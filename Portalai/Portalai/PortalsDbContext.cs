@@ -5,7 +5,7 @@ using Portalai.Models;
 
 public class PortalsDbContext : DbContext
 {
-    public PortalsDbContext(DbContextOptions<PortalsDbContext> options) : base(options) { }
+    public PortalsDbContext(DbContextOptions options) : base(options) { }
     
     public PortalsDbContext() : base () { }
 

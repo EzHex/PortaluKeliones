@@ -7,8 +7,12 @@ namespace Portalai.Controllers;
 
 public class PlaceController : Controller
 {
-    
     private readonly PortalsDbContext context;
+    
+    public PlaceController(PortalsDbContext context)
+    {
+        this.context = context;
+    }
     
     public async Task<ActionResult> Index()
     {
@@ -28,6 +32,7 @@ public class PlaceController : Controller
     [HttpPost]
     public async Task<ActionResult> Create(Place place)
     {
+        Console.WriteLine(place);
         if (ModelState.IsValid)
         {
             await context.Places.AddAsync(place);
