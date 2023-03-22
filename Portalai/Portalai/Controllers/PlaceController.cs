@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
@@ -16,10 +17,9 @@ public class PlaceController : Controller
     
     public async Task<ActionResult> Index()
     {
-        // var places = await context.Places.ToListAsync();
-        // return View(places);
-        
-        return View();
+        var places = await context.Places.ToListAsync();
+
+        return View(places);
     }
 
     public async Task<ActionResult> Create()
@@ -32,7 +32,6 @@ public class PlaceController : Controller
     [HttpPost]
     public async Task<ActionResult> Create(Place place)
     {
-        Console.WriteLine(place);
         if (ModelState.IsValid)
         {
             await context.Places.AddAsync(place);
@@ -42,6 +41,32 @@ public class PlaceController : Controller
         }
         
         return View(place);
+    }
+
+    public async Task<ActionResult> Edit(int id)
+    {
+        var place = await context.Places.SingleAsync(x => x.Id == id);
+
+        return View(place);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Edit(Place newPlace)
+    {
+        if (ModelState.IsValid)
+        {
+            var place = await context.Places.SingleAsync(x => x.Id == newPlace.Id);
+
+            place.Longitude = newPlace.Longitude;
+            place.Latitude = newPlace.Latitude;
+            place.Name = newPlace.Name;
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        return View(newPlace);
     }
 
     public async Task<ActionResult> Delete(Place place)
