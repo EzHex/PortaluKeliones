@@ -18,12 +18,6 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model=> model.Longitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model=> model.Latitude)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model=> model.Name)
                 </th>
                 <th></th>
@@ -33,17 +27,12 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Longitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
-                    </td>
-                    <td>
+                    <td class="text-md-start">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td>
-                        <a href="@Url.Action("Edit", new { item.Id })" class="btn btn-secondary">Redaguoti</a>
+                    <td class="text-md-end">
+                        <a href="@Url.Action("Read", item)" class="btn btn-secondary">Išsami informacija</a>
+                        <a href="@Url.Action("Edit", new { item.Id })" class="btn btn-warning">Redaguoti</a>
                         <a href="@Url.Action("Delete", item)" class="btn btn-danger">Šalinti</a>
                     </td>
                 </tr>

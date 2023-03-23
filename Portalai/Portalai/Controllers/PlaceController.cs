@@ -95,4 +95,9 @@ public class PlaceController : Controller
             return View(place);
         }
     }
+    
+    public async Task<ActionResult> Read(Place place)
+    {
+        return View(place);
+    }
 }
