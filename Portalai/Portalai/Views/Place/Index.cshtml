@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<Place>
+
 @{
-    ViewData["title"] = "Vietovių sąrašas";
+    ViewBag.Title = "Vietovių sąrašas";
     Layout = "_Layout";
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
     <span class="title">
-        <h1>@ViewData["title"]</h1>
+        <h1>@ViewBag.Title</h1>
     </span>
+
     <span>
         <a href="@Url.Action("Create")" class="btn btn-primary">Sukurti naują</a>
     </span>
@@ -20,7 +22,6 @@
                 <th>
                     @Html.DisplayNameFor(model=> model.Name)
                 </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -40,3 +41,12 @@
         </tbody>
     </table>
 </div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Status))
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@{WriteLiteral(ViewBag.Status);}");
+        };
+    </script>
+}

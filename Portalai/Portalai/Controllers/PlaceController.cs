@@ -19,6 +19,12 @@ public class PlaceController : Controller
     {
         var places = await context.Places.ToListAsync();
 
+        if (TempData["status"] != null)
+        {
+            ViewBag.Status = TempData["status"];
+            TempData.Remove("status");
+        }
+
         return View(places);
     }
 
@@ -36,7 +42,8 @@ public class PlaceController : Controller
         {
             await context.Places.AddAsync(place);
             await context.SaveChangesAsync();
-            
+
+            TempData["status"] = "Įrašas sėkmingai sukurtas";
             return RedirectToAction("Index");
         }
         
@@ -63,6 +70,7 @@ public class PlaceController : Controller
 
             await context.SaveChangesAsync();
 
+            TempData["status"] = "Įrašas sėkmingai redaguotas";
             return RedirectToAction("Index");
         }
 
@@ -84,6 +92,7 @@ public class PlaceController : Controller
             context.Remove(place);
             await context.SaveChangesAsync();
 
+            TempData["status"] = "Įrašas sėkmingai pašalintas";
             return RedirectToAction("Index");
         }
         catch (Exception e)
