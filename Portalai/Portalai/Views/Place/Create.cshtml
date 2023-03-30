@@ -15,32 +15,32 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-    <fieldset class="border rounded shadow p-2">
-        <div class="form-group">
-            @Html.LabelFor(m => m.Longitude, new { @class = "control-label" })
-            @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Latitude, new { @class = "control-label" })
-            @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-        </div>
-    </fieldset>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="container-fluid d-flex d-row justify-content-end">
-        <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
-    </div>
-}
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Longitude, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Latitude, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </fieldset>
+
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+        </div>
+    }
 </div>

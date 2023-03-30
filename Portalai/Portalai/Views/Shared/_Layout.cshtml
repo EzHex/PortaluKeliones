@@ -28,6 +28,13 @@
     </nav>
 </header>
 <div class="container">
+    <div id="event-handler" class="text-center alert alert-danger">@ViewBag.Status</div>
+    @if (string.IsNullOrWhiteSpace(ViewBag.Status))
+    {
+        <script>
+                document.getElementById("event-handler").style.display = "none";
+            </script>
+    }
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
@@ -41,6 +48,6 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

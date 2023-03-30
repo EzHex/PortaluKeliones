@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
 
@@ -9,12 +7,12 @@ namespace Portalai.Controllers;
 public class PlaceController : Controller
 {
     private readonly PortalsDbContext context;
-    
+
     public PlaceController(PortalsDbContext context)
     {
         this.context = context;
     }
-    
+
     public async Task<ActionResult> Index()
     {
         var places = await context.Places.ToListAsync();
@@ -31,10 +29,10 @@ public class PlaceController : Controller
     public async Task<ActionResult> Create()
     {
         var place = new Place();
-        
+
         return View(place);
     }
-    
+
     [HttpPost]
     public async Task<ActionResult> Create(Place place)
     {
@@ -46,7 +44,7 @@ public class PlaceController : Controller
             TempData["status"] = "Įrašas sėkmingai sukurtas";
             return RedirectToAction("Index");
         }
-        
+
         return View(place);
     }
 
@@ -81,14 +79,14 @@ public class PlaceController : Controller
     {
         return View(place);
     }
-    
+
     [HttpPost]
     public async Task<ActionResult> Delete(int id)
     {
         try
         {
             var place = await context.Places.SingleAsync(x => x.Id == id);
-            
+
             context.Remove(place);
             await context.SaveChangesAsync();
 
@@ -100,11 +98,11 @@ public class PlaceController : Controller
             ViewData["deletionNotPermitted"] = true;
 
             var place = await context.Places.SingleAsync(x => x.Id == id);
-            
+
             return View(place);
         }
     }
-    
+
     public async Task<ActionResult> Read(Place place)
     {
         return View(place);

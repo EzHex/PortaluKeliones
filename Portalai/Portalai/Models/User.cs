@@ -11,7 +11,7 @@ public class User : IEntityTypeConfiguration<User>
     public string Password { get; set; }
     public string Phone { get; set; }
     public string Role { get; set; }
-    
+
     public void Configure(EntityTypeBuilder<User> builder)
     {
         throw new NotImplementedException();

@@ -6,7 +6,7 @@ var connectionString = builder.Configuration.GetValue<string>("SqlConnectionStri
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<PortalsDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
+builder.Services.AddDbContext<PortalsDbContext>(options => options.UseSqlServer(connectionString));
 // Add services to the container.
 
 
@@ -28,7 +28,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

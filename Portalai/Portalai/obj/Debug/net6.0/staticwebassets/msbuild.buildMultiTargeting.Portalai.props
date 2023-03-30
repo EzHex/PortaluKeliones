@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="..\build\Portalai.props" />
+    <Import Project="..\build\Portalai.props"/>
 </Project>

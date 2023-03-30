@@ -17,35 +17,35 @@
 <div class="d-flex justify-content-center">
     <table class="entitylist table table-striped table-hover">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model=> model.Name)
-                </th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="text-md-start">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td class="text-md-end">
-                        <a href="@Url.Action("Read", item)" class="btn btn-secondary">Išsami informacija</a>
-                        <a href="@Url.Action("Edit", new { item.Id })" class="btn btn-warning">Redaguoti</a>
-                        <a href="@Url.Action("Delete", item)" class="btn btn-danger">Šalinti</a>
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-md-end">
+                    <a href="@Url.Action("Read", item)" class="btn btn-secondary">Išsami informacija</a>
+                    <a href="@Url.Action("Edit", new { item.Id })" class="btn btn-warning">Redaguoti</a>
+                    <a href="@Url.Action("Delete", item)" class="btn btn-danger">Šalinti</a>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>
 
-@if (!string.IsNullOrEmpty(ViewBag.Status))
+@*@if (!string.IsNullOrEmpty(ViewBag.Status))
 {
     <script type="text/javascript">
         window.onload = function () {
             alert("@{WriteLiteral(ViewBag.Status);}");
         };
     </script>
-}
+}*@

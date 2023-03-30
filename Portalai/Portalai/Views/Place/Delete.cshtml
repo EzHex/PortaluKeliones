@@ -9,14 +9,14 @@
     <span class="title">
         <h1>@ViewBag.Title</h1>
     </span>
-    
+
     <span class="actions">
         <a href="@Url.Action("Index")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
     </span>
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
@@ -29,20 +29,21 @@
 
                 <dt>@Html.DisplayNameFor(m => m.Longitude)</dt>
                 <dd>@Html.DisplayFor(m => m.Longitude)</dd>
-                
+
                 <dt>@Html.DisplayNameFor(m => m.Latitude)</dt>
                 <dd>@Html.DisplayFor(m => m.Latitude)</dd>
             </dl>
 
-		
+
             <div class="container-fluid d-flex d-row justify-content-end">
                 <button
-                    formaction="@Url.Action("Delete", new {id = Model.Id})"
+                    formaction="@Url.Action("Delete", new { id = Model.Id })"
                     class="btn btn-danger"
-                    style="white-space: nowrap;"
-                ><i class="fa-solid fa-trash"></i> Šalinti</button>
-            </div>			
-		
+                    style="white-space: nowrap;">
+                    <i class="fa-solid fa-trash"></i> Šalinti
+                </button>
+            </div>
+
         </fieldset>
     }
 </div>

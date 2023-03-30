@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Studijos\\Programu sistemu analizes ir projektavimo irankiai\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj": {}
+    "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\Project\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj": {}
   },
   "projects": {
-    "E:\\Studijos\\Programu sistemu analizes ir projektavimo irankiai\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj": {
+    "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\Project\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Studijos\\Programu sistemu analizes ir projektavimo irankiai\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj",
+        "projectUniqueName": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\Project\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj",
         "projectName": "Portalai",
-        "projectPath": "E:\\Studijos\\Programu sistemu analizes ir projektavimo irankiai\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj",
-        "packagesPath": "C:\\Users\\venck\\.nuget\\packages\\",
-        "outputPath": "E:\\Studijos\\Programu sistemu analizes ir projektavimo irankiai\\PortaluKeliones\\Portalai\\Portalai\\obj\\",
+        "projectPath": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\Project\\PortaluKeliones\\Portalai\\Portalai\\Portalai.csproj",
+        "packagesPath": "C:\\Users\\modes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\Project\\PortaluKeliones\\Portalai\\Portalai\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\venck\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\modes\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
