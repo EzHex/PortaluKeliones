@@ -28,12 +28,12 @@
     </nav>
 </header>
 <div class="container">
-    <div id="event-handler" class="text-center alert alert-danger">@ViewBag.Status</div>
+    <div id="event-handler" class="text-center alert alert-success">@ViewBag.Status</div>
     @if (string.IsNullOrWhiteSpace(ViewBag.Status))
     {
         <script>
-                document.getElementById("event-handler").style.display = "none";
-            </script>
+            document.getElementById("event-handler").style.display = "none";
+        </script>
     }
     <main role="main" class="pb-3">
         @RenderBody()
