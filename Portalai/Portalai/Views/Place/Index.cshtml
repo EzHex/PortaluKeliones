@@ -21,6 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -40,12 +41,3 @@
         </tbody>
     </table>
 </div>
-
-@*@if (!string.IsNullOrEmpty(ViewBag.Status))
-{
-    <script type="text/javascript">
-        window.onload = function () {
-            alert("@{WriteLiteral(ViewBag.Status);}");
-        };
-    </script>
-}*@
