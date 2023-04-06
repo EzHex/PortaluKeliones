@@ -9,10 +9,6 @@
     <span class="title">
         <h1>@ViewBag.Title</h1>
     </span>
-
-    <span class="actions">
-        <a href="@Url.Action("Index")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
-    </span>
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
@@ -35,7 +31,10 @@
             </dl>
 
 
-            <div class="container-fluid d-flex d-row justify-content-end">
+            <div class="container-fluid d-flex d-row justify-content-center">
+                <span class="actions">
+                    <a href="@Url.Action("Index")" class="btn btn-primary"><i class="fa-sharp fa-solid fa-circle-xmark fa-spin"></i> Atšaukti</a>
+                </span>
                 <button
                     formaction="@Url.Action("Delete", new { id = Model.Id })"
                     class="btn btn-danger"

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +9,13 @@ public class Place : IEntityTypeConfiguration<Place>
 {
     public int Id { get; set; }
 
-    [DisplayName("Ilguma")] public double Longitude { get; set; }
+    [DisplayName("Ilguma")] 
+    [Range(-180,180)]
+    public double Longitude { get; set; }
 
-    [DisplayName("Platuma")] public double Latitude { get; set; }
+    [DisplayName("Platuma")] 
+    [Range(-90,90)]
+    public double Latitude { get; set; }
 
     [DisplayName("Vietovės pavadinimas")] public string Name { get; set; }
 

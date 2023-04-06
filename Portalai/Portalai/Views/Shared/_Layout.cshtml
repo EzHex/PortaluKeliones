@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Portalai.styles.css" asp-append-version="true"/>
+    <!-- Font Awesome -->
+    <script
+      crossorigin="anonymous"
+      src="https://kit.fontawesome.com/8ece948e7e.js"
+    ></script>
 </head>
 <body>
 <header>
@@ -28,7 +33,7 @@
     </nav>
 </header>
 <div class="container">
-    <div id="event-handler" class="text-center alert alert-danger">@ViewBag.Status</div>
+    <div id="event-handler" class="text-center alert alert-success">@ViewBag.Status</div>
     @if (string.IsNullOrWhiteSpace(ViewBag.Status))
     {
         <script>
