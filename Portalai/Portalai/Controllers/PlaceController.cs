@@ -13,7 +13,7 @@ public class PlaceController : Controller
         this.context = context;
     }
 
-    public async Task<ActionResult> PlacesList()
+    public async Task<ActionResult> ShowPlaces()
     {
         var places = await context.Places.ToListAsync();
 
@@ -23,18 +23,18 @@ public class PlaceController : Controller
             TempData.Remove("status");
         }
 
-        return View(places);
+        return View("PlacesList", places);
     }
 
-    public async Task<ActionResult> PlaceCreate()
+    public async Task<ActionResult> ShowCreateForm()
     {
         var place = new Place();
 
-        return View(place);
+        return View("PlaceCreate",place);
     }
 
     [HttpPost]
-    public async Task<ActionResult> PlaceCreate(Place place)
+    public async Task<ActionResult> PostCreate(Place place)
     {
         if (ModelState.IsValid)
         {
@@ -42,21 +42,21 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai sukurtas";
-            return RedirectToAction("PlacesList");
+            return RedirectToAction("ShowPlaces");
         }
 
-        return View(place);
+        return View("PlaceCreate", place);
     }
 
-    public async Task<ActionResult> PlaceEdit(int id)
+    public async Task<ActionResult> ShowEditForm(int id)
     {
         var place = await context.Places.SingleAsync(x => x.Id == id);
 
-        return View(place);
+        return View("PlaceEdit", place);
     }
 
     [HttpPost]
-    public async Task<ActionResult> PlaceEdit(Place newPlace)
+    public async Task<ActionResult> PostEdit(Place newPlace)
     {
         if (ModelState.IsValid)
         {
@@ -69,19 +69,19 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai redaguotas";
-            return RedirectToAction("PlacesList");
+            return RedirectToAction("ShowPlaces");
         }
 
-        return View(newPlace);
+        return View("PlaceEdit", newPlace);
     }
 
-    public async Task<ActionResult> PlaceDelete(Place place)
+    public async Task<ActionResult> ShowDeleteConfirmForm(Place place)
     {
-        return View(place);
+        return View("PlaceDelete", place);
     }
 
     [HttpPost]
-    public async Task<ActionResult> PlaceDelete(int id)
+    public async Task<ActionResult> DeletePlace(int id)
     {
         try
         {
@@ -91,7 +91,7 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai pašalintas";
-            return RedirectToAction("PlacesList");
+            return RedirectToAction("ShowPlaces");
         }
         catch (Exception e)
         {
@@ -99,12 +99,12 @@ public class PlaceController : Controller
 
             var place = await context.Places.SingleAsync(x => x.Id == id);
 
-            return View(place);
+            return View("PlaceDelete", place);
         }
     }
 
-    public async Task<ActionResult> PlaceInfo(Place place)
+    public async Task<ActionResult> ShowOnePlace(Place place) 
     {
-        return View(place);
+        return View("PlaceInfo", place);
     }
 }

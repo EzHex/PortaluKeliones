@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - Portalai</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Portalai.styles.css" asp-append-version="true"/>
     <!-- Font Awesome -->
     <script
       crossorigin="anonymous"
@@ -32,6 +31,7 @@
         </div>
     </nav>
 </header>
+
 <div class="container">
     <div id="event-handler" class="text-center alert alert-success">@ViewBag.Status</div>
     @if (string.IsNullOrWhiteSpace(ViewBag.Status))
@@ -50,9 +50,11 @@
         &copy; 2023 - Portalai ir ne tik
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
 @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

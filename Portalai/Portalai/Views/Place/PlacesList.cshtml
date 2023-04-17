@@ -10,7 +10,7 @@
         <h1>@ViewBag.Title</h1>
     </span>
     <span>
-        <a href="@Url.Action("PlaceCreate")" class="btn btn-primary">Sukurti naują</a>
+        <a href="@Url.Action("ShowCreateForm")" class="btn btn-primary">Sukurti naują</a>
     </span>
 </div>
 
@@ -32,9 +32,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td class="text-md-end">
-                    <a href="@Url.Action("PlaceInfo", item)" class="btn btn-secondary">Išsami informacija</a>
-                    <a href="@Url.Action("PlaceEdit", new { item.Id })" class="btn btn-warning">Redaguoti</a>
-                    <a href="@Url.Action("PlaceDelete", item)" class="btn btn-danger">Šalinti</a>
+                    <a href="@Url.Action("ShowOnePlace", item)" class="btn btn-secondary">Išsami informacija</a>
+                    <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
+                    <a href="@Url.Action("ShowDeleteConfirmForm", item)" class="btn btn-danger">Šalinti</a>
                 </td>
             </tr>
         }

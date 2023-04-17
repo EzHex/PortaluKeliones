@@ -33,10 +33,10 @@
 
             <div class="container-fluid d-flex d-row justify-content-between align-items-center p-2">
                 <span class="actions">
-                    <a href="@Url.Action("PlacesList")" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-circle-xmark"></i> Atšaukti</a>
+                    <a href="@Url.Action("ShowPlaces")" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-circle-xmark"></i> Atšaukti</a>
                 </span>
                 <span>
-                    <button formaction="@Url.Action("PlaceDelete", new { id = Model.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
+                    <button formaction="@Url.Action("DeletePlace", new { id = Model.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
                 </span>
                 
             </div>
