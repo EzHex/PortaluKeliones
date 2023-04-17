@@ -13,7 +13,7 @@ public class PlaceController : Controller
         this.context = context;
     }
 
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> PlacesList()
     {
         var places = await context.Places.ToListAsync();
 
@@ -26,7 +26,7 @@ public class PlaceController : Controller
         return View(places);
     }
 
-    public async Task<ActionResult> Create()
+    public async Task<ActionResult> PlaceCreate()
     {
         var place = new Place();
 
@@ -34,7 +34,7 @@ public class PlaceController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(Place place)
+    public async Task<ActionResult> PlaceCreate(Place place)
     {
         if (ModelState.IsValid)
         {
@@ -42,13 +42,13 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai sukurtas";
-            return RedirectToAction("Index");
+            return RedirectToAction("PlacesList");
         }
 
         return View(place);
     }
 
-    public async Task<ActionResult> Edit(int id)
+    public async Task<ActionResult> PlaceEdit(int id)
     {
         var place = await context.Places.SingleAsync(x => x.Id == id);
 
@@ -56,7 +56,7 @@ public class PlaceController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult> Edit(Place newPlace)
+    public async Task<ActionResult> PlaceEdit(Place newPlace)
     {
         if (ModelState.IsValid)
         {
@@ -69,19 +69,19 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai redaguotas";
-            return RedirectToAction("Index");
+            return RedirectToAction("PlacesList");
         }
 
         return View(newPlace);
     }
 
-    public async Task<ActionResult> Delete(Place place)
+    public async Task<ActionResult> PlaceDelete(Place place)
     {
         return View(place);
     }
 
     [HttpPost]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> PlaceDelete(int id)
     {
         try
         {
@@ -91,7 +91,7 @@ public class PlaceController : Controller
             await context.SaveChangesAsync();
 
             TempData["status"] = "Įrašas sėkmingai pašalintas";
-            return RedirectToAction("Index");
+            return RedirectToAction("PlacesList");
         }
         catch (Exception e)
         {
@@ -103,7 +103,7 @@ public class PlaceController : Controller
         }
     }
 
-    public async Task<ActionResult> Read(Place place)
+    public async Task<ActionResult> PlaceInfo(Place place)
     {
         return View(place);
     }

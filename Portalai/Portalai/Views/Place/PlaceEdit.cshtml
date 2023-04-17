@@ -1,7 +1,7 @@
 ﻿@model Place
 
 @{
-    ViewBag.Title = "Vietovės kūrimas";
+    ViewBag.Title = "Vietovės redagavimas";
     Layout = "_Layout";
 }
 
@@ -9,8 +9,8 @@
     <span class="title">
         <h1>@ViewBag.Title</h1>
     </span>
-    <span class="actions">
-        <a href="@Url.Action("Index")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    <span>
+        <a href="@Url.Action("PlacesList")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
     </span>
 </div>
 
@@ -40,7 +40,7 @@
         </fieldset>
 
         <div class="container-fluid d-flex d-row justify-content-end">
-            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
         </div>
     }
 </div>
