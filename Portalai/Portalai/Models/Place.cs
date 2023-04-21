@@ -17,7 +17,8 @@ public class Place : IEntityTypeConfiguration<Place>
     [Range(-90,90)]
     public double Latitude { get; set; }
 
-    [DisplayName("Vietovės pavadinimas")] public string Name { get; set; }
+    [DisplayName("Vietovės pavadinimas")] 
+    public string Name { get; set; }
 
     public void Configure(EntityTypeBuilder<Place> builder)
     {
