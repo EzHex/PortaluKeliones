@@ -14,4 +14,5 @@ public class PortalsDbContext : DbContext
     public virtual DbSet<User> Users { get; set; } = null!;
 
     public virtual DbSet<Place> Places { get; set; } = null!;
+    
 }
