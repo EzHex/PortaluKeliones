@@ -20,6 +20,8 @@ public class Place : IEntityTypeConfiguration<Place>
     [DisplayName("Vietovės pavadinimas")] 
     public string Name { get; set; }
 
+    public List<RouteVoyage> RouteVoyages { get; set; }
+    
     public void Configure(EntityTypeBuilder<Place> builder)
     {
         throw new NotImplementedException();

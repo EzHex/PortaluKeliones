@@ -7,10 +7,9 @@ namespace Portalai.Models;
 
 public class Portal : IEntityTypeConfiguration<Portal>
 {
-
     public int Id { get; set; }
 
-    [DisplayName("Ilguma")] 
+    [DisplayName("Ilguma")]
     [Range(-180,180)]
     public double Longitude { get; set; }
 
