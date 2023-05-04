@@ -22,6 +22,8 @@ public class Place : IEntityTypeConfiguration<Place>
 
     public List<RouteVoyage> RouteVoyages { get; set; }
     
+    public List<EducationalRoute> EducationalRoutes { get; set; }
+    
     public void Configure(EntityTypeBuilder<Place> builder)
     {
         throw new NotImplementedException();

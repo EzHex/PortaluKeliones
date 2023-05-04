@@ -34,6 +34,8 @@ public class Portal : IEntityTypeConfiguration<Portal>
     
     public PortalJunction PortalJunction { get; set; }
     
+    public List<Complaint> Complaints { get; set; }
+    
     public void Configure(EntityTypeBuilder<Portal> builder)
     {
         builder.HasOne(p => p.PortalJunction)
