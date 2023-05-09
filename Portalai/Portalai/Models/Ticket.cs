@@ -19,6 +19,7 @@ public class Ticket : IEntityTypeConfiguration<Ticket>
     public DateTime ArrivalTime { get; set; }
     
     public Trip Trip { get; set; }
+    public User User { get; set; }
 
     public Ticket(int seat, double price, DateTime purchaseDate, DateTime departureTime, DateTime arrivalTime)
     {
@@ -31,6 +32,8 @@ public class Ticket : IEntityTypeConfiguration<Ticket>
 
     public void Configure(EntityTypeBuilder<Ticket> builder)
     {
-        throw new NotImplementedException();
+        builder.HasOne(u => u.User)
+            .WithMany(t => t.Tickets)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

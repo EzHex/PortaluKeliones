@@ -11,9 +11,12 @@ public class User : IEntityTypeConfiguration<User>
     public string Password { get; set; }
     public string Phone { get; set; }
     public Roles Role { get; set; }
+    public List<Ticket> Tickets { get; set; }
 
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        throw new NotImplementedException();
+        builder.HasMany(t => t.Tickets)
+            .WithOne(u => u.User)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
