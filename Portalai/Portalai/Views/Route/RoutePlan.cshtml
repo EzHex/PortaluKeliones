@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Place>
+
+@{
+    ViewBag.Title = "Maršruto planavimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+</div>
+
+@if (ViewBag.RoutePlan != null)
+{
+    <div class="container-fluid text-center">
+        <p>Maršrutas: @ViewBag.RoutePlan</p>
+    </div>
+}
+@if (ViewBag.Error1 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error1</p>
+    </div>
+}
+@if (ViewBag.Error2 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error2</p>
+    </div>
+}
+@if (ViewBag.Error3 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error3</p>
+    </div>
+}
+@if (ViewBag.Error4 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error4</p>
+    </div>
+}
+@if (ViewBag.Error5 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error5</p>
+    </div>
+}
+@if (ViewBag.Error6 != null)
+{
+        <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error6</p>
+    </div>
+}
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("PostRoutePlan", "Route", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.Label("StartPlace", "Pradinė vietovė:")
+                <select name="StartPlace" id="StartPlace" class="form-control">
+                    <option value="-1">----------</option>
+                    @foreach (var place in Model)
+                    {
+                        <option value="@place.Id" selected="@(ViewBag.StartPlaceId != null && place.Id == Convert.ToInt32(ViewBag.StartPlaceId))">@place.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                @Html.Label("EndPlace", "Galinė vietovė:")
+                <select name="EndPlace" id="EndPlace" class="form-control">
+                    <option value="-1">----------</option>
+                    @foreach (var place in Model)
+                    {
+                        <option value="@place.Id" selected="@(ViewBag.EndPlaceId != null && place.Id == Convert.ToInt32(ViewBag.EndPlaceId))">@place.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                @Html.Label("Places", "Tarpinės vietovės:")
+                <select name="Places" id="Places" multiple class="form-control">
+                    @foreach (var place in Model)
+                    {
+                        <option value="@place.Id" selected="@(ViewBag.PlaceIds != null && ViewBag.PlaceIds.Contains(place.Id.ToString()))">@place.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                @Html.Label("TimePerLocation", "Laikas vietovei aplankyti (h)")
+                @Html.TextBox("TimePerLocation", (string)ViewBag.TimePerLocation, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.Label("TimePerKilometer", "Keliavimo greitis (km/min)")
+                @Html.TextBox("TimePerKilometer", (string)ViewBag.TimePerKilometer, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.Label("TimeBeforeBreak", "Keliavimo laikas iki pertraukos (h)")
+                @Html.TextBox("TimeBeforeBreak", (string)ViewBag.TimeBeforeBreak, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.Label("BreakTime", "Pertraukos laikas (h)")
+                @Html.TextBox("BreakTime", (string)ViewBag.BreakTime, new { @class = "form-control" })
+            </div>
+        </fieldset>
+
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-map-marked-alt"></i> Planuoti</button>
+        </div>
+    }
+</div>

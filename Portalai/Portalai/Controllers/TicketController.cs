@@ -12,9 +12,11 @@ namespace Portalai.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> ShowPurchasedTicketsList()
         {
-            return View();
+            var tickets = await context.Tickets.Where(t => t.User.Id == 1).ToListAsync();
+
+            return View("TicketsList", tickets);
         }
     }
 }
