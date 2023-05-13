@@ -1,0 +1,155 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
+using Portalai.Models;
+
+namespace Portalai.Controllers;
+
+public class BusController : Controller
+{
+    private readonly PortalsDbContext context;
+
+    public BusController(PortalsDbContext context)
+    {
+        this.context = context;
+    }
+    
+    public async Task<ActionResult> ShowBusesList()
+    {
+        var buses = await context.Buses.ToListAsync();
+
+        if (TempData["status"] != null)
+        {
+            ViewBag.Status = TempData["status"];
+            TempData.Remove("status");
+        }
+
+        return View("BusesList", buses);
+    }
+
+    public async Task<ActionResult> ShowStatusChangeForBus(int id)
+    {
+        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+        bus.NewStatus = bus.Status;
+
+        return View("BusStatus", bus);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CheckIfStatusAvailable(int id, BusStatus newStatus)
+    {
+        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+
+        switch (bus.Status)
+        {
+            case BusStatus.Garage:
+                if (newStatus is BusStatus.OnRoute or BusStatus.Broken)
+                {
+                    TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
+                    bus.Status = newStatus;
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("ShowBusesList");
+                }
+                ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
+                return View("BusStatus", bus);
+            case BusStatus.OnRoute:
+                if (newStatus is BusStatus.Garage or BusStatus.Broken)
+                {
+                    TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
+                    bus.Status = newStatus;
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("ShowBusesList");
+                }
+                ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
+                return View("BusStatus", bus);
+            case BusStatus.Broken:
+                if (newStatus is BusStatus.Repair)
+                {
+                    TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
+                    bus.Status = newStatus;
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("ShowBusesList");
+                }
+                ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
+                return View("BusStatus", bus);
+            case BusStatus.Repair:
+                if (newStatus is BusStatus.Garage)
+                {
+                    TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
+                    bus.Status = newStatus;
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("ShowBusesList");
+                }
+                ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
+                return View("BusStatus", bus);
+            default:
+                return View("BusStatus", bus);
+        }
+    }
+    
+    public async Task<ActionResult> ShowCreateForm()
+    {
+        var bus = new Bus();
+
+        return View("BusCreate", bus);
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult> PostBusCreate(Bus bus)
+    {
+        ModelState["Trips"].ValidationState = ModelValidationState.Valid;
+        ModelState["Trips"].Errors.Clear();
+        
+        if (!ModelState.IsValid)
+            return View("BusCreate", bus);
+        
+        await context.Buses.AddAsync(bus);
+        await context.SaveChangesAsync();
+
+        TempData["status"] = "Autobusas sėkmingai pridėtas";
+        
+        return RedirectToAction("ShowBusesList");
+    }
+    
+    public async Task<ActionResult> ShowEditForm(int id)
+    {
+        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+
+        return View("BusEdit", bus);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> PostBusEdit(Bus bus)
+    {
+        ModelState["Trips"].ValidationState = ModelValidationState.Valid;
+        ModelState["Trips"].Errors.Clear();
+        
+        if (!ModelState.IsValid)
+            return View("BusEdit", bus);
+        
+        context.Buses.Update(bus);
+        await context.SaveChangesAsync();
+        
+        TempData["status"] = "Autobusas sėkmingai atnaujintas";
+        
+        return RedirectToAction("ShowBusesList");
+    }
+
+    public async Task<ActionResult> ShowBusDelete(Bus bus)
+    {
+        return View("BusDelete", bus);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> DeleteBus(int id)
+    {
+        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+        
+        context.Buses.Remove(bus);
+        await context.SaveChangesAsync();
+        
+        TempData["status"] = "Autobusas sėkmingai pašalintas";
+        
+        return RedirectToAction("ShowBusesList");
+    }
+}

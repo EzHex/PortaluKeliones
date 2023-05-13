@@ -1,0 +1,78 @@
+@model IEnumerable<Bus>
+@{
+    ViewBag.Title = "Autobusų sąrašas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span>
+        <a href="@Url.Action("ShowCreateForm")" class="btn btn-primary">Pridėti</a>
+    </span>
+</div>
+
+<div class="d-flex justify-content-center">
+    <table class="entitylist table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LicensePlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufactureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fuel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fuel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td class="text-md-end">
+                    <a href="@Url.Action("ShowStatusChangeForBus", item)" class="btn btn-secondary">Keisti būseną</a>
+                    <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
+                    <a href="@Url.Action("ShowBusDelete", item)" class="btn btn-danger">Šalinti</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

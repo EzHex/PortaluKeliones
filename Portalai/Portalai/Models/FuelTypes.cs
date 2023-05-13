@@ -2,7 +2,7 @@ namespace Portalai.Models;
 
 public enum FuelTypes
 {
-    Gasoline,
+    Petrol,
     PetrolElectricity,
     Gas,
     Diesel,

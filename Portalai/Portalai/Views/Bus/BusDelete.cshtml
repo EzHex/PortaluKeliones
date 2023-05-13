@@ -1,0 +1,54 @@
+@model Bus
+@{
+    ViewBag.Title = "Autobuso šalinimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("ShowBusesList")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset class="border rounded shadow p-2">
+            <legend class="text-center">Ar tikrai norite šalinti šį autobusą?</legend>
+
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.Brand)</dt>
+                <dd>@Html.DisplayFor(m => m.Brand)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Model)</dt>
+                <dd>@Html.DisplayFor(m => m.Model)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.LicensePlate)</dt>
+                <dd>@Html.DisplayFor(m => m.LicensePlate)</dd>
+                
+                <dt>@Html.DisplayNameFor(m=>m.Fuel)</dt>
+                <dd>@Html.DisplayFor(m=>m.Fuel)</dd>
+                
+                <dt>@Html.DisplayNameFor(m=>m.Seats)</dt>
+                <dd>@Html.DisplayFor(m=>m.Seats)</dd>
+                
+                <dt>@Html.DisplayNameFor(m=>m.ManufactureDate)</dt>
+                <dd>@Html.DisplayFor(m=>m.ManufactureDate)</dd>
+                
+                <dt>@Html.DisplayNameFor(m=>m.Status)</dt>
+                <dd>@Html.DisplayFor(m=>m.Status)</dd>
+            </dl>
+            
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center p-2">
+                <span>
+                    <button formaction="@Url.Action("DeleteBus", new { id = Model.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
+                </span>
+            </div>
+        </fieldset>
+    }
+</div>

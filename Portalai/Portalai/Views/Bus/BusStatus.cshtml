@@ -1,0 +1,45 @@
+@model Bus
+@{
+    ViewBag.Title = "Autobuso būsenos keitimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("ShowBusesList")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("CheckIfStatusAvailable", "Bus", new {id = Model.Id, newStatus = Model.NewStatus}, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        
+        <fieldset class="border rounded shadow p-2">
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.LicensePlate)</dt>
+                <dd>@Html.DisplayFor(m => m.LicensePlate)</dd>
+            </dl>
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.Model)</dt>
+                <dd>@Html.DisplayFor(m => m.Model)</dd>
+            </dl>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.NewStatus, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.NewStatus, new SelectList(Enum.GetValues(typeof(BusStatus))), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.NewStatus, "", new { @class = "text-danger" })
+            </div>
+            
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center p-2">
+                <span>
+                    <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+                </span>
+            </div>
+        </fieldset>
+    }
+</div>

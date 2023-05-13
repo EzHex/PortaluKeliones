@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,9 +20,14 @@ public class Bus : IEntityTypeConfiguration<Bus>
     [DisplayName("Degalų tipas")]
     public FuelTypes Fuel { get; set; }
     [DisplayName("Sėdimų vietų skaičius")]
+    [Range(1, 100)]
     public int Seats { get; set; }
     [DisplayName("Būsena")]
     public BusStatus Status { get; set; }
+    
+    [DisplayName("Būsena")]
+    [NotMapped]
+    public BusStatus NewStatus { get; set; }
     
     public List<Trip> Trips { get; set; }
 
@@ -33,6 +40,11 @@ public class Bus : IEntityTypeConfiguration<Bus>
         Fuel = fuel;
         Seats = seats;
         Status = status;
+    }
+    
+    public Bus()
+    {
+        
     }
 
     public void Configure(EntityTypeBuilder<Bus> builder)
