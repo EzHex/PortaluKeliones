@@ -28,4 +28,9 @@ public class HomeController : Controller
     {
         return View();
     }
+    
+    public IActionResult ClientView()
+    {
+        return View();
+    }
 }

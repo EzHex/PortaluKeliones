@@ -14,7 +14,7 @@ public class SurveyQuestionOption : IEntityTypeConfiguration<SurveyQuestionOptio
     
     public SurveyQuestion SurveyQuestion { get; set; }
     
-    List<QuestionAnswer> QuestionAnswers { get; set; }
+    public List<QuestionAnswer> QuestionAnswers { get; set; }
     
     public void Configure(EntityTypeBuilder<SurveyQuestionOption> builder)
     {
