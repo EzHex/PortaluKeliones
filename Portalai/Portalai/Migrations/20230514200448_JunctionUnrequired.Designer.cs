@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Portalai.Migrations
 {
     [DbContext(typeof(PortalsDbContext))]
-    partial class PortalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230514200448_JunctionUnrequired")]
+    partial class JunctionUnrequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,7 +221,7 @@ namespace Portalai.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
 
-                    b.Property<int?>("PortalJunctionId")
+                    b.Property<int>("PortalJunctionId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -626,7 +628,9 @@ namespace Portalai.Migrations
                 {
                     b.HasOne("Portalai.Models.PortalJunction", "PortalJunction")
                         .WithMany("Portals")
-                        .HasForeignKey("PortalJunctionId");
+                        .HasForeignKey("PortalJunctionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PortalJunction");
                 });

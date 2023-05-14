@@ -32,14 +32,16 @@ public class Portal : IEntityTypeConfiguration<Portal>
     [DisplayName("Būsena")]
     public PortalStatus Status { get; set; }
     
-    public PortalJunction PortalJunction { get; set; }
+    public PortalJunction? PortalJunction { get; set; }
     
     public List<Complaint> Complaints { get; set; }
     
     public void Configure(EntityTypeBuilder<Portal> builder)
     {
+        // 0 to 1 relation
         builder.HasOne(p => p.PortalJunction)
             .WithMany(p => p.Portals)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Complaint>
+@{
+    ViewBag.Title = "Skundų sąrašas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+</div>
+
+<div class="d-flex justify-content-center">
+    <table class="entitylist table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubmisionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.SubmisionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td class="text-md-end">
+                    <a href="@Url.Action("ShowOneComplaint", item)" class="btn btn-secondary">Išsami informacija</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
