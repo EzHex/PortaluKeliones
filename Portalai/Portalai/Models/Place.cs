@@ -26,6 +26,6 @@ public class Place : IEntityTypeConfiguration<Place>
     
     public void Configure(EntityTypeBuilder<Place> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

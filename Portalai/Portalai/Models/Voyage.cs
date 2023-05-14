@@ -25,6 +25,6 @@ public class Voyage : IEntityTypeConfiguration<Voyage>
 
     public void Configure(EntityTypeBuilder<Voyage> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

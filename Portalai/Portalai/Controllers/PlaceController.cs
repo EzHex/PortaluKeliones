@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
 
@@ -36,16 +37,19 @@ public class PlaceController : Controller
     [HttpPost]
     public async Task<ActionResult> PostCreate(Place place)
     {
-        if (ModelState.IsValid)
-        {
-            await context.Places.AddAsync(place);
-            await context.SaveChangesAsync();
+        ModelState["RouteVoyages"].ValidationState = ModelValidationState.Valid;
+        ModelState["RouteVoyages"].Errors.Clear();
+        ModelState["EducationalRoutes"].ValidationState = ModelValidationState.Valid;
+        ModelState["EducationalRoutes"].Errors.Clear();
 
-            TempData["status"] = "Įrašas sėkmingai sukurtas";
-            return RedirectToAction("ShowPlaces");
-        }
+        if (!ModelState.IsValid) 
+            return View("PlaceCreate", place);
+        
+        await context.Places.AddAsync(place);
+        await context.SaveChangesAsync();
 
-        return View("PlaceCreate", place);
+        TempData["status"] = "Įrašas sėkmingai sukurtas";
+        return RedirectToAction("ShowPlaces");
     }
 
     public async Task<ActionResult> ShowEditForm(int id)

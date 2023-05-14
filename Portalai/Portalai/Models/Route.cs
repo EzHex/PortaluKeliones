@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,7 +13,10 @@ public class Route : IEntityTypeConfiguration<Route>
     
     public Trip Trip { get; set; }
     
-    public List<RouteVoyage> RouteVoyages { get; set; }
+    public List<RouteVoyage> RouteVoyages { get; set; } = new List<RouteVoyage>();
+    
+    [NotMapped]
+    public List<Place> Places { get; set; } = new List<Place>();
 
     public Route(string title)
     {
@@ -21,6 +25,6 @@ public class Route : IEntityTypeConfiguration<Route>
 
     public void Configure(EntityTypeBuilder<Route> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

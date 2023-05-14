@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
 using System.Diagnostics;
 using static System.Math;
+using Route = Portalai.Models.Route;
 
 namespace Portalai.Controllers
 {
@@ -385,6 +386,132 @@ namespace Portalai.Controllers
             ViewBag.RoutePlan = routePlan;
 
             return View("RoutePlan", places);
+        }
+
+        public async Task<ActionResult> ShowRoutesSearch()
+        {
+            var routes = await context.Routes.ToListAsync();
+            foreach (var route in routes)
+            {
+                route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
+
+                foreach (var routeVoyage in route.RouteVoyages)
+                {
+                    routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
+                    
+                    routeVoyage.Places.ForEach(p =>
+                    {
+                        if (!route.Places.Contains(p))
+                        {
+                            route.Places.Add(p);   
+                        }
+                    });
+                }
+            }
+
+            return View("RouteSearch", routes);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostSearch()
+        {
+            var form = Request.Form;
+            var routes = await context.Routes.ToListAsync();
+            
+            var filteredRoutes = new System.Collections.Generic.List<Route>();
+            
+            int departureCityId = 0;
+            int arrivalCityId = 0;
+            DateTime departureDate = DateTime.Now;
+            DateTime arrivalDate = DateTime.Now;
+
+            if (form.ContainsKey("departureCity"))
+            {
+                departureCityId = Convert.ToInt32(form["departureCity"]);
+            }
+            else
+            {
+                ModelState.AddModelError("departureCity", "Nepasirinktas išvykimo miestas");
+            }
+            
+            if (form.ContainsKey("destinationCity"))
+            {
+                arrivalCityId = Convert.ToInt32(form["destinationCity"]);
+            }
+            else
+            {
+                ModelState.AddModelError("arrivalCity", "Nepasirinktas atvykimo miestas");
+            }
+            
+            if (form.ContainsKey("departureTime"))
+            {
+                departureDate = Convert.ToDateTime(form["departureTime"]);
+            }
+            else
+            {
+                ModelState.AddModelError("departureTime", "Nepasirinkta išvykimo data");
+            }
+            
+            if (form.ContainsKey("arrivalTime"))
+            {
+                arrivalDate = Convert.ToDateTime(form["arrivalTime"]);
+            }
+            else
+            {
+                ModelState.AddModelError("arrivalTime", "Nepasirinkta atvykimo data");
+            }
+            
+            if (departureCityId == arrivalCityId)
+            {
+                ModelState.AddModelError("departureCity", "Išvykimo miestas negali sutapti su atvykimo miestu");
+                ModelState.AddModelError("arrivalCity", "Atvykimo miestas negali sutapti su išvykimo miestu");
+            }
+            
+            if (departureDate > arrivalDate)
+            {
+                ModelState.AddModelError("departureTime", "Išvykimo data negali būti vėlesnė nei atvykimo data");
+                ModelState.AddModelError("arrivalTime", "Atvykimo data negali būti ankstesnė nei išvykimo data");
+            }
+
+            if (!ModelState.IsValid)
+                return View("RouteSearch", routes);
+
+            var departureCity = await context.Places.SingleAsync(c => c.Id == departureCityId);
+            var arrivalCity = await context.Places.SingleAsync(c => c.Id == arrivalCityId);
+            
+            foreach (var route in routes)
+            {
+                route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
+
+                foreach (var routeVoyage in route.RouteVoyages)
+                {
+                    routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
+                    
+                    routeVoyage.Places.ForEach(p =>
+                    {
+                        if (!route.Places.Contains(p))
+                        {
+                            route.Places.Add(p);   
+                        }
+                    });
+                }
+            }
+            //TODO: filter by needed cities (and maybe dates)
+            //cant do it because there is no data in database and no way to add it yet. Waiting for other to do it.
+            //too lazy to add manually to database myself cuz there is a lot of table and I am tired :(
+            foreach (var route in routes)
+            {
+                foreach (var routeVoyage in route.RouteVoyages)
+                {
+                    if (!routeVoyage.Places.Contains(departureCity) || !routeVoyage.Places.Contains(arrivalCity))
+                        continue;
+
+                    filteredRoutes.Add(route);
+                }
+            }
+            
+            
+            return View("RoutesList", filteredRoutes);
         }
     }
 }

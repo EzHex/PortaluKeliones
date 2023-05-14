@@ -1,0 +1,57 @@
+@model IEnumerable<Route>
+@{
+    ViewBag.Title = "Kelionės paieška";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+</div>
+
+<div class="d-flex justify-content-center">
+    @using (Html.BeginForm("PostSearch", "Route", FormMethod.Post))
+    {
+        <div class="text-danger">
+            @Html.ValidationSummary()
+        </div>
+        
+        <div class="form-group">
+            <label for="departureCity">Išvykimo miestas</label>
+            <select class="form-control" id="departureCity" name="departureCity">
+                <option value="">Pasirinkite miestą</option>
+                @foreach (var place in Model.SelectMany(x => x.Places).Distinct())
+                {
+                    <option value="@place.Id">@place.Name</option>
+                }
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="destinationCity">Atvykimo miestas</label>
+            <select class="form-control" id="destinationCity" name="destinationCity">
+                <option value="">Pasirinkite miestą</option>
+                @foreach (var place in Model.SelectMany(x => x.Places).Distinct())
+                {
+                    <option value="@place.Id">@place.Name</option>
+                }
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="departureTime">Išvykimo laikas</label>
+            @Html.Editor("departureTime", new { htmlAttributes = new { @class = "form-control datetime-picker", type = "datetime-local" } })
+        </div>
+        
+        <div class="form-group">
+          <label for="arrivalTime">Atvykimo laikas</label>
+          @Html.Editor("arrivalTime", new { htmlAttributes = new { @class = "form-control datetime-picker", type = "datetime-local" } })
+        </div>
+
+        
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success">Ieškoti</button>
+        </div>
+    }
+</div>

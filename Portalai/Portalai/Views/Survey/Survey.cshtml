@@ -17,8 +17,10 @@
 <div class="d-flex justify-content-center">
     @using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
     {
-        @Html.ValidationSummary();
-        
+        <div class="text-danger">
+            @Html.ValidationSummary()
+        </div>
+
         @foreach (var question in Model.SurveyQuestions)
         {
             <div>

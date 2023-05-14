@@ -18,5 +18,7 @@ namespace Portalai.Controllers
 
             return View("TicketsList", tickets);
         }
+        
+        //TODO: Buy tickets for routes/trips
     }
 }

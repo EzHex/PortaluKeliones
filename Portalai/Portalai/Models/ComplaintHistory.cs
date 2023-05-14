@@ -18,6 +18,6 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
 
     public void Configure(EntityTypeBuilder<ComplaintHistory> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

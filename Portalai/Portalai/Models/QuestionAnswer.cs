@@ -24,6 +24,6 @@ public class QuestionAnswer : IEntityTypeConfiguration<QuestionAnswer>
 
     public void Configure(EntityTypeBuilder<QuestionAnswer> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }
