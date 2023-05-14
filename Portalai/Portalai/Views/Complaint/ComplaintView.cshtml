@@ -10,13 +10,13 @@
         <h1>@ViewBag.Title</h1>
     </span>
     <span class="actions">
-        <a href="@Url.Action("ShowComplaints")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+        <a href="@Url.Action("ShowComplaints")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sąrašą</a>
     </span>
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
 
-    <fieldset class="border rounded shadow p-2">
+    <fieldset class="border rounded shadow p-2" style="width: 40%; word-wrap: break-word;">
 
         <dl>
             <dt>@Html.DisplayNameFor(m => m.SubmisionDate)</dt>
@@ -28,13 +28,16 @@
             <dt>@Html.DisplayNameFor(m => m.Status)</dt>
             <dd>@Html.DisplayFor(m => m.Status)</dd>
             
-            <dt><p>Portalas</p></dt>
-            <dd>@Html.DisplayFor(m => m.Portal.Latitude)</dd>
+            <dt><p>Portalo ID</p></dt>
+            <dd>@Html.DisplayFor(m => m.Portal.Id)</dd>
+            
+            <dt><p>Kliento ID</p></dt>
+             <dd>@Html.DisplayFor(m => m.User.Id)</dd>
             
         </dl>
     </fieldset>
 </div>
-<div>
-    <a  class="btn btn-secondary">Keisti būseną</a>
-    <a  class="btn btn-danger">Šalinti</a>
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div style="padding-right:5px;"> <a class="btn btn-secondary">Keisti būseną</a></div>
+    <div style="margin-left:5px;"><a href="@Url.Action("ShowDeleteConfirmForm", Model)" class="btn btn-danger">Šalinti</a></div>
 </div>

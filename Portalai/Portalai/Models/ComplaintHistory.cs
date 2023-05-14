@@ -18,6 +18,8 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
 
     public void Configure(EntityTypeBuilder<ComplaintHistory> builder)
     {
-        
+        builder.HasOne(t => t.Complaint)
+            .WithMany(t => t.ComplaintHistories)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -16,14 +16,10 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
     
     public Portal Portal { get; set; }
     
+    public User User { get; set; }
+    
     public List<ComplaintHistory> ComplaintHistories { get; set; }
 
-    public Complaint(DateTime submisionDate, string description, ComplaintStatus status)
-    {
-        SubmisionDate = submisionDate;
-        Description = description;
-        Status = status;
-    }
 
     public void Configure(EntityTypeBuilder<Complaint> builder)
     {
@@ -33,6 +29,10 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
         
         builder.HasMany(p=> p.ComplaintHistories)
             .WithOne(c => c.Complaint)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasOne(p => p.User)
+            .WithMany(c => c.Complaints)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
