@@ -11,12 +11,14 @@ public class SurveyAnswer : IEntityTypeConfiguration<SurveyAnswer>
     [DisplayName("Atsakymo data")]
     public DateTime AnswerDate { get; set; }
     
+    public int SurveyId { get; set; }
     public Survey Survey { get; set; }
     
-    
+    public List<QuestionAnswer> QuestionAnswers { get; set; }
 
     public void Configure(EntityTypeBuilder<SurveyAnswer> builder)
     {
-        
+        builder.HasMany(m => m.QuestionAnswers)
+            .WithOne(m => m.SurveyAnswer);
     }
 }

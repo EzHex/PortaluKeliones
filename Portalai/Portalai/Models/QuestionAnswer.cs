@@ -13,8 +13,15 @@ public class QuestionAnswer : IEntityTypeConfiguration<QuestionAnswer>
     
     public SurveyQuestion SurveyQuestion { get; set; }
     
-    public List<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
+    public SurveyAnswer SurveyAnswer { get; set; }
     
+    public List<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
+
+    public QuestionAnswer()
+    {
+        SurveyQuestionOptions = new List<SurveyQuestionOption>();
+    }
+
     public void Configure(EntityTypeBuilder<QuestionAnswer> builder)
     {
         throw new NotImplementedException();

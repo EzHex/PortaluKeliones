@@ -26,11 +26,10 @@ public class SurveyQuestion : IEntityTypeConfiguration<SurveyQuestion>
     public void Configure(EntityTypeBuilder<SurveyQuestion> builder)
     {
         builder.HasMany(p=> p.QuestionAnswers)
-            .WithOne(p=> p.SurveyQuestion)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithOne(p=> p.SurveyQuestion);
 
         builder.HasMany(p => p.SurveyQuestionOptions)
             .WithOne(p => p.SurveyQuestion)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

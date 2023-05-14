@@ -19,18 +19,18 @@ public class Survey : IEntityTypeConfiguration<Survey>
     [DisplayName("Būsena")]
     public SurveyStatus Status { get; set; }
     
-    public List<SurveyQuestion> SurveyQuestions { get; set; }
+    public List<SurveyQuestion> SurveyQuestions { get; set; } = new List<SurveyQuestion>();
     
-    public List<SurveyAnswer> SurveyAnswers { get; set; }
+    public List<SurveyAnswer> SurveyAnswers { get; set; } = new List<SurveyAnswer>();
     
     public void Configure(EntityTypeBuilder<Survey> builder)
     {
         builder.HasMany(p => p.SurveyQuestions)
             .WithOne(p => p.Survey)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasMany(p => p.SurveyAnswers)
             .WithOne(p => p.Survey)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
