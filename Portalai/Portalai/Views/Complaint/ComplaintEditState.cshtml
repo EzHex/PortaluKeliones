@@ -1,7 +1,7 @@
 ﻿@model Complaint
 
 @{
-    ViewBag.Title = "Išsami skundo informacija";
+    ViewBag.Title = "Skundo būsenos keitimas";
     Layout = "_Layout";
 }
 
@@ -10,31 +10,47 @@
         <h1>@ViewBag.Title</h1>
     </span>
     <span class="actions">
-        <a href="@Url.Action("ShowComplaints")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+        <a href="@Url.Action("ShowComplaints")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sąrašą</a>
     </span>
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("PostEditState", "Complaint", FormMethod.Post,new { style = "width:50%" }))
+    {
+        @Html.AntiForgeryToken()
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Portal)
+        @Html.HiddenFor(m => m.User)
 
-    <fieldset class="border rounded shadow p-2">
-
-        <dl>
-            <dt>@Html.DisplayNameFor(m => m.SubmisionDate)</dt>
-            <dd>@Html.DisplayFor(m => m.SubmisionDate)</dd>
-
-            <dt>@Html.DisplayNameFor(m => m.Description)</dt>
-            <dd>@Html.DisplayFor(m => m.Description)</dd>
-
-            <dt>@Html.DisplayNameFor(m => m.Status)</dt>
-            <dd>@Html.DisplayFor(m => m.Status)</dd>
+        <fieldset class="border rounded shadow p-2" style="word-wrap: break-word;">
+            <div class="form-group">
+                @Html.LabelFor(m => m.SubmisionDate, new { @class = "control-label" })
+                @Html.EditorFor(m => m.SubmisionDate, new { htmlAttributes = new {@readonly = "readonly",  @class = "form-control" } })
+            </div>
             
-            <dt><p>Portalas</p></dt>
-            <dd>@Html.DisplayFor(m => m.Portal.Latitude)</dd>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                <textarea id="Description" name="Description" class="form-control" readonly>@Model.Description</textarea>
+            </div>
             
-        </dl>
-    </fieldset>
-</div>
-<div>
-    <a  class="btn btn-secondary">Keisti būseną</a>
-    <a  class="btn btn-danger">Šalinti</a>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Status, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(ComplaintStatus)), Model.Status), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(m => m.Comment, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Comment, "", new { @class = "text-danger" })
+            </div>
+        </fieldset>
+        
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i style="padding-right: 5px" class="fa-solid fa-check"></i> Pateikti</button>
+        </div>
+    }
 </div>
