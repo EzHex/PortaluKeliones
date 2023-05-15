@@ -30,8 +30,8 @@ public class ComplaintController : Controller
     public async Task<ActionResult> ShowOneComplaint(int id) 
     {
         var complaint = await context.Complaints.SingleAsync(x => x.Id == id);
-    
 
+        
         return View("ComplaintView", complaint);
     }
 
