@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portalai.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace Portalai.Controllers;
@@ -26,17 +27,19 @@ public class ComplaintController : Controller
         return View("ComplaintList", complaints);
     }
     
-    //TODO: Pataisyti, nes portalas ir user null
     public async Task<ActionResult> ShowOneComplaint(int id) 
     {
-        var complaint = await context.Complaints.SingleAsync(x => x.Id == id);
-
+        var complaint = await context.Complaints
+            .Include(m => m.Portal)
+            .Include(m => m.User)
+            .SingleAsync(x => x.Id == id);
         
         return View("ComplaintView", complaint);
     }
 
-    public async Task<ActionResult> ShowDeleteConfirmForm(Complaint complaint)
+    public async Task<ActionResult> ShowDeleteConfirmForm(int id)
     {
+        var complaint = await context.Complaints.SingleAsync(x => x.Id == id);
         return View("ComplaintDelete", complaint);
     }
     
@@ -61,5 +64,38 @@ public class ComplaintController : Controller
 
             return View("ComplaintDelete", compl);
         }
+    }
+    
+    public async Task<ActionResult> ShowEditStateForm(int id)
+    {
+        var complaint = await context.Complaints
+            .Include(m => m.Portal)
+            .Include(m => m.User)
+            .SingleAsync(x => x.Id == id);
+        return View("ComplaintEditState", complaint);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> PostEditState(Complaint newElement)
+    {
+        ModelState["ComplaintHistories"].ValidationState = ModelValidationState.Valid;
+        ModelState["ComplaintHistories"].Errors.Clear();
+        ModelState["User"].ValidationState = ModelValidationState.Valid;
+        ModelState["User"].Errors.Clear();
+        ModelState["Portal"].ValidationState = ModelValidationState.Valid;
+        ModelState["Portal"].Errors.Clear();
+
+        if (!ModelState.IsValid)
+            return View("ComplaintEditState", newElement);
+        
+        context.Complaints.Update(newElement);
+        await context.SaveChangesAsync();
+        
+        var complaintHistory = new ComplaintHistory(DateTime.Now, newElement.Status, newElement.Comment, newElement);
+        await context.ComplaintHistories.AddAsync(complaintHistory);
+        await context.SaveChangesAsync();
+        
+        TempData["status"] = "Skundo būsena pakeista";
+        return RedirectToAction("ShowComplaints");
     }
 }

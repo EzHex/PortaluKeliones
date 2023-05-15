@@ -16,6 +16,18 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
     
     public Complaint Complaint { get; set; }
 
+    public ComplaintHistory(DateTime date, ComplaintStatus status, string comment, Complaint complaint)
+    {
+        Date = date;
+        Status = status;
+        Comment = comment;
+        Complaint = complaint;
+    }
+
+    public ComplaintHistory()
+    {
+    }
+
     public void Configure(EntityTypeBuilder<ComplaintHistory> builder)
     {
         builder.HasOne(t => t.Complaint)

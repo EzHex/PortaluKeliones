@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Portalai.Models;
@@ -14,12 +15,17 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
     [DisplayName("Būsena")]
     public ComplaintStatus Status { get; set; }
     
+    [DisplayName("Portalo ID")]
     public Portal Portal { get; set; }
     
+    [DisplayName("Kliento ID")]
     public User User { get; set; }
     
     public List<ComplaintHistory> ComplaintHistories { get; set; }
 
+    [DisplayName("Komentaras")]
+    [NotMapped] public string Comment { get; set; }
+    
 
     public void Configure(EntityTypeBuilder<Complaint> builder)
     {
