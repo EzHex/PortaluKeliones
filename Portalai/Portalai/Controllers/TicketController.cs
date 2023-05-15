@@ -14,11 +14,15 @@ namespace Portalai.Controllers
 
         public async Task<ActionResult> ShowPurchasedTicketsList()
         {
-            var tickets = await context.Tickets.Where(t => t.User.Id == 1).ToListAsync();
+            var tickets = await context.Tickets
+                .Include(t => t.Trip)
+                    .ThenInclude(b => b.Bus)
+                .Where(t => t.User.Id == 1)
+                .ToListAsync();
 
             return View("TicketsList", tickets);
         }
-        
+
         //TODO: Buy tickets for routes/trips
     }
 }

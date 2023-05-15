@@ -16,6 +16,9 @@
         <thead>
             <tr>
                 <th>
+                    Autobuso valstybiniai numeriai
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Seat)
                 </th>
                 <th>
@@ -30,6 +33,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td class="text-md-start">
+                        @Html.DisplayFor(modelItem => item.Trip.Bus.LicensePlate)
+                    </td>
                     <td class="text-md-start">
                         @Html.DisplayFor(modelItem => item.Seat)
                     </td>

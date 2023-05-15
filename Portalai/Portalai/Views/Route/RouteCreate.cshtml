@@ -1,0 +1,101 @@
+﻿@model Route
+
+@{
+    ViewBag.Title = "Maršruto kūrimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("ShowRoutes")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("Create", "Route", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center">
+                <span></span>
+                <legend style="width: unset; margin-bottom: 0px;">Maršruto reisai</legend>
+                <button name="add"
+                        value="1"
+                        formnovalidate
+                        formaction="@Url.Action("Create", "Route")#listEnd"
+                        class="btn btn-info"
+                        style="white-space: nowrap;">
+                    <i class="fa-solid fa-plus"></i> Pridėti
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Eilės numeris</th>
+                        <th>Išvykimo laikas</th>
+                        <th>Atvykimo laikas</th>
+                        <th>Išvykimo vietovė</th>
+                        <th>Atvykimo vietovė</th>
+                        <th style="width: 1px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.RouteVoyages.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m.RouteVoyages[i].ListId)
+
+                                @Html.EditorFor(m => m.RouteVoyages[i].Order, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].Order, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.RouteVoyages[i].DepartureTime, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].DepartureTime, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(m => m.RouteVoyages[i].ArrivalTime, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].ArrivalTime, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(m => m.RouteVoyages[i].Places, Model.AvailablePlaces, "--------------", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].Places, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(m => m.RouteVoyages[i].Places, Model.AvailablePlaces, "--------------", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].Places, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                <button name="remove"
+                                        value="@Model.RouteVoyages[i].ListId"
+                                        formnovalidate
+                                        formaction="@Url.Action("Create", "Route")#listEnd"
+                                        class="btn btn-danger"
+                                        style="white-space: nowrap;">
+                                    <i class="fa-solid fa-trash"></i> Šalinti
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+        </div>
+    }
+</div>

@@ -17,6 +17,82 @@ namespace Portalai.Controllers
             this.context = context;
         }
 
+        public async Task<ActionResult> ShowRoutes()
+        {
+            var routes = await context.Routes.ToListAsync();
+
+            return View("RoutesAdminList", routes);
+        }
+
+        public async Task<ActionResult> ShowCreateForm()
+        {
+            var route = new Route();
+
+            await route.LoadAvailableDropdowns(context);
+
+            return View("RouteCreate", route);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> Create(int? save, int? add, int? remove, Route route)
+        {
+            if (add != null)
+            {
+                var now = DateTime.Now;
+                var dateOnly = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+                var routeVoyage = new RouteVoyage(0, dateOnly, dateOnly);
+                routeVoyage.ListId = route.RouteVoyages.Count > 0 ? route.RouteVoyages.Max(it => it.ListId) + 1 : 0;
+
+                route.RouteVoyages.Add(routeVoyage);
+
+                ModelState.Clear();
+
+                await route.LoadAvailableDropdowns(context);
+
+                return View("RouteCreate", route);
+            }
+
+            if (remove != null)
+            {
+                route.RouteVoyages = route
+                    .RouteVoyages
+                    .Where(it => it.ListId != remove.Value)
+                    .ToList();
+
+                ModelState.Clear();
+
+                await route.LoadAvailableDropdowns(context);
+
+                return View("RouteCreate", route);
+            }
+
+            //if (save != null)
+            //{
+            //    //form field validation passed?
+            //    if (ModelState.IsValid)
+            //    {
+            //        //create new 'Sutartis'
+            //        sutartisEvm.Sutartis.Nr = SutartisRepo.Insert(sutartisEvm);
+
+            //        //create new 'UzsakytosPaslaugos' records
+            //        foreach (var upVm in sutartisEvm.UzsakytosPaslaugos)
+            //            UzsakytaPaslaugaRepo.Insert(sutartisEvm.Sutartis.Nr, upVm);
+
+            //        //save success, go back to the entity list
+            //        return RedirectToAction("Index");
+            //    }
+            //    //form field validation failed, go back to the form
+            //    else
+            //    {
+            //        PopulateLists(sutartisEvm);
+            //        return View(sutartisEvm);
+            //    }
+            //}
+
+            throw new Exception("Should not reach here.");
+        }
+
         public async Task<ActionResult> ShowRoutePlanning()
         {
             var places = await context.Places.ToListAsync();

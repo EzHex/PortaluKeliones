@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,12 +22,18 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
     public List<Voyage> Voyage { get; set; }
     
     public List<Place> Places { get; set; }
+
+    [NotMapped]
+    public int ListId { get; set; }
     
     public RouteVoyage(int order, DateTime departureTime, DateTime arrivalTime)
     {
         Order = order;
         DepartureTime = departureTime;
         ArrivalTime = arrivalTime;
+    }
+    public RouteVoyage()
+    {
     }
 
     public void Configure(EntityTypeBuilder<RouteVoyage> builder)
