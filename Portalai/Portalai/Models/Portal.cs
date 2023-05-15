@@ -1,12 +1,14 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Portalai.Models;
 
 public class Portal : IEntityTypeConfiguration<Portal>
 {
+    [DisplayName("ID")]
     public int Id { get; set; }
 
     [DisplayName("Ilguma")]
@@ -34,7 +36,14 @@ public class Portal : IEntityTypeConfiguration<Portal>
     
     public PortalJunction? PortalJunction { get; set; }
     
+    [DisplayName("Besijungiančio portalo ID")]
+    [NotMapped] public int JunctionPortalId { get; set; }
+    
+    //For dropdown --- kito kelio neradau
+    [NotMapped] public List<Portal> PortalsList { get; set; }
+    
     public List<Complaint> Complaints { get; set; }
+    
     
     public void Configure(EntityTypeBuilder<Portal> builder)
     {
