@@ -39,9 +39,7 @@ namespace Portalai.Controllers
         {
             if (add != null)
             {
-                var now = DateTime.Now;
-                var dateOnly = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
-                var routeVoyage = new RouteVoyage(0, dateOnly, dateOnly);
+                var routeVoyage = new RouteVoyage(0, DateTime.MinValue, DateTime.MinValue);
                 routeVoyage.ListId = route.RouteVoyages.Count > 0 ? route.RouteVoyages.Max(it => it.ListId) + 1 : 0;
 
                 route.RouteVoyages.Add(routeVoyage);

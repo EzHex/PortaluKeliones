@@ -32,9 +32,8 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
         DepartureTime = departureTime;
         ArrivalTime = arrivalTime;
     }
-    public RouteVoyage()
-    {
-    }
+
+    public RouteVoyage() { }
 
     public void Configure(EntityTypeBuilder<RouteVoyage> builder)
     {

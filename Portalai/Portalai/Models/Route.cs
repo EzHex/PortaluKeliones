@@ -27,10 +27,7 @@ public class Route : IEntityTypeConfiguration<Route>
         Title = title;
     }
 
-    public Route()
-    {
-
-    }
+    public Route() { }
 
     public void Configure(EntityTypeBuilder<Route> builder)
     {
