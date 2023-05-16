@@ -9,6 +9,7 @@ namespace Portalai.Models;
 public class Place : IEntityTypeConfiguration<Place>
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [DisplayName("Ilguma")] 
@@ -22,14 +23,28 @@ public class Place : IEntityTypeConfiguration<Place>
     [DisplayName("Vietovės pavadinimas")] 
     public string Name { get; set; }
     
+    //Constructor
+
+    public Place(int id, string name, double longitude, double latitude)
+    {
+        Id = id;
+        Longitude = longitude;
+        Latitude = latitude;
+        Name = name;
+    }
+
+    public Place()
+    {
+    }
+
     //Mapping
 
     [InverseProperty("Arrival")]
-    public virtual List<RouteVoyage> ArrivalVoyages { get; set; }
+    public virtual List<RouteVoyage>? ArrivalVoyages { get; set; }
     [InverseProperty("Departure")]
-    public virtual List<RouteVoyage> DepartureVoyages { get; set; }
+    public virtual List<RouteVoyage>? DepartureVoyages { get; set; }
     
-    public virtual List<EducationalRoute> EducationalRoutes { get; set; }
+    public virtual List<EducationalRoute>? EducationalRoutes { get; set; }
 
     public void Configure(EntityTypeBuilder<Place> builder)
     {
@@ -38,7 +53,7 @@ public class Place : IEntityTypeConfiguration<Place>
             .WithOne(m => m.Arrival)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         // Place 1 : 0...N RouteVoyage (DEPARTURE)
         builder.HasMany(m => m.DepartureVoyages)
             .WithOne(m => m.Departure)
