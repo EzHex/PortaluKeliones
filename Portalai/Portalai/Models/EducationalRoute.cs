@@ -24,7 +24,7 @@ public class EducationalRoute : IEntityTypeConfiguration<EducationalRoute>
     
     public void Configure(EntityTypeBuilder<EducationalRoute> builder)
     {
-        // builder.HasMany(e => e.Places)
-        //     .WithMany(e => e.EducationalRoutes);
+        builder.HasMany(e => e.Places)
+            .WithMany(e => e.EducationalRoutes);
     }
 }

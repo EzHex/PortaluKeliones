@@ -28,6 +28,8 @@ public class Place : IEntityTypeConfiguration<Place>
     public virtual List<RouteVoyage> ArrivalVoyages { get; set; }
     [InverseProperty("Departure")]
     public virtual List<RouteVoyage> DepartureVoyages { get; set; }
+    
+    public virtual List<EducationalRoute> EducationalRoutes { get; set; }
 
     public void Configure(EntityTypeBuilder<Place> builder)
     {
