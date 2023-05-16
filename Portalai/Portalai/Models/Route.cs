@@ -12,9 +12,21 @@ public class Route : IEntityTypeConfiguration<Route>
     [DisplayName("Pavadinimas")]
     public string Title { get; set; }
     
-    public Trip Trip { get; set; }
+    //Mapping
+    public virtual List<Trip> Trips { get; set; }
+    public virtual List<RouteVoyage> RouteVoyages { get; set; } = new List<RouteVoyage>();
     
-    public List<RouteVoyage> RouteVoyages { get; set; } = new List<RouteVoyage>();
+    public void Configure(EntityTypeBuilder<Route> builder)
+    {
+        // Route 1 : 0...N Trips
+        builder.HasMany(m => m.Trips)
+            .WithOne(m => m.Route)
+            .IsRequired(false);
+        
+        // Route 1 : 1...N RouteVoyage
+        builder.HasMany(m => m.RouteVoyages)
+            .WithOne(m => m.Route);
+    }
     
     [NotMapped]
     public List<Place> Places { get; set; } = new List<Place>();
@@ -28,11 +40,6 @@ public class Route : IEntityTypeConfiguration<Route>
     }
 
     public Route() { }
-
-    public void Configure(EntityTypeBuilder<Route> builder)
-    {
-        
-    }
 
     public async Task LoadAvailableDropdowns(PortalsDbContext context)
     {

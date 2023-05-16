@@ -14,8 +14,11 @@ public class Trip : IEntityTypeConfiguration<Trip>
     [DisplayName("Trukmė")]
     public TimeSpan Duration => ArrivalTime - DepartureTime;
     
-    public Bus Bus { get; set; }
-    public List<Route> Routes { get; set; }
+    //Mapping
+    
+    public virtual Bus Bus { get; set; }
+    public virtual Route Route { get; set; }
+    public virtual List<Voyage> Voyages { get; set; }
     
     public List<Ticket> Tickets { get; set; }
 
@@ -27,9 +30,17 @@ public class Trip : IEntityTypeConfiguration<Trip>
 
     public void Configure(EntityTypeBuilder<Trip> builder)
     {
-        builder.HasMany(t => t.Routes)
-            .WithOne(t => t.Trip)
-            .OnDelete(DeleteBehavior.Cascade);
+        // Trip 0...N : 1 Route
+        builder.HasOne(m => m.Route)
+            .WithMany(m => m.Trips);
+        
+        // Trip 1 : 1...N Voyage
+        builder.HasMany(m => m.Voyages)
+            .WithOne(m => m.Trip);
+        
+        // Trip 0...N : 1 Bus
+        builder.HasOne(m => m.Bus)
+            .WithMany(m => m.Trips);
 
         builder.HasMany(t => t.Tickets)
             .WithOne(t => t.Trip)

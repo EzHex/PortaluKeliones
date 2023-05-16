@@ -14,7 +14,10 @@ public class Voyage : IEntityTypeConfiguration<Voyage>
     [DisplayName("Kaina")]
     public double Price { get; set; }
     
-    public RouteVoyage RouteVoyage { get; set; }
+    //Mapping
+    
+    public virtual RouteVoyage RouteVoyage { get; set; }
+    public virtual Trip Trip { get; set; }
 
     public Voyage(DateTime departureTime, DateTime arrivalTime, double price)
     {
@@ -25,6 +28,12 @@ public class Voyage : IEntityTypeConfiguration<Voyage>
 
     public void Configure(EntityTypeBuilder<Voyage> builder)
     {
+        // Voyage 0...N : 1 RouteVoyage   
+        builder.HasOne(m=>m.RouteVoyage)
+            .WithMany(m=>m.Voyage);
         
+        //Voyage 1...N : 1 Trip
+        builder.HasOne(m=>m.Trip)
+            .WithMany(m=>m.Voyages);
     }
 }

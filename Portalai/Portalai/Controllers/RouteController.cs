@@ -467,20 +467,21 @@ namespace Portalai.Controllers
             var routes = await context.Routes.ToListAsync();
             foreach (var route in routes)
             {
-                route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
-
-                foreach (var routeVoyage in route.RouteVoyages)
-                {
-                    routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
-                    
-                    routeVoyage.Places.ForEach(p =>
-                    {
-                        if (!route.Places.Contains(p))
-                        {
-                            route.Places.Add(p);   
-                        }
-                    });
-                }
+                //TODO fix this
+                // route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
+                //
+                // foreach (var routeVoyage in route.RouteVoyages)
+                // {
+                //     routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
+                //     
+                //     routeVoyage.Places.ForEach(p =>
+                //     {
+                //         if (!route.Places.Contains(p))
+                //         {
+                //             route.Places.Add(p);   
+                //         }
+                //     });
+                // }
             }
 
             return View("RouteSearch", routes);
@@ -555,33 +556,36 @@ namespace Portalai.Controllers
             
             foreach (var route in routes)
             {
-                route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
+                //TODO fix this
+                // route.RouteVoyages = await context.RouteVoyages.Where(rv => rv.Routes.Id == route.Id).ToListAsync();
 
-                foreach (var routeVoyage in route.RouteVoyages)
-                {
-                    routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
-                    
-                    routeVoyage.Places.ForEach(p =>
-                    {
-                        if (!route.Places.Contains(p))
-                        {
-                            route.Places.Add(p);   
-                        }
-                    });
-                }
+                //TODO fix this
+                // foreach (var routeVoyage in route.RouteVoyages)
+                // {
+                //     routeVoyage.Places = await context.Places.Where(p => p.RouteVoyages.Contains(routeVoyage)).ToListAsync();
+                //     
+                //     routeVoyage.Places.ForEach(p =>
+                //     {
+                //         if (!route.Places.Contains(p))
+                //         {
+                //             route.Places.Add(p);   
+                //         }
+                //     });
+                // }
             }
             //TODO: filter by needed cities (and maybe dates)
             //cant do it because there is no data in database and no way to add it yet. Waiting for other to do it.
             //too lazy to add manually to database myself cuz there is a lot of table and I am tired :(
             foreach (var route in routes)
             {
-                foreach (var routeVoyage in route.RouteVoyages)
-                {
-                    if (!routeVoyage.Places.Contains(departureCity) || !routeVoyage.Places.Contains(arrivalCity))
-                        continue;
-
-                    filteredRoutes.Add(route);
-                }
+                //TODO fix this
+                // foreach (var routeVoyage in route.RouteVoyages)
+                // {
+                //     if (!routeVoyage.Places.Contains(departureCity) || !routeVoyage.Places.Contains(arrivalCity))
+                //         continue;
+                //
+                //     filteredRoutes.Add(route);
+                // }
             }
             
             
