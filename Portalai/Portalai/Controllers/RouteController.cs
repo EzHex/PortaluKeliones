@@ -39,16 +39,16 @@ namespace Portalai.Controllers
         {
             if (add != null)
             {
-                var routeVoyage = new RouteVoyage(0, DateTime.MinValue, DateTime.MinValue);
-                routeVoyage.ListId = route.RouteVoyages.Count > 0 ? route.RouteVoyages.Max(it => it.ListId) + 1 : 0;
-
-                route.RouteVoyages.Add(routeVoyage);
-
-                ModelState.Clear();
-
-                await route.LoadAvailableDropdowns(context);
-
-                return View("RouteCreate", route);
+                // var routeVoyage = new RouteVoyage(0, DateTime.MinValue, DateTime.MinValue);
+                // routeVoyage.ListId = route.RouteVoyages.Count > 0 ? route.RouteVoyages.Max(it => it.ListId) + 1 : 0;
+                //
+                // route.RouteVoyages.Add(routeVoyage);
+                //
+                // ModelState.Clear();
+                //
+                // await route.LoadAvailableDropdowns(context);
+                //
+                // return View("RouteCreate", route);
             }
 
             if (remove != null)

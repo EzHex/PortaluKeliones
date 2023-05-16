@@ -56,20 +56,20 @@
                     @for (var i = 0; i < Model.RouteVoyages.Count; i++)
                     {
                         <tr>
-                            <td>
-                                @Html.HiddenFor(m => m.RouteVoyages[i].ListId)
-
-                                @Html.EditorFor(m => m.RouteVoyages[i].Order, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].Order, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(m => m.RouteVoyages[i].DepartureTime, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].DepartureTime, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(m => m.RouteVoyages[i].ArrivalTime, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(m => m.RouteVoyages[i].ArrivalTime, "", new { @class = "text-danger" })
-                            </td>
+                            @* <td> *@
+                            @*     @Html.HiddenFor(m => m.RouteVoyages[i].ListId) *@
+                            @* *@
+                            @*     @Html.EditorFor(m => m.RouteVoyages[i].Order, new { htmlAttributes = new { @class = "form-control" } }) *@
+                            @*     @Html.ValidationMessageFor(m => m.RouteVoyages[i].Order, "", new { @class = "text-danger" }) *@
+                            @* </td> *@
+                            @* <td> *@
+                            @*     @Html.EditorFor(m => m.RouteVoyages[i].DepartureTime, new { htmlAttributes = new { @class = "form-control" } }) *@
+                            @*     @Html.ValidationMessageFor(m => m.RouteVoyages[i].DepartureTime, "", new { @class = "text-danger" }) *@
+                            @* </td> *@
+                            @* <td> *@
+                            @*     @Html.EditorFor(m => m.RouteVoyages[i].ArrivalTime, new { htmlAttributes = new { @class = "form-control" } }) *@
+                            @*     @Html.ValidationMessageFor(m => m.RouteVoyages[i].ArrivalTime, "", new { @class = "text-danger" }) *@
+                            @* </td> *@
                             @* //TODO fix this *@
                             @* <td> *@
                             @*     @Html.DropDownListFor(m => m.RouteVoyages[i].Places, Model.AvailablePlaces, "--------------", new { @class = "form-control" }) *@

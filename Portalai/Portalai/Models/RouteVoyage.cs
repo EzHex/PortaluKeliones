@@ -12,12 +12,10 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
     
     [DisplayName("Eilės numeris")]
     public int Order { get; set; }
-    [DisplayName("Išvykimo laikas")]
-    public DateTime DepartureTime { get; set; }
-    [DisplayName("Atvykimo laikas")]
-    public DateTime ArrivalTime { get; set; }
+    
     [DisplayName("Trukmė")]
-    public TimeSpan Duration => ArrivalTime - DepartureTime;
+    public int Duration { get; set; }
+    
     public virtual Route Route { get; set; }
     
     public virtual List<Voyage> Voyage { get; set; }
@@ -30,12 +28,6 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
     [NotMapped]
     public int ListId { get; set; }
     
-    public RouteVoyage(int order, DateTime departureTime, DateTime arrivalTime)
-    {
-        Order = order;
-        DepartureTime = departureTime;
-        ArrivalTime = arrivalTime;
-    }
 
     public RouteVoyage() { }
 
