@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MessagePack;
 using Microsoft.EntityFrameworkCore;
@@ -13,21 +14,31 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
     [DisplayName("Eilės numeris")]
     public int Order { get; set; }
     
-    [DisplayName("Trukmė")]
+    [DisplayName("Trukmė (min)")]
+    [Range(0,300)]
     public int Duration { get; set; }
     
+    public int RouteId { get; set; }
+    [ForeignKey("RouteId")]
     public virtual Route Route { get; set; }
     
-    public virtual List<Voyage> Voyage { get; set; }
+    public virtual List<Voyage>? Voyage { get; set; }
     
+    public int ArrivalPlaceId { get; set; }
     [ForeignKey("ArrivalPlaceId")]
     public virtual Place Arrival { get; set; }
+
+    public int DeparturePlaceId { get; set; }
     [ForeignKey("DeparturePlaceId")]
     public virtual Place Departure { get; set; }
 
-    [NotMapped]
-    public int ListId { get; set; }
-    
+
+    public RouteVoyage(int order, int duration, Route route)
+    {
+        Order = order;
+        Duration = duration;
+        Route = route;
+    }
 
     public RouteVoyage() { }
 

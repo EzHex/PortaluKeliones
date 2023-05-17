@@ -1,7 +1,7 @@
 ﻿@model Portalai.ViewModel.RouteCreateEditVm
 
 @{
-    ViewBag.Title = "Maršruto kūrimas";
+    ViewBag.Title = "Maršruto redagavimas";
     Layout = "_Layout";
 }
 
@@ -16,7 +16,7 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("Create", "Route", FormMethod.Post, new { @class = "col-md-6" }))
+    @using (Html.BeginForm("Edit", "Route", FormMethod.Post, new { @class = "col-md-6" }))
     {
         @Html.AntiForgeryToken()
 
@@ -37,7 +37,7 @@
                 <button name="add"
                         value="1"
                         formnovalidate
-                        formaction="@Url.Action("Create", "Route")#listEnd"
+                        formaction="@Url.Action("Edit", "Route")#listEnd"
                         class="btn btn-info"
                         style="white-space: nowrap;">
                     <i class="fa-solid fa-plus"></i>Pridėti
@@ -70,15 +70,15 @@
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].PlaceId, "", new { @class = "text-danger" })
                         </td>
                         <td>
-                        						<button
-                        							name="remove"
-                        							value="@Model.RouteVoyageMs[i].Order"
-                        							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-                        							formaction="@Url.Action()#listEnd"
-                        							class="btn btn-danger"
-                        							style="white-space: nowrap;"
-                        						><i class="fa-solid fa-trash"></i> Šalinti</button>
-                        					</td>
+                        	<button
+                        		name="remove"
+                        		value="@Model.RouteVoyageMs[i].Order"
+                        		formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+                        		formaction="@Url.Action("Edit")#listEnd"
+                        		class="btn btn-danger"
+                        		style="white-space: nowrap;"
+                        	><i class="fa-solid fa-trash"></i> Šalinti</button>
+                        </td>
                     </tr>
                 }
                 </tbody>
