@@ -11,11 +11,51 @@
     </span>
 </div>
 
-@if (ViewBag.RoutePlan != null)
+@if (TempData.Peek("RoutePlan") != null)
 {
     <div class="container-fluid text-center">
-        <p>Maršrutas: @ViewBag.RoutePlan</p>
+        <p>Suplanuotas maršrutas: @TempData.Peek("RoutePlan")</p>
     </div>
+    @if (!string.IsNullOrEmpty(TempData.Peek("SuggestedRoute") as string))
+    {
+        <div class="container-fluid text-center">
+            <p>Siūlomas maršrutas: @TempData.Peek("SuggestedRoute")</p>
+        </div>
+    }
+    @if (ViewBag.Error8 != null)
+    {
+        <div class="container-fluid text-center">
+            <p class="text-danger">@ViewBag.Error8</p>
+        </div>
+    }
+    @if (ViewBag.Error9 != null)
+    {
+        <div class="container-fluid text-center">
+            <p class="text-danger">@ViewBag.Error9</p>
+        </div>
+    }
+    @if ((TempData.Peek("IsReviewPosted") as bool?) == false)
+    {
+        <div class="container-fluid d-flex justify-content-center">
+            @using (Html.BeginForm("PostReview", "Route", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <fieldset class="border rounded shadow p-2">
+                    <div class="form-group">
+                        @Html.Label("Rating", "Pasiūlymo vertinimas:")
+                        @Html.TextBox("Rating", TempData.Peek("Rating"), new { @class = "form-control" })
+                    </div>
+                </fieldset>
+
+                <div class="container-fluid d-flex d-row justify-content-end">
+                    <button name="rate" value="1" class="btn btn-success"><i class="fas fa-check"></i> Vertinti</button>
+                </div>
+            }
+        </div>
+    }
 }
 @if (ViewBag.Error1 != null)
 {
@@ -49,8 +89,14 @@
 }
 @if (ViewBag.Error6 != null)
 {
-        <div class="container-fluid text-center">
+    <div class="container-fluid text-center">
         <p class="text-danger">@ViewBag.Error6</p>
+    </div>
+}
+@if (ViewBag.Error7 != null)
+{
+    <div class="container-fluid text-center">
+        <p class="text-danger">@ViewBag.Error7</p>
     </div>
 }
 <div class="container-fluid d-flex justify-content-center">
@@ -67,7 +113,7 @@
                     <option value="-1">----------</option>
                     @foreach (var place in Model)
                     {
-                        <option value="@place.Id" selected="@(ViewBag.StartPlaceId != null && place.Id == Convert.ToInt32(ViewBag.StartPlaceId))">@place.Name</option>
+                        <option value="@place.Id" selected="@(TempData.Peek("StartPlaceId") != null && place.Id == Convert.ToInt32(TempData.Peek("StartPlaceId")))">@place.Name</option>
                     }
                 </select>
             </div>
@@ -77,7 +123,7 @@
                     <option value="-1">----------</option>
                     @foreach (var place in Model)
                     {
-                        <option value="@place.Id" selected="@(ViewBag.EndPlaceId != null && place.Id == Convert.ToInt32(ViewBag.EndPlaceId))">@place.Name</option>
+                        <option value="@place.Id" selected="@(TempData.Peek("EndPlaceId") != null && place.Id == Convert.ToInt32(TempData.Peek("EndPlaceId")))">@place.Name</option>
                     }
                 </select>
             </div>
@@ -86,30 +132,30 @@
                 <select name="Places" id="Places" multiple class="form-control">
                     @foreach (var place in Model)
                     {
-                        <option value="@place.Id" selected="@(ViewBag.PlaceIds != null && ViewBag.PlaceIds.Contains(place.Id.ToString()))">@place.Name</option>
+                        <option value="@place.Id" selected="@((TempData.Peek("PlaceIds") as string[])?.Contains(place.Id.ToString()))">@place.Name</option>
                     }
                 </select>
             </div>
             <div class="form-group">
                 @Html.Label("TimePerLocation", "Laikas vietovei aplankyti (h)")
-                @Html.TextBox("TimePerLocation", (string)ViewBag.TimePerLocation, new { @class = "form-control" })
+                @Html.TextBox("TimePerLocation", TempData.Peek("TimePerLocation"), new { @class = "form-control" })
             </div>
             <div class="form-group">
                 @Html.Label("TimePerKilometer", "Keliavimo greitis (km/min)")
-                @Html.TextBox("TimePerKilometer", (string)ViewBag.TimePerKilometer, new { @class = "form-control" })
+                @Html.TextBox("TimePerKilometer", TempData.Peek("TimePerKilometer"), new { @class = "form-control" })
             </div>
             <div class="form-group">
                 @Html.Label("TimeBeforeBreak", "Keliavimo laikas iki pertraukos (h)")
-                @Html.TextBox("TimeBeforeBreak", (string)ViewBag.TimeBeforeBreak, new { @class = "form-control" })
+                @Html.TextBox("TimeBeforeBreak", TempData.Peek("TimeBeforeBreak"), new { @class = "form-control" })
             </div>
             <div class="form-group">
                 @Html.Label("BreakTime", "Pertraukos laikas (h)")
-                @Html.TextBox("BreakTime", (string)ViewBag.BreakTime, new { @class = "form-control" })
+                @Html.TextBox("BreakTime", TempData.Peek("BreakTime"), new { @class = "form-control" })
             </div>
         </fieldset>
 
         <div class="container-fluid d-flex d-row justify-content-end">
-            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-map-marked-alt"></i> Planuoti</button>
+            <button name="plan" value="1" class="btn btn-success"><i class="fa-solid fa-map-marked-alt"></i> Planuoti</button>
         </div>
     }
 </div>

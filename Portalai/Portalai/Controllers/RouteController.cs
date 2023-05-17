@@ -429,13 +429,13 @@ namespace Portalai.Controllers
         [HttpPost]
         public async Task<ActionResult> PostRoutePlan(IFormCollection form)
         {
-            ViewBag.StartPlaceId = form["StartPlace"].ToString();
-            ViewBag.EndPlaceId = form["EndPlace"].ToString();
-            ViewBag.PlaceIds = form["Places"].ToList();
-            ViewBag.TimePerLocation = form["TimePerLocation"].ToString();
-            ViewBag.TimePerKilometer = form["TimePerKilometer"].ToString();
-            ViewBag.TimeBeforeBreak = form["TimeBeforeBreak"].ToString();
-            ViewBag.BreakTime = form["BreakTime"].ToString();
+            TempData["StartPlaceId"] = form["StartPlace"].ToString();
+            TempData["EndPlaceId"] = form["EndPlace"].ToString();
+            TempData["PlaceIds"] = form["Places"].ToArray();
+            TempData["TimePerLocation"] = form["TimePerLocation"].ToString();
+            TempData["TimePerKilometer"] = form["TimePerKilometer"].ToString();
+            TempData["TimeBeforeBreak"] = form["TimeBeforeBreak"].ToString();
+            TempData["BreakTime"] = form["BreakTime"].ToString();
 
             var places = await _context.Places.ToListAsync();
 
@@ -457,6 +457,11 @@ namespace Portalai.Controllers
                 ViewBag.Error3 = "Nepasirinkta nei viena tarpinė vietovė";
                 return View("RoutePlan", places);
             }
+            if (placeIds.Contains(form["StartPlace"].ToString()) || placeIds.Contains(form["EndPlace"].ToString()))
+            {
+                ViewBag.Error4 = "Pradžios arba pabaigos vietovė negali būti įtraukta tarp tarpinių vietovių";
+                return View("RoutePlan", places);
+            }
             var timePerPlace = 0.0;
             var timePerKilometer = 0.0;
             var timeBeforeBreak = 0.0;
@@ -470,17 +475,17 @@ namespace Portalai.Controllers
             }
             catch (FormatException ex)
             {
-                ViewBag.Error4 = "Netinkamas skaičiaus formatas";
+                ViewBag.Error5 = "Netinkamas skaičiaus formatas";
                 return View("RoutePlan", places);
             }
             if (timePerPlace <= 0.0 || timePerKilometer <= 0.0 || timeBeforeBreak <= 0.0)
             {
-                ViewBag.Error5 = "Laikas vietovei aplankyti, keliavimo greitis, keliavimo laikas iki pertraukos turi būti didesni už 0";
+                ViewBag.Error6 = "Laikas vietovei aplankyti, keliavimo greitis, keliavimo laikas iki pertraukos turi būti didesni už 0";
                 return View("RoutePlan", places);
             }
             if (breakTime < 0.0)
             {
-                ViewBag.Error6 = "Petraukos laikas negali būti neigiamas";
+                ViewBag.Error7 = "Petraukos laikas negali būti neigiamas";
                 return View("RoutePlan", places);
             }
 
@@ -495,7 +500,7 @@ namespace Portalai.Controllers
             int sameIterationCount = 1;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (sameIterationCount <= 1000 && stopwatch.Elapsed.TotalSeconds < 60)
+            while (sameIterationCount <= 200 && stopwatch.Elapsed.TotalSeconds < 60)
             {
                 Chromosome lastFittest = fittest;
                 population = geneticAlgorithm.EvolvePopulation(population);
@@ -510,7 +515,121 @@ namespace Portalai.Controllers
             stopwatch.Stop();
 
             var routePlan = fittest.ToString();
-            ViewBag.RoutePlan = routePlan;
+            TempData["RoutePlan"] = routePlan;
+
+            var educationalRoutes = await _context.EducationalRoutes
+                .Include(r => r.Places)
+                .ToListAsync();
+
+            var filteredRoutes = educationalRoutes
+                .Where(r =>
+                    r.Places.Any(p => p.Id == startPlaceId) &&
+                    r.Places.Any(p => p.Id == endPlaceId)
+                ).ToList();
+
+            if (filteredRoutes.Count == 0)
+            {
+                filteredRoutes = educationalRoutes
+                    .Where(r =>
+                        r.Places.Any(p => p.Id == startPlaceId) ||
+                        r.Places.Any(p => p.Id == endPlaceId)
+                    ).ToList();
+                if (filteredRoutes.Count == 0)
+                {
+                    filteredRoutes = educationalRoutes;
+                }
+            }
+
+            var placeNames = selectedPlaces.Select(p => p.Name).ToList();
+
+            var random = new Random();
+            var routeMatches = filteredRoutes.Select(r => new
+            {
+                Route = r,
+                MatchCount = r.Places.Count(p => placeNames.Contains(p.Name))
+            })
+                .OrderByDescending(match => match.MatchCount)
+                .ThenBy(_ => random.Next())
+                .ToList();
+
+            var suggestedRoute = routeMatches.FirstOrDefault()?.Route;
+
+            var suggestedRouteStr = "";
+            if (suggestedRoute != null)
+            {
+                var startPlaceIndex = suggestedRoute.Places.FindIndex(p => p.Id == startPlaceId);
+                var endPlaceIndex = suggestedRoute.Places.FindIndex(p => p.Id == endPlaceId);
+
+                if (startPlaceIndex != -1)
+                {
+                    var temp = suggestedRoute.Places[0];
+                    suggestedRoute.Places[0] = suggestedRoute.Places[startPlaceIndex];
+                    suggestedRoute.Places[startPlaceIndex] = temp;
+                }
+                if (endPlaceIndex != -1)
+                {
+                    var temp = suggestedRoute.Places[suggestedRoute.Places.Count - 1];
+                    suggestedRoute.Places[suggestedRoute.Places.Count - 1] = suggestedRoute.Places[endPlaceIndex];
+                    suggestedRoute.Places[endPlaceIndex] = temp;
+                }
+
+                for (int i = 0; i < suggestedRoute.Places.Count; i++)
+                {
+                    if (i <= suggestedRoute.Places.Count - 2)
+                    {
+                        suggestedRouteStr += suggestedRoute.Places[i].Name + "->";
+                    }
+                    else
+                    {
+                        suggestedRouteStr += suggestedRoute.Places[i].Name;
+                    }
+                }
+            }
+
+            TempData["SuggestedRouteId"] = suggestedRoute?.Id;
+            TempData["SuggestedRoute"] = suggestedRouteStr;
+            if (suggestedRouteStr != "")
+            {
+                TempData["IsReviewPosted"] = false;
+            }
+
+            return View("RoutePlan", places);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostReview(IFormCollection form)
+        {
+            TempData["Rating"] = form["Rating"].ToString();
+
+            var places = await _context.Places.ToListAsync();
+
+            var rating = 0.0;
+            try
+            {
+                rating = Convert.ToInt32(form["Rating"]);
+            }
+            catch (FormatException ex)
+            {
+                ViewBag.Error8 = "Netinkamas skaičiaus formatas";
+                return View("RoutePlan", places);
+            }
+            if (rating < 0.0 || rating > 5.0)
+            {
+                ViewBag.Error9 = "Reitingas turi būti tarp 0 ir 5";
+                return View("RoutePlan", places);
+            }
+
+            var educationalRouteId = Convert.ToInt32(TempData.Peek("SuggestedRouteId"));
+
+            var educationalRoute = await _context.EducationalRoutes.SingleAsync(r => r.Id == educationalRouteId);
+
+            educationalRoute.Rating = (int)((educationalRoute.RatingCount * educationalRoute.Rating + rating) / (educationalRoute.RatingCount + 1));
+            educationalRoute.RatingCount += 1;
+
+            await _context.SaveChangesAsync();
+
+            TempData["IsReviewPosted"] = true;
+            TempData.Remove("Rating");
 
             return View("RoutePlan", places);
         }
