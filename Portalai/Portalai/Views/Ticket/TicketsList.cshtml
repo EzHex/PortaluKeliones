@@ -22,6 +22,12 @@
                     @Html.DisplayNameFor(model => model.Seat)
                 </th>
                 <th>
+                    Maršruto išvykimo vietovė
+                </th>
+                <th>
+                    Maršruto atvykimo vietovė
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DepartureTime)
                 </th>
                 <th>
@@ -38,6 +44,24 @@
                     </td>
                     <td class="text-md-start">
                         @Html.DisplayFor(modelItem => item.Seat)
+                    </td>
+                    <td class="text-md-start">
+                        @foreach (var routeVoyage in item.Trip.Route.RouteVoyages)
+                        {
+                            @if (routeVoyage.Order == 1)
+                            {
+                                @Html.DisplayFor(modelItem => routeVoyage.Departure.Name)
+                            }
+                        }
+                    </td>
+                    <td class="text-md-start">
+                        @foreach (var routeVoyage in item.Trip.Route.RouteVoyages)
+                        {
+                            @if (routeVoyage.Order == item.Trip.Route.RouteVoyages.Count)
+                            {
+                                @Html.DisplayFor(modelItem => routeVoyage.Arrival.Name)
+                            }
+                        }
                     </td>
                     <td class="text-md-start">
                         @Html.DisplayFor(modelItem => item.DepartureTime)
