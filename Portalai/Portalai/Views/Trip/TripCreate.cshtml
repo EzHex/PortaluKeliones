@@ -1,0 +1,48 @@
+﻿@model Portalai.ViewModel.TripCreateEditVM
+
+@{
+    ViewBag.Title = "Maršruto kūrimas";
+    Layout = "_Layout";
+}
+
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("ShowTrips")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("Create", "Trip", FormMethod.Post, new { @class = "col-md-6" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.LabelFor(m => m.TripModel.RouteId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.TripModel.RouteId, Model.RouteSelectList,"---------", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TripModel.RouteId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TripModel.BusId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.TripModel.BusId, Model.BusSelectList,"---------", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TripModel.BusId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TripModel.DepartureTime, new { @class = "control-label" })
+                @Html.EditorFor(m => m.TripModel.DepartureTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TripModel.DepartureTime, "", new { @class = "text-danger" })
+            </div>
+        </fieldset>
+
+
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button formnovalidate name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+        </div>
+    }
+</div>

@@ -79,7 +79,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 3,
                             LicensePlate = "ABC 123",
-                            ManufactureDate = new DateTime(2018, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9600),
+                            ManufactureDate = new DateTime(2018, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6113),
                             Model = "Vivado",
                             Seats = 42,
                             Status = 0
@@ -90,7 +90,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 0,
                             LicensePlate = "BCA 234",
-                            ManufactureDate = new DateTime(2021, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9633),
+                            ManufactureDate = new DateTime(2021, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6142),
                             Model = "Vivado",
                             Seats = 54,
                             Status = 0
@@ -101,7 +101,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 1,
                             LicensePlate = "CDE 345",
-                            ManufactureDate = new DateTime(2016, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9637),
+                            ManufactureDate = new DateTime(2016, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6144),
                             Model = "Gaming",
                             Seats = 12,
                             Status = 0
@@ -112,7 +112,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 4,
                             LicensePlate = "DEF 456",
-                            ManufactureDate = new DateTime(2011, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9640),
+                            ManufactureDate = new DateTime(2011, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6148),
                             Model = "Driving",
                             Seats = 34,
                             Status = 0
@@ -123,7 +123,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 1,
                             LicensePlate = "EFG 567",
-                            ManufactureDate = new DateTime(2009, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9643),
+                            ManufactureDate = new DateTime(2009, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6150),
                             Model = "Base",
                             Seats = 57,
                             Status = 0
@@ -134,7 +134,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 4,
                             LicensePlate = "FGH 678",
-                            ManufactureDate = new DateTime(2015, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9646),
+                            ManufactureDate = new DateTime(2015, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6152),
                             Model = "Express",
                             Seats = 86,
                             Status = 0
@@ -145,7 +145,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "GHI 789",
-                            ManufactureDate = new DateTime(2017, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9649),
+                            ManufactureDate = new DateTime(2017, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6154),
                             Model = "Driving",
                             Seats = 56,
                             Status = 0
@@ -156,7 +156,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "JKL 890",
-                            ManufactureDate = new DateTime(2022, 5, 17, 19, 50, 30, 451, DateTimeKind.Local).AddTicks(9652),
+                            ManufactureDate = new DateTime(2022, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6156),
                             Model = "Trolling",
                             Seats = 21,
                             Status = 0

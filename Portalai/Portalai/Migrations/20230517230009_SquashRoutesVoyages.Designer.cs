@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Portalai.Migrations
 {
     [DbContext(typeof(PortalsDbContext))]
-    [Migration("20230516203226_RouteVoyageFix")]
-    partial class RouteVoyageFix
+    [Migration("20230517230009_SquashRoutesVoyages")]
+    partial class SquashRoutesVoyages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,96 @@ namespace Portalai.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Buses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Brand = "Opel",
+                            Fuel = 3,
+                            LicensePlate = "ABC 123",
+                            ManufactureDate = new DateTime(2018, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6113),
+                            Model = "Vivado",
+                            Seats = 42,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Brand = "Opel",
+                            Fuel = 0,
+                            LicensePlate = "BCA 234",
+                            ManufactureDate = new DateTime(2021, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6142),
+                            Model = "Vivado",
+                            Seats = 54,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Brand = "Arnas",
+                            Fuel = 1,
+                            LicensePlate = "CDE 345",
+                            ManufactureDate = new DateTime(2016, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6144),
+                            Model = "Gaming",
+                            Seats = 12,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Brand = "Arnas",
+                            Fuel = 4,
+                            LicensePlate = "DEF 456",
+                            ManufactureDate = new DateTime(2011, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6148),
+                            Model = "Driving",
+                            Seats = 34,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Brand = "Mad Lions",
+                            Fuel = 1,
+                            LicensePlate = "EFG 567",
+                            ManufactureDate = new DateTime(2009, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6150),
+                            Model = "Base",
+                            Seats = 57,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Brand = "Mad Lions",
+                            Fuel = 4,
+                            LicensePlate = "FGH 678",
+                            ManufactureDate = new DateTime(2015, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6152),
+                            Model = "Express",
+                            Seats = 86,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Brand = "Mode",
+                            Fuel = 0,
+                            LicensePlate = "GHI 789",
+                            ManufactureDate = new DateTime(2017, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6154),
+                            Model = "Driving",
+                            Seats = 56,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Brand = "Mode",
+                            Fuel = 0,
+                            LicensePlate = "JKL 890",
+                            ManufactureDate = new DateTime(2022, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6156),
+                            Model = "Trolling",
+                            Seats = 21,
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.Complaint", b =>
@@ -153,8 +243,8 @@ namespace Portalai.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<int>("RatingCount")
                         .HasColumnType("int");
@@ -714,6 +804,23 @@ namespace Portalai.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Routes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "Zarasai - Rokiškis - Panevėžys - Šiauliai - Plungė - Palanga - Klaipėda"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "Vilnius - Kaunas - Raseiniai - Kryžkalnis - Klaipėda"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Title = "Rokiškis - Anykščiai - Ukmergė - Jonava - Kaunas"
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.RouteVoyage", b =>
@@ -748,6 +855,125 @@ namespace Portalai.Migrations
                     b.HasIndex("RouteId");
 
                     b.ToTable("RouteVoyages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArrivalPlaceId = 30,
+                            DeparturePlaceId = 22,
+                            Duration = 70,
+                            Order = 1,
+                            RouteId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArrivalPlaceId = 14,
+                            DeparturePlaceId = 30,
+                            Duration = 50,
+                            Order = 2,
+                            RouteId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArrivalPlaceId = 9,
+                            DeparturePlaceId = 14,
+                            Duration = 40,
+                            Order = 3,
+                            RouteId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArrivalPlaceId = 3,
+                            DeparturePlaceId = 9,
+                            Duration = 45,
+                            Order = 4,
+                            RouteId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArrivalPlaceId = 2,
+                            DeparturePlaceId = 1,
+                            Duration = 105,
+                            Order = 1,
+                            RouteId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArrivalPlaceId = 27,
+                            DeparturePlaceId = 2,
+                            Duration = 90,
+                            Order = 2,
+                            RouteId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArrivalPlaceId = 3,
+                            DeparturePlaceId = 27,
+                            Duration = 150,
+                            Order = 3,
+                            RouteId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ArrivalPlaceId = 22,
+                            DeparturePlaceId = 38,
+                            Duration = 90,
+                            Order = 1,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArrivalPlaceId = 4,
+                            DeparturePlaceId = 22,
+                            Duration = 120,
+                            Order = 2,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ArrivalPlaceId = 5,
+                            DeparturePlaceId = 4,
+                            Duration = 120,
+                            Order = 3,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ArrivalPlaceId = 17,
+                            DeparturePlaceId = 5,
+                            Duration = 120,
+                            Order = 4,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ArrivalPlaceId = 16,
+                            DeparturePlaceId = 17,
+                            Duration = 65,
+                            Order = 5,
+                            RouteId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ArrivalPlaceId = 3,
+                            DeparturePlaceId = 16,
+                            Duration = 30,
+                            Order = 6,
+                            RouteId = 1
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.Survey", b =>
@@ -954,6 +1180,53 @@ namespace Portalai.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "Arnas@PortalsDB.com",
+                            Name = "Arnas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "Modestas@PortalsDB.com",
+                            Name = "Modestas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "Viktorija@PortalsDB.com",
+                            Name = "Viktorija",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "Dominykas@PortalsDB.com",
+                            Name = "Dominykas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "Karolis@PortalsDB.com",
+                            Name = "Karolis",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 0
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.Voyage", b =>

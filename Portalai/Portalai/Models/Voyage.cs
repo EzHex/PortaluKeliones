@@ -26,14 +26,20 @@ public class Voyage : IEntityTypeConfiguration<Voyage>
         Price = price;
     }
 
+    public Voyage()
+    {
+    }
+
     public void Configure(EntityTypeBuilder<Voyage> builder)
     {
         // Voyage 0...N : 1 RouteVoyage   
-        builder.HasOne(m=>m.RouteVoyage)
-            .WithMany(m=>m.Voyage);
+        builder.HasOne(m => m.RouteVoyage)
+            .WithMany(m => m.Voyage)
+            .OnDelete(DeleteBehavior.NoAction);
         
         //Voyage 1...N : 1 Trip
-        builder.HasOne(m=>m.Trip)
-            .WithMany(m=>m.Voyages);
+        builder.HasOne(m => m.Trip)
+            .WithMany(m => m.Voyages)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

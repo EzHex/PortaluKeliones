@@ -46,13 +46,14 @@ public class Place : IEntityTypeConfiguration<Place>
     
     public virtual List<EducationalRoute>? EducationalRoutes { get; set; }
 
+    //TODO iskelt configure paskui i atskira file nes specify twice nepadeda
     public void Configure(EntityTypeBuilder<Place> builder)
     {
         // Place 1 : 0...N RouteVoyage (ARRIVAL)
         builder.HasMany(m => m.ArrivalVoyages)
             .WithOne(m => m.Arrival)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Place 1 : 0...N RouteVoyage (DEPARTURE)
         builder.HasMany(m => m.DepartureVoyages)

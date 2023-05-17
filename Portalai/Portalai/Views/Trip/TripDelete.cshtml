@@ -1,0 +1,47 @@
+﻿@model Trip
+
+@{
+    ViewBag.Title = "Keliones šalinimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset class="border rounded shadow p-2">
+            <legend class="text-center">Ar tikrai norite šalinti šį maršrutą?</legend>
+
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.Route.Title)</dt>
+                <dd>@Html.DisplayFor(m => m.Route.Title)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Id)</dt>
+                <dd>@Html.DisplayFor(m => m.Id)</dd>
+            </dl>
+            
+            <dl>
+                <dt>@Html.HiddenFor(m=>m.Voyages)</dt>
+            </dl>
+
+
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center p-2">
+                <span class="actions">
+                    <a href="@Url.Action("ShowTrips")" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-circle-xmark"></i> Atšaukti</a>
+                </span>
+                <span>
+                    <button formaction="@Url.Action("DeleteTrip", new { id = Model.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
+                </span>
+                
+            </div>
+
+        </fieldset>
+    }
+</div>

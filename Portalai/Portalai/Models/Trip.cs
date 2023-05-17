@@ -28,6 +28,10 @@ public class Trip : IEntityTypeConfiguration<Trip>
         ArrivalTime = arrivalTime;
     }
 
+    public Trip()
+    {
+    }
+
     public void Configure(EntityTypeBuilder<Trip> builder)
     {
         // Trip 0...N : 1 Route
@@ -36,7 +40,8 @@ public class Trip : IEntityTypeConfiguration<Trip>
         
         // Trip 1 : 1...N Voyage
         builder.HasMany(m => m.Voyages)
-            .WithOne(m => m.Trip);
+            .WithOne(m => m.Trip)
+            .OnDelete(DeleteBehavior.Cascade);
         
         // Trip 0...N : 1 Bus
         builder.HasOne(m => m.Bus)
