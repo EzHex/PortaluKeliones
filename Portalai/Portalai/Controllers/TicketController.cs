@@ -19,7 +19,11 @@ namespace Portalai.Controllers
         {
             var tickets = await context.Tickets
                 .Include(t => t.Trip)
-                    .ThenInclude(b => b.Bus)
+                    .ThenInclude(t => t.Bus)
+                .Include(t => t.Trip.Route.RouteVoyages)
+                    .ThenInclude(rv => rv.Arrival)
+                .Include(t => t.Trip.Route.RouteVoyages)
+                    .ThenInclude(rv => rv.Departure)
                 .Where(t => t.User.Id == 1)
                 .ToListAsync();
 

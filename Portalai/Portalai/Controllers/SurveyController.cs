@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Portalai.Models;
 
 namespace Portalai.Controllers;
@@ -17,6 +18,12 @@ public class SurveyController : Controller
     public async Task<ActionResult> ShowSurveyList()
     {
         var surveys = await context.Surveys.ToListAsync();
+        
+        if (TempData["status"] != null)
+        {
+            ViewBag.Status = TempData["status"];
+            TempData.Remove("status");
+        }
 
         return View("SurveyList", surveys);
     }
@@ -32,6 +39,106 @@ public class SurveyController : Controller
         
         return View("Survey", survey);
     }
+
+    [HttpPost]
+    public async Task<ActionResult> ChangeState(Survey model)
+    {
+        if (model.Status == SurveyStatus.Created)
+        {
+            model.Status = SurveyStatus.Active;
+        }
+        else if (model.Status == SurveyStatus.Active)
+        {
+            model.Status = SurveyStatus.Closed;
+        }
+        
+        context.Surveys.Update(model);
+        await context.SaveChangesAsync();
+        
+        return RedirectToAction("ShowSurvey", new {id = model.Id});
+    }
+    
+    
+    public async Task<ActionResult> ShowEditForm(int id)
+    {
+        var survey = await context.Surveys.SingleAsync(x => x.Id == id);
+        return View("SurveyEdit", survey);
+    }
+    
+    public async Task<ActionResult> ShowDeleteConfirmForm(int id)
+    {
+        var survey = await context.Surveys.SingleAsync(x => x.Id == id);
+        return View("SurveyDelete", survey);
+    }
+    
+    public async Task<ActionResult> ShowCreateForm()
+    {
+        Survey survey = new Survey();
+        return View("SurveyCreate", survey);
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult> postCreate(int? save, int? add, int? remove, Survey survey)
+    {
+        if( add != null )
+        {
+            int id = survey.SurveyQuestions.Count > 0 ? survey.SurveyQuestions.Max(it => it.Id) + 1 : 0;
+            //add entry for the new record
+            var up =
+                new SurveyQuestion(id, "", 0, false, 0);
+            survey.SurveyQuestions.Add(up);
+
+            //make sure @Html helper is not reusing old model state containing the old list
+            ModelState.Clear();
+            
+            //go back to the form
+            return View("SurveyCreate", survey);
+        }
+
+        //removal of existing 'UzsakytosPaslaugos' record was requested?
+        if( remove != null )
+        {
+            //filter out 'UzsakytosPaslaugos' record having in-list-id the same as the given one
+            survey.SurveyQuestions =
+                survey.SurveyQuestions
+                    .Where(it => it.Id != remove.Value)
+                    .ToList();
+
+            //make sure @Html helper is not reusing old model state containing the old list
+            ModelState.Clear();
+
+            //go back to the form
+            return View("SurveyCreate", survey);
+        }
+
+        /*//save of the form data was requested?
+        if( save != null )
+        {
+            //form field validation passed?
+            if( ModelState.IsValid )
+            {
+                //create new 'Sutartis'
+                sutartisEvm.Sutartis.Nr = SutartisRepo.Insert(sutartisEvm);
+
+                //create new 'UzsakytosPaslaugos' records
+                foreach( var upVm in sutartisEvm.UzsakytosPaslaugos )
+                    UzsakytaPaslaugaRepo.Insert(sutartisEvm.Sutartis.Nr, upVm);
+
+                //save success, go back to the entity list
+                return RedirectToAction("ShowSurveyList");
+            }
+            //form field validation failed, go back to the form
+            else
+            {
+                return View("SurveyCreate", survey);
+            }
+        }*/
+
+        //should not reach here
+        throw new Exception("Should not reach here.");
+    }
+    
+    
 
     [HttpPost]
     public async Task<ActionResult> PostAnswers(Survey survey)
