@@ -38,10 +38,7 @@ public class Portal : IEntityTypeConfiguration<Portal>
     
     [DisplayName("Besijungiančio portalo ID")]
     [NotMapped] public int JunctionPortalId { get; set; }
-    
-    //For dropdown --- kito kelio neradau
-    [NotMapped] public List<Portal> PortalsList { get; set; }
-    
+
     public List<Complaint> Complaints { get; set; }
     
     

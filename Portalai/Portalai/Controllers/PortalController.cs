@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
+using Portalai.ViewModel;
 
 namespace Portalai.Controllers;
 
@@ -66,21 +67,23 @@ public class PortalController : Controller
         }
         
         var portalList = await context.Portals.ToListAsync();
-        portal.PortalsList = portalList;
-        
-        return View("PortalEdit", portal);
+        var portalEdit = new PortalEditVM();
+        portalEdit.Portal = portal;
+        portalEdit.AllPortals = portalList;
+
+        return View("PortalEdit", portalEdit);
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostEdit(Portal newElement)
+    public async Task<ActionResult> PostEdit(PortalEditVM newElement)
     {
-        ModelState["Complaints"].ValidationState = ModelValidationState.Valid;
-        ModelState["Complaints"].Errors.Clear();
+        /*ModelState["Complaints"].ValidationState = ModelValidationState.Valid;
+        ModelState["Complaints"].Errors.Clear();*/
 
         if (!ModelState.IsValid)
             return View("PortalEdit", newElement);
         
-        context.Portals.Update(newElement);
+        context.Portals.Update(newElement.Portal);
         await context.SaveChangesAsync();
 
         TempData["status"] = "Portalas sėkmingai atnaujintas";
