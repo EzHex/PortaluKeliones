@@ -606,7 +606,7 @@ namespace Portalai.Controllers
             var rating = 0.0;
             try
             {
-                rating = Convert.ToInt32(form["Rating"]);
+                rating = Convert.ToDouble(form["Rating"]);
             }
             catch (FormatException ex)
             {
