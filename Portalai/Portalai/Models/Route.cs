@@ -32,9 +32,6 @@ public class Route : IEntityTypeConfiguration<Route>
     }
     
     [NotMapped]
-    public List<Place> Places { get; set; } = new List<Place>();
-
-    [NotMapped]
     public IList<SelectListItem>? AvailablePlaces { get; set; }
 
     public Route(string title)

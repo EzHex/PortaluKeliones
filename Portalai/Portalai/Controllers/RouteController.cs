@@ -554,36 +554,12 @@ namespace Portalai.Controllers
             {
                 ModelState.AddModelError("arrivalCity", "Nepasirinktas atvykimo miestas");
             }
-            
-            // if (form.ContainsKey("departureTime"))
-            // {
-            //     departureDate = Convert.ToDateTime(form["departureTime"]);
-            // }
-            // else
-            // {
-            //     ModelState.AddModelError("departureTime", "Nepasirinkta išvykimo data");
-            // }
-            //
-            // if (form.ContainsKey("arrivalTime"))
-            // {
-            //     arrivalDate = Convert.ToDateTime(form["arrivalTime"]);
-            // }
-            // else
-            // {
-            //     ModelState.AddModelError("arrivalTime", "Nepasirinkta atvykimo data");
-            // }
-            
+
             if (departureCityId == arrivalCityId)
             {
                 ModelState.AddModelError("departureCity", "Išvykimo miestas negali sutapti su atvykimo miestu");
                 ModelState.AddModelError("arrivalCity", "Atvykimo miestas negali sutapti su išvykimo miestu");
             }
-            
-            // if (departureDate > arrivalDate)
-            // {
-            //     ModelState.AddModelError("departureTime", "Išvykimo data negali būti vėlesnė nei atvykimo data");
-            //     ModelState.AddModelError("arrivalTime", "Atvykimo data negali būti ankstesnė nei išvykimo data");
-            // }
 
             if (!ModelState.IsValid)
             {

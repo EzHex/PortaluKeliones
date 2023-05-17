@@ -45,6 +45,7 @@ namespace Portalai.Controllers
             ticket.Seat = availableSeat;
             ticket.User = user;
             ticket.Trip = await context.Trips.Where(t => t.Route.Id == route.Id).FirstAsync();
+            // TODO [extra] calculate price
             ticket.Price = 5;
             ticket.DepartureTime = DateTime.Now;
             ticket.ArrivalTime = DateTime.Now.AddHours(1);
