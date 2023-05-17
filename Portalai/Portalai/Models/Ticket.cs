@@ -21,13 +21,9 @@ public class Ticket : IEntityTypeConfiguration<Ticket>
     public Trip Trip { get; set; }
     public User User { get; set; }
 
-    public Ticket(int seat, double price, DateTime purchaseDate, DateTime departureTime, DateTime arrivalTime)
+    public Ticket()
     {
-        Seat = seat;
-        Price = price;
-        PurchaseDate = purchaseDate;
-        DepartureTime = departureTime;
-        ArrivalTime = arrivalTime;
+        
     }
 
     public void Configure(EntityTypeBuilder<Ticket> builder)

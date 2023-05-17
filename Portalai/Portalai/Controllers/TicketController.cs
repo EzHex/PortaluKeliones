@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PayseraSim;
+using Portalai.Models;
+using Route = Portalai.Models.Route;
 
 namespace Portalai.Controllers
 {
@@ -22,7 +25,40 @@ namespace Portalai.Controllers
 
             return View("TicketsList", tickets);
         }
+        
+        public async Task<ActionResult> MakeTicketPurchase(Route route)
+        {
+            if (!GetStatus())
+            {
+                TempData["status"] = "Mokėjimas nepavyko";
+                return RedirectToAction("ShowRoutesSearch", "Route");
+            }
 
-        //TODO: Buy tickets for routes/trips
+            var user = await context.Users.SingleAsync(x => x.Id == 1);
+
+            var tickets = await context.Tickets.Where(t => t.Trip.Route.Id == route.Id).ToListAsync();
+            var availableSeat = 0;
+            if (tickets.Count != 0)
+                availableSeat = tickets.Select(t => t.Seat).Max() + 1;
+            
+            var ticket = new Ticket();
+            ticket.Seat = availableSeat;
+            ticket.User = user;
+            ticket.Trip = await context.Trips.Where(t => t.Route.Id == route.Id).FirstAsync();
+            ticket.Price = 5;
+            ticket.DepartureTime = DateTime.Now;
+            ticket.ArrivalTime = DateTime.Now.AddHours(1);
+            
+            context.Tickets.Add(ticket);
+            await context.SaveChangesAsync();
+
+            TempData["status"] = "Mokėjimas pavyko";
+            return RedirectToAction("ShowRoutesSearch", "Route");
+        }
+        
+        public bool GetStatus()
+        {
+            return PayseraSim.Paysera.getStatus();
+        }
     }
 }
