@@ -79,7 +79,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 3,
                             LicensePlate = "ABC 123",
-                            ManufactureDate = new DateTime(2018, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4643),
+                            ManufactureDate = new DateTime(2018, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2620),
                             Model = "Vivado",
                             Seats = 42,
                             Status = 0
@@ -90,7 +90,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 0,
                             LicensePlate = "BCA 234",
-                            ManufactureDate = new DateTime(2021, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4682),
+                            ManufactureDate = new DateTime(2021, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2663),
                             Model = "Vivado",
                             Seats = 54,
                             Status = 0
@@ -101,7 +101,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 1,
                             LicensePlate = "CDE 345",
-                            ManufactureDate = new DateTime(2016, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4684),
+                            ManufactureDate = new DateTime(2016, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2667),
                             Model = "Gaming",
                             Seats = 12,
                             Status = 0
@@ -112,7 +112,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 4,
                             LicensePlate = "DEF 456",
-                            ManufactureDate = new DateTime(2011, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4686),
+                            ManufactureDate = new DateTime(2011, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2671),
                             Model = "Driving",
                             Seats = 34,
                             Status = 0
@@ -123,7 +123,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 1,
                             LicensePlate = "EFG 567",
-                            ManufactureDate = new DateTime(2009, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4688),
+                            ManufactureDate = new DateTime(2009, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2674),
                             Model = "Base",
                             Seats = 57,
                             Status = 0
@@ -134,7 +134,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 4,
                             LicensePlate = "FGH 678",
-                            ManufactureDate = new DateTime(2015, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4690),
+                            ManufactureDate = new DateTime(2015, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2677),
                             Model = "Express",
                             Seats = 86,
                             Status = 0
@@ -145,7 +145,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "GHI 789",
-                            ManufactureDate = new DateTime(2017, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4698),
+                            ManufactureDate = new DateTime(2017, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2681),
                             Model = "Driving",
                             Seats = 56,
                             Status = 0
@@ -156,7 +156,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "JKL 890",
-                            ManufactureDate = new DateTime(2022, 5, 17, 17, 50, 49, 958, DateTimeKind.Local).AddTicks(4700),
+                            ManufactureDate = new DateTime(2022, 5, 17, 18, 8, 41, 867, DateTimeKind.Local).AddTicks(2684),
                             Model = "Trolling",
                             Seats = 21,
                             Status = 0
@@ -1178,6 +1178,53 @@ namespace Portalai.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "Arnas@PortalsDB.com",
+                            Name = "Arnas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "Modestas@PortalsDB.com",
+                            Name = "Modestas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "Viktorija@PortalsDB.com",
+                            Name = "Viktorija",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "Dominykas@PortalsDB.com",
+                            Name = "Dominykas",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "Karolis@PortalsDB.com",
+                            Name = "Karolis",
+                            Password = "UUID",
+                            Phone = "860000000",
+                            Role = 0
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.Voyage", b =>

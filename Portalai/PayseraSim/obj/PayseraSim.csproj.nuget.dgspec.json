@@ -1,25 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Viktorija\\Desktop\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj": {}
+    "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\6 semestras\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Viktorija\\Desktop\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj": {
+    "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\6 semestras\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Viktorija\\Desktop\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj",
+        "projectUniqueName": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\6 semestras\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj",
         "projectName": "PayseraSim",
-        "projectPath": "C:\\Users\\Viktorija\\Desktop\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj",
-        "packagesPath": "C:\\Users\\Viktorija\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Viktorija\\Desktop\\PortaluKeliones\\Portalai\\PayseraSim\\obj\\",
+        "projectPath": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\6 semestras\\PortaluKeliones\\Portalai\\PayseraSim\\PayseraSim.csproj",
+        "packagesPath": "C:\\Users\\modes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\modes\\OneDrive\\Stalinis kompiuteris\\6 semestras\\PortaluKeliones\\Portalai\\PayseraSim\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Viktorija\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\modes\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
