@@ -16,7 +16,7 @@ public class EducationalRoute : IEntityTypeConfiguration<EducationalRoute>
     [DisplayName("Atvykimo data")]
     public DateTime ArrivalDate { get; set; }
     [DisplayName("Reitingas")]
-    public int Rating { get; set; }
+    public double Rating { get; set; }
     [DisplayName("Reitingų skaičius")]
     public int RatingCount { get; set; }
     

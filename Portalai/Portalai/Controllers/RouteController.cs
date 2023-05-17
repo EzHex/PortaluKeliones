@@ -623,7 +623,7 @@ namespace Portalai.Controllers
 
             var educationalRoute = await _context.EducationalRoutes.SingleAsync(r => r.Id == educationalRouteId);
 
-            educationalRoute.Rating = (int)((educationalRoute.RatingCount * educationalRoute.Rating + rating) / (educationalRoute.RatingCount + 1));
+            educationalRoute.Rating = (educationalRoute.RatingCount * educationalRoute.Rating + rating) / (educationalRoute.RatingCount + 1);
             educationalRoute.RatingCount += 1;
 
             await _context.SaveChangesAsync();
