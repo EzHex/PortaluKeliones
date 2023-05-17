@@ -20,9 +20,18 @@ public class SurveyQuestion : IEntityTypeConfiguration<SurveyQuestion>
     public Survey Survey { get; set; }
     
     public List<QuestionAnswer> QuestionAnswers { get; set; }
-
-    public List<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
     
+    public List<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
+
+    public SurveyQuestion(int id, string question, QuestionType type, bool isRequired, int order)
+    {
+        Id = id;
+        Question = question;
+        Type = type;
+        IsRequired = isRequired;
+        Order = order;
+    }
+
     public void Configure(EntityTypeBuilder<SurveyQuestion> builder)
     {
         builder.HasMany(p=> p.QuestionAnswers)

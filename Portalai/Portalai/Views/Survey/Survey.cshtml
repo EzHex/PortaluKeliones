@@ -1,7 +1,7 @@
 @model Survey
 
 @{
-    ViewBag.Title = "Apklausa";
+    ViewBag.Title = "Apklausa - " + Model.Title;
     Layout = "_Layout";
 }
 
@@ -10,42 +10,108 @@
         <h1>@ViewBag.Title</h1>
     </span>
     <span>
-        <a class="btn btn-outline-primary" asp-controller="Survey" asp-action="ShowSurveyList">Grįžti į apklausų sąrašą</a>
+        <a href="@Url.Action("ShowSurveyList")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sąrašą</a>
     </span>
 </div>
 
 <div class="d-flex justify-content-center">
-    @using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
-    {
-        <div class="text-danger">
-            @Html.ValidationSummary()
-        </div>
 
-        @foreach (var question in Model.SurveyQuestions)
+    @*jeigu administratorius*@
+    @if (-2 > 0)
+    {
+        @using (Html.BeginForm("ChangeState", "Survey", Model, FormMethod.Post))
         {
-            <div>
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <td>
-                            <h2>@question.Question</h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <ul>
-                                @foreach (var option in question.SurveyQuestionOptions)
-                                {
+            <div style="min-width: 500px;">
+                <div class="text-danger">
+                    @Html.ValidationSummary()
+                </div>
+                <dl>
+                    <dt>@Html.DisplayNameFor(m => m.Title)</dt>
+                    <dd>@Html.DisplayFor(m => m.Title)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Description)</dt>
+                    <dd>@Html.DisplayFor(m => m.Description)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.StartDate)</dt>
+                    <dd>@Html.DisplayFor(m => m.StartDate)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.EndDate)</dt>
+                    <dd>@Html.DisplayFor(m => m.EndDate)</dd>
+                    <div>
+                        <dt>@Html.DisplayNameFor(m => m.Status)</dt>
+                        <dd>@Html.DisplayFor(m => m.Status)</dd>
+                    </div>
+                    <div>
+                        <button href="@Url.Action("ChangeState", new {Model})" class="btn btn-primary" @(Model.Status.ToString() == "Active" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Aktyvuoti</button>
+                        <button href="@Url.Action("ChangeState", new {Model})" class="btn btn-danger" @(Model.Status.ToString() == "Created" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Baigti</button>
+                    </div>
+                    <h2 style="text-align: center">--------------- Klausimai --------------</h2>
+                </dl>
+
+                @foreach (var question in Model.SurveyQuestions)
+                {
+                    <div>
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td>
+                                    <h4>@question.Question</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <ul>
-                                        <input type="checkbox" name="@option.Id" value="@option.Text"/> @option.Text
+                                        @foreach (var option in question.SurveyQuestionOptions)
+                                        {
+                                            <ul>
+                                                @Html.DisplayFor(modelItem => option.Text)
+                                            </ul>
+                                        }
                                     </ul>
-                                }
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
             </div>
         }
-        
-        <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Pateikti</button>
+    }
+
+/*Jeigu klientas*/
+    else if (2 > 0)
+    {
+        @using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
+        {
+            <div style="min-width: 500px;">
+                <div class="text-danger">
+                    @Html.ValidationSummary()
+                </div>
+
+                @foreach (var question in Model.SurveyQuestions)
+                {
+                    <div>
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td>
+                                    <h3>@question.Question</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        @foreach (var option in question.SurveyQuestionOptions)
+                                        {
+                                            <ul>
+                                                <input type="checkbox" name="@option.Id" value="@option.Text"/> @option.Text
+                                            </ul>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+                <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Pateikti</button>
+            </div>
+        }
     }
 </div>

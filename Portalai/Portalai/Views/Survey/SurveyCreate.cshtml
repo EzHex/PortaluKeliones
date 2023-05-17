@@ -1,18 +1,124 @@
 ﻿@model Survey
-
 @{
-    Layout = null;
+    ViewBag.Title = "Apklausos kūrimas";
+    Layout = "_Layout";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("ShowSurveyList")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sąrašą</a>
+    </span>
 </div>
-</body>
-</html>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm("postCreate","Survey", FormMethod.Post, new { style = "width:75%" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Status)
+
+        <fieldset class="border rounded shadow p-2">
+	        <legend class="text-center">Apklausa</legend>
+	        <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StartDate, new { @class = "control-label" })
+                @Html.EditorFor(m => m.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EndDate, new { @class = "control-label" })
+                @Html.EditorFor(m => m.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </fieldset>
+        
+        <fieldset class="border rounded shadow p-2" style="margin-top: 15px">
+		<div class="container-fluid d-flex d-row justify-content-between align-items-center" style="padding: 0px;margin-bottom: 10px;">
+			<span></span>
+			<legend style="width: unset; margin-bottom: 0px;">Klausimai</legend>
+			<button
+				name="add"
+				value="1"
+				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+				formaction="@Url.Action()#listEnd"
+				class="btn btn-info"
+				style="white-space: nowrap;"
+			><i class="fa-solid fa-plus"></i> Pridėti klausimą</button>
+		</div>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>Klausimas</th>
+					<th>Tipas</th>
+					<th>Privalomumas</th>
+					<th>Eilės numeris</th>
+					<th style="width: 1px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for( var i = 0; i < Model.SurveyQuestions.Count; i++ ) {
+					<tr>
+						<td>
+							@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
+							@Html.HiddenFor(m => m.SurveyQuestions[i].Id)
+
+							@Html.EditorFor(m => m.SurveyQuestions[i].Question, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Question, "", new { @class = "text-danger" })
+						</td>
+						<td>
+							@Html.DropDownListFor(m => m.SurveyQuestions[i].Type, new SelectList(Enum.GetValues(typeof(QuestionType)), Model.SurveyQuestions[i].Type), new { @class = "form-control" })
+							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Type, "", new { @class = "text-danger" })
+						</td>
+						<td>
+							@Html.DropDownListFor(m => m.SurveyQuestions[i].IsRequired, new SelectList(new[] { true, false }), Model.SurveyQuestions[i].IsRequired)
+							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].IsRequired, "", new { @class = "text-danger" })
+						</td>
+						<td>
+							@Html.EditorFor(m => m.SurveyQuestions[i].Order, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
+						</td>
+						<td>
+							<button
+								name="remove"
+								value="@Model.SurveyQuestions[i].Id"
+								formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+								formaction="@Url.Action()#listEnd"
+								class="btn btn-danger"
+								style="white-space: nowrap;"
+							><i class="fa-solid fa-trash"></i> Šalinti</button>
+						</td>
+					</tr>
+				
+					/*----------------------------------------------------------------------------------------------*/
+				
+					/*----------------------------------------------------------------------------------------------*/
+				}
+			</tbody>
+		</table>
+
+		@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
+		<span id="listEnd"></span>
+		
+	</fieldset>
+
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i style="padding-right: 5px;" class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+        </div>
+    }
+</div>
