@@ -163,5 +163,19 @@ public class PortalsDbContext : DbContext
         
         modelBuilder.Entity<RouteVoyage>().HasData(routeVoyages);
 
+        var buses = new[]
+        {
+            new Bus{Id = 1,LicensePlate = "ABC 123",Brand = "Opel",Model = "Vivado",ManufactureDate = DateTime.Now.AddYears(-5),Fuel = FuelTypes.Diesel,Seats = 42,Status = BusStatus.Garage},
+            new Bus{Id = 2,LicensePlate = "BCA 234",Brand = "Opel",Model = "Vivado",ManufactureDate = DateTime.Now.AddYears(-2),Fuel = FuelTypes.Petrol,Seats = 54,Status = BusStatus.Garage},
+            new Bus{Id = 3,LicensePlate = "CDE 345",Brand = "Arnas",Model = "Gaming",ManufactureDate = DateTime.Now.AddYears(-7),Fuel = FuelTypes.PetrolElectricity,Seats = 12,Status = BusStatus.Garage},
+            new Bus{Id = 4,LicensePlate = "DEF 456",Brand = "Arnas",Model = "Driving",ManufactureDate = DateTime.Now.AddYears(-12),Fuel = FuelTypes.Electricity,Seats = 34,Status = BusStatus.Garage},
+            new Bus{Id = 5,LicensePlate = "EFG 567",Brand = "Mad Lions",Model = "Base",ManufactureDate = DateTime.Now.AddYears(-14),Fuel = FuelTypes.PetrolElectricity,Seats = 57,Status = BusStatus.Garage},
+            new Bus{Id = 6,LicensePlate = "FGH 678",Brand = "Mad Lions",Model = "Express",ManufactureDate = DateTime.Now.AddYears(-8),Fuel = FuelTypes.Electricity,Seats = 86,Status = BusStatus.Garage},
+            new Bus{Id = 7,LicensePlate = "GHI 789",Brand = "Mode",Model = "Driving",ManufactureDate = DateTime.Now.AddYears(-6),Fuel = FuelTypes.Petrol,Seats = 56,Status = BusStatus.Garage},
+            new Bus{Id = 8,LicensePlate = "JKL 890",Brand = "Mode",Model = "Trolling",ManufactureDate = DateTime.Now.AddYears(-1),Fuel = FuelTypes.Petrol,Seats = 21,Status = BusStatus.Garage},
+        };
+        
+        modelBuilder.Entity<Bus>().HasData(buses);
+
     }
 }

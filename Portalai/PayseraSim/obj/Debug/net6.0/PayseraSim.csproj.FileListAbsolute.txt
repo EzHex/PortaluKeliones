@@ -10,3 +10,15 @@ C:\Users\arnas\Desktop\Portal3\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net
 C:\Users\arnas\Desktop\Portal3\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\refint\PayseraSim.dll
 C:\Users\arnas\Desktop\Portal3\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.pdb
 C:\Users\arnas\Desktop\Portal3\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\ref\PayseraSim.dll
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\bin\Debug\net6.0\PayseraSim.deps.json
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\bin\Debug\net6.0\PayseraSim.dll
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\bin\Debug\net6.0\PayseraSim.pdb
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.csproj.AssemblyReference.cache
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.AssemblyInfoInputs.cache
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.AssemblyInfo.cs
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.csproj.CoreCompileInputs.cache
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.dll
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\refint\PayseraSim.dll
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\PayseraSim.pdb
+C:\Users\modes\OneDrive\Stalinis kompiuteris\6 semestras\PortaluKeliones\Portalai\PayseraSim\obj\Debug\net6.0\ref\PayseraSim.dll
