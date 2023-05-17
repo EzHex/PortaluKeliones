@@ -85,7 +85,7 @@ public class SurveyController : Controller
             int id = survey.SurveyQuestions.Count > 0 ? survey.SurveyQuestions.Max(it => it.Id) + 1 : 0;
             //add entry for the new record
             var up =
-                new SurveyQuestion(id, null, 0, false, 0);
+                new SurveyQuestion(id, "", 0, false, 0);
             survey.SurveyQuestions.Add(up);
 
             //make sure @Html helper is not reusing old model state containing the old list

@@ -32,6 +32,11 @@ public class SurveyQuestion : IEntityTypeConfiguration<SurveyQuestion>
         Order = order;
     }
 
+    public SurveyQuestion()
+    {
+        
+    }
+
     public void Configure(EntityTypeBuilder<SurveyQuestion> builder)
     {
         builder.HasMany(p=> p.QuestionAnswers)

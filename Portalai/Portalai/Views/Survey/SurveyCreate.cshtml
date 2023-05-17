@@ -1,7 +1,7 @@
 ﻿@model Survey
 @{
-    ViewBag.Title = "Apklausos kūrimas";
-    Layout = "_Layout";
+	ViewBag.Title = "Apklausos kūrimas";
+	Layout = "_Layout";
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
@@ -14,7 +14,7 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("postCreate","Survey", FormMethod.Post, new { style = "width:75%" }))
+    @using (Html.BeginForm("postCreate","Survey", FormMethod.Post, new { style = "width:80%" }))
     {
         @Html.AntiForgeryToken()
 
@@ -55,7 +55,7 @@
 				name="add"
 				value="1"
 				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-				formaction="@Url.Action()#listEnd"
+				formaction="@Url.Action("postCreate", "Survey")#listEnd"
 				class="btn btn-info"
 				style="white-space: nowrap;"
 			><i class="fa-solid fa-plus"></i> Pridėti klausimą</button>
@@ -68,6 +68,7 @@
 					<th>Tipas</th>
 					<th>Privalomumas</th>
 					<th>Eilės numeris</th>
+					<th style="width: 1px;"></th>
 					<th style="width: 1px;"></th>
 				</tr>
 			</thead>
@@ -86,7 +87,7 @@
 							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Type, "", new { @class = "text-danger" })
 						</td>
 						<td>
-							@Html.DropDownListFor(m => m.SurveyQuestions[i].IsRequired, new SelectList(new[] { true, false }), Model.SurveyQuestions[i].IsRequired)
+							@Html.DropDownListFor(m => m.SurveyQuestions[i].IsRequired, new SelectList(new []{true, false}), Model.SurveyQuestions[i].IsRequired)
 							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].IsRequired, "", new { @class = "text-danger" })
 						</td>
 						<td>
@@ -95,10 +96,20 @@
 						</td>
 						<td>
 							<button
+								name="add2"
+                            				value="1"
+                            				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+                            				formaction="@Url.Action("postCreate", "Survey")#listEnd"
+                            				class="btn btn-info"
+                            				style="white-space: nowrap;"
+                            			><i class="fa-solid fa-plus"></i>Variantas</button>
+						</td>
+						<td>
+							<button
 								name="remove"
 								value="@Model.SurveyQuestions[i].Id"
 								formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-								formaction="@Url.Action()#listEnd"
+								formaction="@Url.Action("postCreate", "Survey")#listEnd"
 								class="btn btn-danger"
 								style="white-space: nowrap;"
 							><i class="fa-solid fa-trash"></i> Šalinti</button>
