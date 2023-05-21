@@ -2,6 +2,8 @@
 using Portalai.Models;
 using Route = Portalai.Models.Route;
 
+namespace Portalai;
+
 public class PortalsDbContext : DbContext
 {
     public PortalsDbContext(DbContextOptions options) : base(options)
@@ -121,9 +123,9 @@ public class PortalsDbContext : DbContext
 
         var routes = new[]
         {
-            new Route(1, "Zarasai - Rokiškis - Panevėžys - Šiauliai - Plungė - Palanga - Klaipėda"),
-            new Route(2, "Vilnius - Kaunas - Raseiniai - Kryžkalnis - Klaipėda"),
-            new Route(3, "Rokiškis - Anykščiai - Ukmergė - Jonava - Kaunas")
+            new Route { Id = 1, Title = "Zarasai - Rokiškis - Panevėžys - Šiauliai - Plungė - Palanga - Klaipėda" },
+            new Route { Id = 2, Title = "Vilnius - Kaunas - Raseiniai - Kryžkalnis - Klaipėda" },
+            new Route { Id = 3, Title = "Rokiškis - Anykščiai - Ukmergė - Jonava - Kaunas" }
         };
 
         modelBuilder.Entity<Route>().HasData(routes);
@@ -286,5 +288,92 @@ public class PortalsDbContext : DbContext
         };
 
         modelBuilder.Entity<User>().HasData(users);
+
+        var survey = new Survey
+        {
+            Description = "Ši apklausa skirta išsiašikinti vienam ir visam kaip žmonės valgo šaltibarščius.",
+            StartDate = Convert.ToDateTime("2023-05-21 04:35:52.8560000"),
+            EndDate = Convert.ToDateTime("2023-06-04 04:35:52.8560000"),
+            Title = "Šaltibarščių valgymo ypatumai",
+            Status = 0,
+            Id = 1
+        };
+
+        modelBuilder.Entity<Survey>().HasData(survey);
+
+        var surveyQuestions = new[]
+        {
+            new SurveyQuestion
+            {
+                Id = 1,
+                SurveyId = survey.Id,
+                Question = "Ar pučiate valgydami šaltibarščius ?",
+                Type = QuestionType.SingleChoice
+            },
+            new SurveyQuestion
+            {
+                Id = 2,
+                SurveyId = survey.Id,
+                Question = "Kaip dažnai valgote šaltibarščius ?",
+                Type = QuestionType.MultipleChoice
+            },
+            new SurveyQuestion
+            {
+                Id = 3,
+                SurveyId = survey.Id,
+                Question = "Kaip galėtumėme pagerinti šią apklausą ?",
+                Type = QuestionType.Open
+            },
+        };
+
+        modelBuilder.Entity<SurveyQuestion>().HasData(surveyQuestions);
+
+        var surveyQuestionOptions = new[]
+        {
+            new SurveyQuestionOption
+            {
+                Id = 1,
+                SurveyQuestionId = surveyQuestions[0].Id,
+                Text = "Taip"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 2,
+                SurveyQuestionId = surveyQuestions[0].Id,
+                Text = "Ne"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 3,
+                SurveyQuestionId = surveyQuestions[1].Id,
+                Text = "Nevalgau"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 4,
+                SurveyQuestionId = surveyQuestions[1].Id,
+                Text = "Kartą į metus"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 5,
+                SurveyQuestionId = surveyQuestions[1].Id,
+                Text = "Retai"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 6,
+                SurveyQuestionId = surveyQuestions[1].Id,
+                Text = "Vasarą"
+            },
+            new SurveyQuestionOption
+            {
+                Id = 7,
+                SurveyQuestionId = surveyQuestions[1].Id,
+                Text = "Šaltibarščiai tai mano gyvenimas"
+            },
+        };
+
+        modelBuilder.Entity<SurveyQuestionOption>().HasData(surveyQuestionOptions);
     }
 }

@@ -24,13 +24,13 @@
 
         <fieldset class="border rounded shadow p-2">
             <div class="form-group">
-                @Html.HiddenFor(m=>m.Route.Id)
+                @Html.HiddenFor(m => m.Route.Id)
                 @Html.LabelFor(m => m.Route.Title, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Route.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Įveskite maršruto pavadinimą" } })
+                @Html.EditorFor(m => m.Route.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite maršruto pavadinimą" } })
                 @Html.ValidationMessageFor(m => m.Route.Title, "", new { @class = "text-danger" })
             </div>
         </fieldset>
-        
+
         <fieldset class="border rounded shadow p-6">
             <div class="container-fluid d-flex d-row justify-content-between">
                 <legend style="width: unset; margin-bottom: 0px;"><i class="fa-solid fa-route"></i>Maršruto planas</legend>
@@ -54,7 +54,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for (var i = 0; i < Model.RouteVoyageMs.Count;i++)
+                @for (var i = 0; i < Model.RouteVoyageMs.Count; i++)
                 {
                     <tr>
                         <td>
@@ -62,23 +62,24 @@
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].Order, "", new { @class = "text-danger" })
                         </td>
                         <td>
-                            @Html.EditorFor(m => Model.RouteVoyageMs[i].Duration, new { htmlAttributes = new { @class = "form-control", @placeholder = "Įveskite trukmę"} })
+                            @Html.EditorFor(m => Model.RouteVoyageMs[i].Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite trukmę" } })
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].Duration, "", new { @class = "text-danger" })
                         </td>
                         <td>
-                            @Html.DropDownListFor(m => Model.RouteVoyageMs[i].PlaceId, Model.PlaceSelectList,"---------", new { @class = "form-control" })
+                            @Html.DropDownListFor(m => Model.RouteVoyageMs[i].PlaceId, Model.PlaceSelectList, "---------", new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].PlaceId, "", new { @class = "text-danger" })
                         </td>
                         <td>
-                        						<button
-                        							name="remove"
-                        							value="@Model.RouteVoyageMs[i].Order"
-                        							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-                        							formaction="@Url.Action()#listEnd"
-                        							class="btn btn-danger"
-                        							style="white-space: nowrap;"
-                        						><i class="fa-solid fa-trash"></i> Šalinti</button>
-                        					</td>
+                            <button
+                                name="remove"
+                                value="@Model.RouteVoyageMs[i].Order"
+                                formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+                                formaction="@Url.Action()#listEnd"
+                                class="btn btn-danger"
+                                style="white-space: nowrap;">
+                                <i class="fa-solid fa-trash"></i> Šalinti
+                            </button>
+                        </td>
                     </tr>
                 }
                 </tbody>
@@ -86,7 +87,7 @@
             </table>
             <span id="listEnd"></span>
         </fieldset>
-        
+
         <div class="container-fluid d-flex d-row justify-content-end">
             <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
         </div>

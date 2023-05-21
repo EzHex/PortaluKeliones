@@ -8,9 +8,9 @@
     <span class="title">
         <h1>@ViewBag.Title</h1>
     </span>
-        <span>
-            <a href="@Url.Action("ShowCreateForm")" class="btn btn-primary">Sukurti naują portalą</a>
-        </span>
+    <span>
+        <a href="@Url.Action("ShowCreateForm")" class="btn btn-primary">Sukurti naują portalą</a>
+    </span>
 </div>
 
 <div class="d-flex justify-content-center">
@@ -18,7 +18,8 @@
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)</th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Latitude)
             </th>
@@ -40,7 +41,7 @@
             <tr>
                 <td class="text-md-start">
                     @Html.DisplayFor(modelItem => item.Id)
-                    </td>
+                </td>
                 <td class="text-md-start">
                     @Html.DisplayFor(modelItem => item.Latitude)
                 </td>

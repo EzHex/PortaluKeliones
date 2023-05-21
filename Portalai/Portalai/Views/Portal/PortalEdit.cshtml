@@ -15,80 +15,83 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("PostEdit", "Portal", FormMethod.Post,new { style = "width:50%" }))
+    @using (Html.BeginForm("PostEdit", "Portal", FormMethod.Post, new { style = "width:50%" }))
     {
         @Html.AntiForgeryToken()
-        
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         @Html.HiddenFor(m => m.Portal.Id)
 
         <fieldset class="border rounded shadow p-2" style="word-wrap: break-word;">
             <legend class="text-center">Portalo informacija</legend>
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.Latitude, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.Latitude, new { htmlAttributes = new {@class = "form-control" } })
+                @Html.EditorFor(m => m.Portal.Latitude, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.Latitude, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.Longitude, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.Longitude, new { htmlAttributes = new {@class = "form-control" } })
+                @Html.EditorFor(m => m.Portal.Longitude, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.Longitude, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.LiquidCapacity, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.LiquidCapacity, new { htmlAttributes = new {@class = "form-control" } })
+                @Html.EditorFor(m => m.Portal.LiquidCapacity, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.LiquidCapacity, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.CurrentLiquidLevel, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.CurrentLiquidLevel, new { htmlAttributes = new {@class = "form-control" } })
+                @Html.EditorFor(m => m.Portal.CurrentLiquidLevel, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.CurrentLiquidLevel, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.TeleportCount, new { @class = "control-label" })
                 @Html.EditorFor(m => m.Portal.TeleportCount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.TeleportCount, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.TeleportPrice, new { @class = "control-label" })
                 @Html.EditorFor(m => m.Portal.TeleportPrice, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Portal.TeleportPrice, "", new { @class = "text-danger" })
             </div>
-            
+
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.Status, new { @class = "control-label" })
                 @Html.DropDownListFor(m => m.Portal.Status, new SelectList(Enum.GetValues(typeof(PortalStatus)), Model.Portal.Status), new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Portal.Status, "", new { @class = "text-danger" })
             </div>
-            
-            
+
+
         </fieldset>
         <br/>
         <fieldset class="border rounded shadow p-2" style="word-wrap: break-word;">
             <div class="container-fluid d-flex d-row justify-content-between align-items-center" style="margin-bottom: 10px;">
-            			<span></span>
-            			<legend style="width: unset; margin-bottom: 0px;">Jungties informacija</legend>
-            			<button
-            				name="add"
-            				value="1"
-            				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-            				formaction="@Url.Action()#listEnd"
-            				class="btn btn-info"
-            				style="white-space: nowrap;"
-            			><i class="fa-solid fa-plus"></i> Pridėti</button>
-            		</div>
+                <span></span>
+                <legend style="width: unset; margin-bottom: 0;">Jungties informacija</legend>
+                <button
+                    name="add"
+                    value="1"
+                    formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+                    formaction="@Url.Action()#listEnd"
+                    class="btn btn-info"
+                    style="white-space: nowrap;">
+                    <i class="fa-solid fa-plus"></i> Pridėti
+                </button>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Portal.JunctionPortalId, new { @class = "control-label" })
                 @if (Model.Portal.JunctionPortalId != 0)
                 {
                     @Html.DropDownListFor(m => m.Portal.JunctionPortalId, new SelectList(Model.AllPortals, "Id", "Id", Model.Portal.JunctionPortalId.ToString()), new { @class = "form-control" })
-                    <div style="margin-top:10px;"><a href="@Url.Action("ShowDeleteConfirmForm", new { id = Model.Portal.PortalJunction.Id })" class="btn btn-danger">Šalinti</a></div>
+                    <div style="margin-top:10px;">
+                        <a href="@if (Model.Portal.PortalJunction != null) {@Url.Action("ShowDeleteConfirmForm", new { id = Model.Portal.PortalJunction.Id }) }" class="btn btn-danger">Šalinti</a>
+                    </div>
                 }
                 else
                 {
@@ -96,7 +99,7 @@
                 }
             </div>
         </fieldset>
-        
+
         <div style="margin-top: 10px" class="container-fluid d-flex d-row justify-content-end">
             <button name="save" value="1" class="btn btn-success"><i style="padding-right: 5px" class="fa-solid fa-check"></i> Pateikti</button>
         </div>

@@ -24,7 +24,7 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
     public List<ComplaintHistory> ComplaintHistories { get; set; }
 
     [DisplayName("Komentaras")]
-    [NotMapped] public string Comment { get; set; }
+    [NotMapped] public string? Comment { get; set; }
     
 
     public void Configure(EntityTypeBuilder<Complaint> builder)

@@ -26,9 +26,9 @@
                 <dt>@Html.DisplayNameFor(m => m.Id)</dt>
                 <dd>@Html.DisplayFor(m => m.Id)</dd>
             </dl>
-            
+
             <dl>
-                <dt>@Html.HiddenFor(m=>m.Voyages)</dt>
+                <dt>@Html.HiddenFor(m => m.Voyages)</dt>
             </dl>
 
 
@@ -39,7 +39,7 @@
                 <span>
                     <button formaction="@Url.Action("DeleteTrip", new { id = Model.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
                 </span>
-                
+
             </div>
 
         </fieldset>

@@ -25,12 +25,12 @@
         <fieldset class="border rounded shadow p-2">
             <div class="form-group">
                 @Html.LabelFor(m => m.TripModel.RouteId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.TripModel.RouteId, Model.RouteSelectList,"---------", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.TripModel.RouteId, Model.RouteSelectList, "---------", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.TripModel.RouteId, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.TripModel.BusId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.TripModel.BusId, Model.BusSelectList,"---------", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.TripModel.BusId, Model.BusSelectList, "---------", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.TripModel.BusId, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">

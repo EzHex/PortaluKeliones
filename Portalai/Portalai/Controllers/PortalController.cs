@@ -90,14 +90,14 @@ public class PortalController : Controller
         return RedirectToAction("ShowPortals");
     }
     
-    public async Task<ActionResult> ShowCreateForm()
+    public Task<ActionResult> ShowCreateForm()
     {
-        return RedirectToAction("ShowPortalReservation");
+        return Task.FromResult<ActionResult>(RedirectToAction("ShowPortalReservation"));
     }
     
-    public async Task<ActionResult> ShowDeleteConfirmForm()
+    public Task<ActionResult> ShowDeleteConfirmForm()
     {
-        return RedirectToAction("ShowPortalReservation");
+        return Task.FromResult<ActionResult>(RedirectToAction("ShowPortalReservation"));
     }
     
     public async Task<ActionResult> ShowPortalReservation()
@@ -109,8 +109,8 @@ public class PortalController : Controller
 
     public async Task<ActionResult> PostReservation(Portal portal)
     {
-        ModelState["Complaints"].ValidationState = ModelValidationState.Valid;
-        ModelState["Complaints"].Errors.Clear();
+        ModelState["Complaints"]!.ValidationState = ModelValidationState.Valid;
+        ModelState["Complaints"]!.Errors.Clear();
         
         switch (portal.Status)
         {

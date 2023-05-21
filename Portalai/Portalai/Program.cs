@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Portalai;
 
 var builder = WebApplication.CreateBuilder(args);
 

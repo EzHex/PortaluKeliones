@@ -34,7 +34,7 @@
             <p class="text-danger">@ViewBag.Error9</p>
         </div>
     }
-    @if ((TempData.Peek("IsReviewPosted") as bool?) == false)
+    @if (TempData.Peek("IsReviewPosted") as bool? == false)
     {
         <div class="container-fluid d-flex justify-content-center">
             @using (Html.BeginForm("PostReview", "Route", FormMethod.Post))

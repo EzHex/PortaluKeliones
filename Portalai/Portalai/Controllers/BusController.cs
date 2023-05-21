@@ -87,11 +87,11 @@ public class BusController : Controller
         }
     }
     
-    public async Task<ActionResult> ShowCreateForm()
+    public Task<ActionResult> ShowCreateForm()
     {
         var bus = new Bus();
 
-        return View("BusCreate", bus);
+        return Task.FromResult<ActionResult>(View("BusCreate", bus));
     }
     
     [HttpPost]
@@ -135,9 +135,9 @@ public class BusController : Controller
         return RedirectToAction("ShowBusesList");
     }
 
-    public async Task<ActionResult> ShowBusDelete(Bus bus)
+    public Task<ActionResult> ShowBusDelete(Bus bus)
     {
-        return View("BusDelete", bus);
+        return Task.FromResult<ActionResult>(View("BusDelete", bus));
     }
 
     [HttpPost]

@@ -27,17 +27,21 @@
 
             <dt>@Html.DisplayNameFor(m => m.Status)</dt>
             <dd>@Html.DisplayFor(m => m.Status)</dd>
-            
-             <dt>@Html.DisplayNameFor(m => m.Portal)</dt>
-             <dd>@Html.DisplayFor(m => m.Portal.Id)</dd>
-            
-             <dt>@Html.DisplayNameFor(m => m.User)</dt>
-             <dd>@Html.DisplayFor(m => m.User.Id)</dd>
-            
+
+            <dt>@Html.DisplayNameFor(m => m.Portal)</dt>
+            <dd>@Html.DisplayFor(m => m.Portal.Id)</dd>
+
+            <dt>@Html.DisplayNameFor(m => m.User)</dt>
+            <dd>@Html.DisplayFor(m => m.User.Id)</dd>
+
         </dl>
     </fieldset>
 </div>
 <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <div style="padding-right:5px;"> <a href="@Url.Action("ShowEditStateForm", new { id = Model.Id })" class="btn btn-secondary">Keisti būseną</a></div>
-    <div style="margin-left:5px;"><a href="@Url.Action("ShowDeleteConfirmForm", new { id = Model.Id })" class="btn btn-danger">Šalinti</a></div>
+    <div style="padding-right:5px;">
+        <a href="@Url.Action("ShowEditStateForm", new { id = Model.Id })" class="btn btn-secondary">Keisti būseną</a>
+    </div>
+    <div style="margin-left:5px;">
+        <a href="@Url.Action("ShowDeleteConfirmForm", new { id = Model.Id })" class="btn btn-danger">Šalinti</a>
+    </div>
 </div>

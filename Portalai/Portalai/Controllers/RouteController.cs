@@ -473,7 +473,7 @@ namespace Portalai.Controllers
                 timeBeforeBreak = Convert.ToDouble(form["TimeBeforeBreak"]);
                 breakTime = Convert.ToDouble(form["BreakTime"]);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 ViewBag.Error5 = "Netinkamas skaičiaus formatas";
                 return View("RoutePlan", places);
@@ -608,7 +608,7 @@ namespace Portalai.Controllers
             {
                 rating = Convert.ToDouble(form["Rating"]);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 ViewBag.Error8 = "Netinkamas skaičiaus formatas";
                 return View("RoutePlan", places);
@@ -653,8 +653,6 @@ namespace Portalai.Controllers
             
             int departureCityId = 0;
             int arrivalCityId = 0;
-            DateTime departureDate = DateTime.Now;
-            DateTime arrivalDate = DateTime.Now;
 
             if (form.ContainsKey("departureCity"))
             {

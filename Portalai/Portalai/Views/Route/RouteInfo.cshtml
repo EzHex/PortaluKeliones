@@ -23,7 +23,7 @@
             <dd>@Html.DisplayFor(m => m.Title)</dd>
         </dl>
         <dl>
-            @foreach(var Voyage in Model.RouteVoyages)
+            @foreach (var Voyage in Model.RouteVoyages)
             {
                 <div class="d-flex justify-content-center justify-content-between">
                     <div class="col">@Html.DisplayFor(m => Voyage.Order)</div>

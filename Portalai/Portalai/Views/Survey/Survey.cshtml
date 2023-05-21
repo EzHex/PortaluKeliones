@@ -42,8 +42,8 @@
                         <dd>@Html.DisplayFor(m => m.Status)</dd>
                     </div>
                     <div>
-                        <button href="@Url.Action("ChangeState", new {Model})" class="btn btn-primary" @(Model.Status.ToString() == "Active" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Aktyvuoti</button>
-                        <button href="@Url.Action("ChangeState", new {Model})" class="btn btn-danger" @(Model.Status.ToString() == "Created" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Baigti</button>
+                        <button href="@Url.Action("ChangeState", new { Model })" class="btn btn-primary" @(Model.Status.ToString() == "Active" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Aktyvuoti</button>
+                        <button href="@Url.Action("ChangeState", new { Model })" class="btn btn-danger" @(Model.Status.ToString() == "Created" || Model.Status.ToString() == "Closed" ? "disabled" : "")>Baigti</button>
                     </div>
                     <h2 style="text-align: center">--------------- Klausimai --------------</h2>
                 </dl>
@@ -60,12 +60,12 @@
                             <tr>
                                 <td>
                                     <ul>
-                                        @foreach (var option in question.SurveyQuestionOptions)
-                                        {
-                                            <ul>
-                                                @Html.DisplayFor(modelItem => option.Text)
-                                            </ul>
-                                        }
+                                        @* @foreach (var option in question.SurveyQuestionOptions) *@
+                                        @* { *@
+                                        @*     $1$ <ul> #1# *@
+                                        @*     $1$     @Html.DisplayFor(modelItem => option.Text) #1# *@
+                                        @*     $1$ </ul> #1# *@
+                                        @* } *@
                                     </ul>
                                 </td>
                             </tr>
@@ -76,10 +76,10 @@
         }
     }
 
-/*Jeigu klientas*/
-    else if (2 > 0)
+    /*Jeigu klientas*/
+    @if (2 > 0)
     {
-        @using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
+        using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
         {
             <div style="min-width: 500px;">
                 <div class="text-danger">

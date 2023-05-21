@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Portalai.Migrations
 {
     [DbContext(typeof(PortalsDbContext))]
-    [Migration("20230517230009_SquashRoutesVoyages")]
-    partial class SquashRoutesVoyages
+    [Migration("20230521015657_SurveySeed")]
+    partial class SurveySeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,7 +81,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 3,
                             LicensePlate = "ABC 123",
-                            ManufactureDate = new DateTime(2018, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6113),
+                            ManufactureDate = new DateTime(2018, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8349),
                             Model = "Vivado",
                             Seats = 42,
                             Status = 0
@@ -92,7 +92,7 @@ namespace Portalai.Migrations
                             Brand = "Opel",
                             Fuel = 0,
                             LicensePlate = "BCA 234",
-                            ManufactureDate = new DateTime(2021, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6142),
+                            ManufactureDate = new DateTime(2021, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8381),
                             Model = "Vivado",
                             Seats = 54,
                             Status = 0
@@ -103,7 +103,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 1,
                             LicensePlate = "CDE 345",
-                            ManufactureDate = new DateTime(2016, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6144),
+                            ManufactureDate = new DateTime(2016, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8383),
                             Model = "Gaming",
                             Seats = 12,
                             Status = 0
@@ -114,7 +114,7 @@ namespace Portalai.Migrations
                             Brand = "Arnas",
                             Fuel = 4,
                             LicensePlate = "DEF 456",
-                            ManufactureDate = new DateTime(2011, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6148),
+                            ManufactureDate = new DateTime(2011, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8386),
                             Model = "Driving",
                             Seats = 34,
                             Status = 0
@@ -125,7 +125,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 1,
                             LicensePlate = "EFG 567",
-                            ManufactureDate = new DateTime(2009, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6150),
+                            ManufactureDate = new DateTime(2009, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8388),
                             Model = "Base",
                             Seats = 57,
                             Status = 0
@@ -136,7 +136,7 @@ namespace Portalai.Migrations
                             Brand = "Mad Lions",
                             Fuel = 4,
                             LicensePlate = "FGH 678",
-                            ManufactureDate = new DateTime(2015, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6152),
+                            ManufactureDate = new DateTime(2015, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8390),
                             Model = "Express",
                             Seats = 86,
                             Status = 0
@@ -147,7 +147,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "GHI 789",
-                            ManufactureDate = new DateTime(2017, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6154),
+                            ManufactureDate = new DateTime(2017, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8392),
                             Model = "Driving",
                             Seats = 56,
                             Status = 0
@@ -158,7 +158,7 @@ namespace Portalai.Migrations
                             Brand = "Mode",
                             Fuel = 0,
                             LicensePlate = "JKL 890",
-                            ManufactureDate = new DateTime(2022, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6156),
+                            ManufactureDate = new DateTime(2022, 5, 21, 4, 56, 57, 121, DateTimeKind.Local).AddTicks(8394),
                             Model = "Trolling",
                             Seats = 21,
                             Status = 0
@@ -1004,6 +1004,17 @@ namespace Portalai.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Ši apklausa skirta išsiašikinti vienam ir visam kaip žmonės valgo šaltibarščius.",
+                            EndDate = new DateTime(2023, 6, 4, 4, 35, 52, 856, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2023, 5, 21, 4, 35, 52, 856, DateTimeKind.Unspecified),
+                            Status = 0,
+                            Title = "Šaltibarščių valgymo ypatumai"
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.SurveyAnswer", b =>
@@ -1056,6 +1067,35 @@ namespace Portalai.Migrations
                     b.HasIndex("SurveyId");
 
                     b.ToTable("SurveyQuestions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsRequired = false,
+                            Order = 0,
+                            Question = "Ar pučiate valgydami šaltibarščius ?",
+                            SurveyId = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsRequired = false,
+                            Order = 0,
+                            Question = "Kaip dažnai valgote šaltibarščius ?",
+                            SurveyId = 1,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsRequired = false,
+                            Order = 0,
+                            Question = "Kaip galėtumėme pagerinti šią apklausą ?",
+                            SurveyId = 1,
+                            Type = 0
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.SurveyQuestionOption", b =>
@@ -1065,9 +1105,6 @@ namespace Portalai.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
 
                     b.Property<int>("SurveyQuestionId")
                         .HasColumnType("int");
@@ -1081,6 +1118,50 @@ namespace Portalai.Migrations
                     b.HasIndex("SurveyQuestionId");
 
                     b.ToTable("SurveyQuestionOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            SurveyQuestionId = 1,
+                            Text = "Taip"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SurveyQuestionId = 1,
+                            Text = "Ne"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            SurveyQuestionId = 2,
+                            Text = "Nevalgau"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            SurveyQuestionId = 2,
+                            Text = "Kartą į metus"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            SurveyQuestionId = 2,
+                            Text = "Retai"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            SurveyQuestionId = 2,
+                            Text = "Vasarą"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            SurveyQuestionId = 2,
+                            Text = "Šaltibarščiai tai mano gyvenimas"
+                        });
                 });
 
             modelBuilder.Entity("Portalai.Models.Ticket", b =>

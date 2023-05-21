@@ -1,9 +1,8 @@
 ﻿@model Survey
 @{
-	ViewBag.Title = "Apklausos kūrimas";
-	Layout = "_Layout";
+    ViewBag.Title = "Apklausos kūrimas";
+    Layout = "_Layout";
 }
-
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
     <span class="title">
         <h1>@ViewBag.Title</h1>
@@ -14,25 +13,22 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("postCreate","Survey", FormMethod.Post, new { style = "width:80%" }))
+    @using (Html.BeginForm("PostCreate", "Survey", FormMethod.Post, new { style = "width:80%" }))
     {
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        @Html.HiddenFor(m => m.Id)
-        @Html.HiddenFor(m => m.Status)
 
         <fieldset class="border rounded shadow p-2">
-	        <legend class="text-center">Apklausa</legend>
-	        <div class="form-group">
+            <legend class="text-center">Survey</legend>
+            <div class="form-group">
                 @Html.LabelFor(m => m.Title, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite apklausos pavadinimą" } })
                 @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Description, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control col-12" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
@@ -46,90 +42,188 @@
                 @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
             </div>
         </fieldset>
-        
+
         <fieldset class="border rounded shadow p-2" style="margin-top: 15px">
-		<div class="container-fluid d-flex d-row justify-content-between align-items-center" style="padding: 0px;margin-bottom: 10px;">
-			<span></span>
-			<legend style="width: unset; margin-bottom: 0px;">Klausimai</legend>
-			<button
-				name="add"
-				value="1"
-				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-				formaction="@Url.Action("postCreate", "Survey")#listEnd"
-				class="btn btn-info"
-				style="white-space: nowrap;"
-			><i class="fa-solid fa-plus"></i> Pridėti klausimą</button>
-		</div>
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center">
+                <span></span>
+                <legend>Questions</legend>
+                <button id="addQuestionButton" class="btn btn-info" style="white-space: nowrap;">
+                    <i class="fa-solid fa-plus"></i> Add question
+                </button>
+            </div>
 
-		<table class="table table-striped table-hover w-100">
-			<thead>
-				<tr>
-					<th>Klausimas</th>
-					<th>Tipas</th>
-					<th>Privalomumas</th>
-					<th>Eilės numeris</th>
-					<th style="width: 1px;"></th>
-					<th style="width: 1px;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				@for( var i = 0; i < Model.SurveyQuestions.Count; i++ ) {
-					<tr>
-						<td>
-							@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
-							@Html.HiddenFor(m => m.SurveyQuestions[i].Id)
+            <!-- Modify the table structure to include a separate tbody for each question -->
+            <table id="questionsTable" class="table table-striped table-hover w-100">
+                <thead>
+                <tr>
+                    <th>Klausimas</th>
+                    <th>Tipas</th>
+                    <th>Privalomumas</th>
+                    <th>Eilės numeris</th>
+                    <th style="width: 1px;"></th>
+                </tr>
+                </thead>
+                @for (var i = 0; i < Model.SurveyQuestions.Count; i++)
+                {
+                    <tbody>
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => Model.SurveyQuestions[i].Id)
+                            @Html.EditorFor(m => Model.SurveyQuestions[i].Question, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Question, "", new { @class = "text-danger" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => Model.SurveyQuestions[i].Type, new SelectList(Enum.GetValues(typeof(QuestionType))), new { @class = "form-control question-type-select" })
+                            @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Type, "", new { @class = "text-danger" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => Model.SurveyQuestions[i].IsRequired, new SelectList(new[] { true, false }), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].IsRequired, "", new { @class = "text-danger" })
+                        </td>
+                        <td>
+                            @Html.EditorFor(m => Model.SurveyQuestions[i].Order, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
+                        </td>
+                        <td>
+                            <button class="btn btn-success addOptionButton" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
+                                <i class="fa-solid fa-plus"></i> Add Option
+                            </button>
+                        </td>
+                    </tr>
+                    @for (var j = 0; j < Model.SurveyQuestions[i].SurveyQuestionOptions.Count; j++)
+                    {
+                        <tr class="optionRow" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
+                            <td colspan="4">
+                                @Html.HiddenFor(m => Model.SurveyQuestions[i].SurveyQuestionOptions[j].Id)
+                                @Html.EditorFor(m => Model.SurveyQuestions[i].SurveyQuestionOptions[j].Text, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].SurveyQuestionOptions[j].Text, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                <button class="btn btn-danger removeOptionButton">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                }
+            </table>
 
-							@Html.EditorFor(m => m.SurveyQuestions[i].Question, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Question, "", new { @class = "text-danger" })
-						</td>
-						<td>
-							@Html.DropDownListFor(m => m.SurveyQuestions[i].Type, new SelectList(Enum.GetValues(typeof(QuestionType)), Model.SurveyQuestions[i].Type), new { @class = "form-control" })
-							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Type, "", new { @class = "text-danger" })
-						</td>
-						<td>
-							@Html.DropDownListFor(m => m.SurveyQuestions[i].IsRequired, new SelectList(new []{true, false}), Model.SurveyQuestions[i].IsRequired)
-							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].IsRequired, "", new { @class = "text-danger" })
-						</td>
-						<td>
-							@Html.EditorFor(m => m.SurveyQuestions[i].Order, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(m => m.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
-						</td>
-						<td>
-							<button
-								name="add2"
-                            				value="1"
-                            				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-                            				formaction="@Url.Action("postCreate", "Survey")#listEnd"
-                            				class="btn btn-info"
-                            				style="white-space: nowrap;"
-                            			><i class="fa-solid fa-plus"></i>Variantas</button>
-						</td>
-						<td>
-							<button
-								name="remove"
-								value="@Model.SurveyQuestions[i].Id"
-								formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-								formaction="@Url.Action("postCreate", "Survey")#listEnd"
-								class="btn btn-danger"
-								style="white-space: nowrap;"
-							><i class="fa-solid fa-trash"></i> Šalinti</button>
-						</td>
-					</tr>
-				
-					/*----------------------------------------------------------------------------------------------*/
-				
-					/*----------------------------------------------------------------------------------------------*/
-				}
-			</tbody>
-		</table>
 
-		@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
-		<span id="listEnd"></span>
-		
-	</fieldset>
+            <span id="listEnd"></span>
+        </fieldset>
 
         <div class="container-fluid d-flex d-row justify-content-end">
-            <button name="save" value="1" class="btn btn-success"><i style="padding-right: 5px;" class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
+            <button name="save" value="1" formnovalidate class="btn btn-success">
+                <i style="padding-right: 5px;" class="fa-solid fa-floppy-disk"></i>Išsaugoti
+            </button>
         </div>
     }
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#addQuestionButton').click(function (event) {
+            event.preventDefault();
+            let questionIndex = $('#questionsTable tbody').length;
+
+            let newQuestionRow =
+                `<tbody>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="SurveyQuestions[${questionIndex}].Id" id="questionId_${questionIndex}" class="invisible" />
+                            <input type="text" name="SurveyQuestions[${questionIndex}].Question" class="form-control" />
+                            <span class="text-danger"></span>
+                        </td>
+                        <td>
+                            <select name="SurveyQuestions[${questionIndex}].Type" class="form-control question-type-select">
+                                @foreach (var questionType in Enum.GetValues(typeof(QuestionType)))
+                                {
+                                    <option value="@questionType">@questionType</option>
+                                }
+                            </select>
+                            <span class="text-danger"></span>
+                        </td>
+                        <td>
+                            <select name="SurveyQuestions[${questionIndex}].IsRequired" class="form-control">
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                            <span class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input type="text" name="SurveyQuestions[${questionIndex}].Order" class="form-control" />
+                            <span class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-success addOptionButton" data-question-index="${questionIndex}">
+                                <i class="fa-solid fa-plus"></i> Add Option
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>`;
+
+            $('#questionsTable').append(newQuestionRow);
+
+            let questionTypeSelect = $(`#questionsTable tbody:eq(${questionIndex}) .question-type-select`);
+            let addOptionButton = $(`#questionsTable tbody:eq(${questionIndex}) .addOptionButton`);
+
+            if (questionTypeSelect.val() === 'Open') {
+                addOptionButton.prop('disabled', true);
+            } else {
+                addOptionButton.prop('disabled', false);
+            }
+        });
+
+        $(document).on('click', '.addOptionButton', function (event) {
+            event.preventDefault();
+            console.log("addOptionButton clicked");
+            let questionIndex = $(this).data('question-index');
+            let optionIndex = $(`#questionsTable tbody:eq(${questionIndex}) .optionRow`).length;
+            console.log(`questionIndex: ${questionIndex}, optionIndex: ${optionIndex}`);
+
+            let newOptionRow =
+                `<tr class="optionRow">
+                    <td colspan="4">
+                        <input type="text" name="SurveyQuestions[${questionIndex}].SurveyQuestionOptions[${optionIndex}].Text" class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger removeOptionButton">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+
+            $(`#questionsTable tbody:eq(${questionIndex})`).append(newOptionRow);
+        });
+
+        $(document).on('click', '.removeOptionButton', function (event) {
+            event.preventDefault();
+            $(this).closest('.optionRow').remove();
+        });
+
+        $('.question-type-select').each(function () {
+            let questionType = $(this).val();
+            let addOptionButton = $(this).closest('tr').find('.addOptionButton');
+
+            if (questionType === 'Open') {
+                addOptionButton.prop('disabled', true);
+            } else {
+                addOptionButton.prop('disabled', false);
+            }
+        });
+
+        $(document).on('change', '.question-type-select', function () {
+            let questionType = $(this).val();
+            let addOptionButton = $(this).closest('tr').find('.addOptionButton');
+
+            if (questionType === 'Open') {
+                addOptionButton.prop('disabled', true);
+            } else {
+                addOptionButton.prop('disabled', false);
+            }
+        });
+    });
+</script>

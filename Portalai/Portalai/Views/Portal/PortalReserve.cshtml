@@ -18,47 +18,47 @@
 <div class="d-flex justify-content-center">
 
     <table class="entitylist table table-striped table-hover">
-            <thead>
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Longitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Latitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="text-md-start">
-                        @Html.DisplayFor(modelItem => item.Longitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
-                    </td>
-                    <td>
-                        @if (item.Status == PortalStatus.Reserved)
-                        {
-                            <div class="text-danger">
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </div>
-                        }
-                        else
-                        {
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @if (item.Status == PortalStatus.Reserved)
+                    {
+                        <div class="text-danger">
                             @Html.DisplayFor(modelItem => item.Status)
-                        }
-                    </td>
-                    <td class="text-md-end">
-                        <a href="@Url.Action("PostReservation", item)" class="btn btn-secondary">Rezervuoti</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Status)
+                    }
+                </td>
+                <td class="text-md-end">
+                    <a href="@Url.Action("PostReservation", item)" class="btn btn-secondary">Rezervuoti</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

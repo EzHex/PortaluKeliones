@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Portalai.Migrations
 {
-    public partial class SquashRoutesVoyages : Migration
+    public partial class SurveySquash : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Portals_PortalJunctions_PortalJunctionId",
+                table: "Portals");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Routes_Trips_TripId",
                 table: "Routes");
@@ -17,12 +21,28 @@ namespace Portalai.Migrations
                 name: "FK_RouteVoyages_Routes_RoutesId",
                 table: "RouteVoyages");
 
+            migrationBuilder.DropForeignKey(
+                name: "FK_SurveyQuestionOptions_QuestionAnswers_QuestionAnswerId",
+                table: "SurveyQuestionOptions");
+
             migrationBuilder.DropTable(
                 name: "PlaceRouteVoyage");
 
             migrationBuilder.DropIndex(
+                name: "IX_SurveyQuestionOptions_QuestionAnswerId",
+                table: "SurveyQuestionOptions");
+
+            migrationBuilder.DropIndex(
                 name: "IX_Routes_TripId",
                 table: "Routes");
+
+            migrationBuilder.DropColumn(
+                name: "Number",
+                table: "SurveyQuestionOptions");
+
+            migrationBuilder.DropColumn(
+                name: "QuestionAnswerId",
+                table: "SurveyQuestionOptions");
 
             migrationBuilder.DropColumn(
                 name: "ArrivalTime",
@@ -81,6 +101,21 @@ namespace Portalai.Migrations
                 nullable: false,
                 defaultValue: 0);
 
+            migrationBuilder.AddColumn<int>(
+                name: "SurveyAnswerId",
+                table: "QuestionAnswers",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "PortalJunctionId",
+                table: "Portals",
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
+
             migrationBuilder.AlterColumn<double>(
                 name: "Rating",
                 table: "EducationalRoutes",
@@ -89,19 +124,50 @@ namespace Portalai.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
+            migrationBuilder.AddColumn<int>(
+                name: "UserId",
+                table: "Complaints",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.CreateTable(
+                name: "QuestionAnswerSurveyQuestionOption",
+                columns: table => new
+                {
+                    QuestionAnswersId = table.Column<int>(type: "int", nullable: false),
+                    SurveyQuestionOptionsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionAnswerSurveyQuestionOption", x => new { x.QuestionAnswersId, x.SurveyQuestionOptionsId });
+                    table.ForeignKey(
+                        name: "FK_QuestionAnswerSurveyQuestionOption_QuestionAnswers_QuestionAnswersId",
+                        column: x => x.QuestionAnswersId,
+                        principalTable: "QuestionAnswers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_QuestionAnswerSurveyQuestionOption_SurveyQuestionOptions_SurveyQuestionOptionsId",
+                        column: x => x.SurveyQuestionOptionsId,
+                        principalTable: "SurveyQuestionOptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
             migrationBuilder.InsertData(
                 table: "Buses",
                 columns: new[] { "Id", "Brand", "Fuel", "LicensePlate", "ManufactureDate", "Model", "Seats", "Status" },
                 values: new object[,]
                 {
-                    { 1, "Opel", 3, "ABC 123", new DateTime(2018, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6113), "Vivado", 42, 0 },
-                    { 2, "Opel", 0, "BCA 234", new DateTime(2021, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6142), "Vivado", 54, 0 },
-                    { 3, "Arnas", 1, "CDE 345", new DateTime(2016, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6144), "Gaming", 12, 0 },
-                    { 4, "Arnas", 4, "DEF 456", new DateTime(2011, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6148), "Driving", 34, 0 },
-                    { 5, "Mad Lions", 1, "EFG 567", new DateTime(2009, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6150), "Base", 57, 0 },
-                    { 6, "Mad Lions", 4, "FGH 678", new DateTime(2015, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6152), "Express", 86, 0 },
-                    { 7, "Mode", 0, "GHI 789", new DateTime(2017, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6154), "Driving", 56, 0 },
-                    { 8, "Mode", 0, "JKL 890", new DateTime(2022, 5, 18, 2, 0, 9, 456, DateTimeKind.Local).AddTicks(6156), "Trolling", 21, 0 }
+                    { 1, "Opel", 3, "ABC 123", new DateTime(2018, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4145), "Vivado", 42, 0 },
+                    { 2, "Opel", 0, "BCA 234", new DateTime(2021, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4188), "Vivado", 54, 0 },
+                    { 3, "Arnas", 1, "CDE 345", new DateTime(2016, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4191), "Gaming", 12, 0 },
+                    { 4, "Arnas", 4, "DEF 456", new DateTime(2011, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4194), "Driving", 34, 0 },
+                    { 5, "Mad Lions", 1, "EFG 567", new DateTime(2009, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4197), "Base", 57, 0 },
+                    { 6, "Mad Lions", 4, "FGH 678", new DateTime(2015, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4199), "Express", 86, 0 },
+                    { 7, "Mode", 0, "GHI 789", new DateTime(2017, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4202), "Driving", 56, 0 },
+                    { 8, "Mode", 0, "JKL 890", new DateTime(2022, 5, 21, 4, 19, 58, 780, DateTimeKind.Local).AddTicks(4205), "Trolling", 21, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -241,6 +307,44 @@ namespace Portalai.Migrations
                 table: "RouteVoyages",
                 column: "DeparturePlaceId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionAnswers_SurveyAnswerId",
+                table: "QuestionAnswers",
+                column: "SurveyAnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Complaints_UserId",
+                table: "Complaints",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionAnswerSurveyQuestionOption_SurveyQuestionOptionsId",
+                table: "QuestionAnswerSurveyQuestionOption",
+                column: "SurveyQuestionOptionsId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Complaints_Users_UserId",
+                table: "Complaints",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Portals_PortalJunctions_PortalJunctionId",
+                table: "Portals",
+                column: "PortalJunctionId",
+                principalTable: "PortalJunctions",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_QuestionAnswers_SurveyAnswers_SurveyAnswerId",
+                table: "QuestionAnswers",
+                column: "SurveyAnswerId",
+                principalTable: "SurveyAnswers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.NoAction);
+
             migrationBuilder.AddForeignKey(
                 name: "FK_RouteVoyages_Places_ArrivalPlaceId",
                 table: "RouteVoyages",
@@ -271,7 +375,7 @@ namespace Portalai.Migrations
                 column: "RouteId",
                 principalTable: "Routes",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Voyages_Trips_TripId",
@@ -279,11 +383,23 @@ namespace Portalai.Migrations
                 column: "TripId",
                 principalTable: "Trips",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Complaints_Users_UserId",
+                table: "Complaints");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Portals_PortalJunctions_PortalJunctionId",
+                table: "Portals");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_QuestionAnswers_SurveyAnswers_SurveyAnswerId",
+                table: "QuestionAnswers");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_RouteVoyages_Places_ArrivalPlaceId",
                 table: "RouteVoyages");
@@ -304,6 +420,9 @@ namespace Portalai.Migrations
                 name: "FK_Voyages_Trips_TripId",
                 table: "Voyages");
 
+            migrationBuilder.DropTable(
+                name: "QuestionAnswerSurveyQuestionOption");
+
             migrationBuilder.DropIndex(
                 name: "IX_Voyages_TripId",
                 table: "Voyages");
@@ -319,6 +438,14 @@ namespace Portalai.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_RouteVoyages_DeparturePlaceId",
                 table: "RouteVoyages");
+
+            migrationBuilder.DropIndex(
+                name: "IX_QuestionAnswers_SurveyAnswerId",
+                table: "QuestionAnswers");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Complaints_UserId",
+                table: "Complaints");
 
             migrationBuilder.DeleteData(
                 table: "Buses",
@@ -790,6 +917,14 @@ namespace Portalai.Migrations
                 name: "Duration",
                 table: "RouteVoyages");
 
+            migrationBuilder.DropColumn(
+                name: "SurveyAnswerId",
+                table: "QuestionAnswers");
+
+            migrationBuilder.DropColumn(
+                name: "UserId",
+                table: "Complaints");
+
             migrationBuilder.RenameColumn(
                 name: "RouteId",
                 table: "RouteVoyages",
@@ -799,6 +934,19 @@ namespace Portalai.Migrations
                 name: "IX_RouteVoyages_RouteId",
                 table: "RouteVoyages",
                 newName: "IX_RouteVoyages_RoutesId");
+
+            migrationBuilder.AddColumn<int>(
+                name: "Number",
+                table: "SurveyQuestionOptions",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<int>(
+                name: "QuestionAnswerId",
+                table: "SurveyQuestionOptions",
+                type: "int",
+                nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "ArrivalTime",
@@ -820,6 +968,16 @@ namespace Portalai.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "PortalJunctionId",
+                table: "Portals",
+                type: "int",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
                 name: "Rating",
@@ -854,6 +1012,11 @@ namespace Portalai.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_SurveyQuestionOptions_QuestionAnswerId",
+                table: "SurveyQuestionOptions",
+                column: "QuestionAnswerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Routes_TripId",
                 table: "Routes",
                 column: "TripId");
@@ -862,6 +1025,14 @@ namespace Portalai.Migrations
                 name: "IX_PlaceRouteVoyage_RouteVoyagesId",
                 table: "PlaceRouteVoyage",
                 column: "RouteVoyagesId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Portals_PortalJunctions_PortalJunctionId",
+                table: "Portals",
+                column: "PortalJunctionId",
+                principalTable: "PortalJunctions",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Routes_Trips_TripId",
@@ -878,6 +1049,13 @@ namespace Portalai.Migrations
                 principalTable: "Routes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_SurveyQuestionOptions_QuestionAnswers_QuestionAnswerId",
+                table: "SurveyQuestionOptions",
+                column: "QuestionAnswerId",
+                principalTable: "QuestionAnswers",
+                principalColumn: "Id");
         }
     }
 }

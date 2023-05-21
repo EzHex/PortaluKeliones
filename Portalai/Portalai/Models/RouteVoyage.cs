@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MessagePack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,32 +8,6 @@ namespace Portalai.Models;
 
 public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
 {
-    public int Id { get; set; }
-    
-    [DisplayName("Eilės numeris")]
-    public int Order { get; set; }
-    
-    [DisplayName("Trukmė (min)")]
-    [Range(0,300)]
-    public int Duration { get; set; }
-    
-    public int RouteId { get; set; }
-    [ForeignKey("RouteId")]
-    public virtual Route Route { get; set; }
-    
-    public virtual List<Voyage>? Voyage { get; set; }
-    
-    public int ArrivalPlaceId { get; set; }
-    
-    [ForeignKey("ArrivalPlaceId")]
-    public virtual Place Arrival { get; set; }
-
-    public int DeparturePlaceId { get; set; }
-    
-    [ForeignKey("DeparturePlaceId")]
-    public virtual Place Departure { get; set; }
-
-
     public RouteVoyage(int order, int duration, Route route)
     {
         Order = order;
@@ -42,7 +15,31 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
         Route = route;
     }
 
-    public RouteVoyage() { }
+    public RouteVoyage()
+    {
+    }
+
+    public int Id { get; set; }
+
+    [DisplayName("Eilės numeris")] public int Order { get; set; }
+
+    [DisplayName("Trukmė (min)")]
+    [Range(0, 300)]
+    public int Duration { get; set; }
+
+    public int RouteId { get; set; }
+
+    [ForeignKey("RouteId")] public virtual Route Route { get; set; }
+
+    public virtual List<Voyage>? Voyage { get; set; }
+
+    public int ArrivalPlaceId { get; set; }
+
+    [ForeignKey("ArrivalPlaceId")] public virtual Place Arrival { get; set; }
+
+    public int DeparturePlaceId { get; set; }
+
+    [ForeignKey("DeparturePlaceId")] public virtual Place Departure { get; set; }
 
     public void Configure(EntityTypeBuilder<RouteVoyage> builder)
     {

@@ -56,7 +56,7 @@ public class ComplaintController : Controller
             TempData["status"] = "Įrašas sėkmingai pašalintas";
             return RedirectToAction("ShowComplaints");
         }
-        catch (Exception e)
+        catch (Exception)
         {
             ViewData["deletionNotPermitted"] = true;
 

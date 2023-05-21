@@ -27,11 +27,11 @@ public class PlaceController : Controller
         return View("PlacesList", places);
     }
 
-    public async Task<ActionResult> ShowCreateForm()
+    public Task<ActionResult> ShowCreateForm()
     {
         var place = new Place();
 
-        return View("PlaceCreate",place);
+        return Task.FromResult<ActionResult>(View("PlaceCreate",place));
     }
 
     [HttpPost]
@@ -79,9 +79,9 @@ public class PlaceController : Controller
         return View("PlaceEdit", newPlace);
     }
 
-    public async Task<ActionResult> ShowDeleteConfirmForm(Place place)
+    public Task<ActionResult> ShowDeleteConfirmForm(Place place)
     {
-        return View("PlaceDelete", place);
+        return Task.FromResult<ActionResult>(View("PlaceDelete", place));
     }
 
     [HttpPost]
@@ -97,7 +97,7 @@ public class PlaceController : Controller
             TempData["status"] = "Įrašas sėkmingai pašalintas";
             return RedirectToAction("ShowPlaces");
         }
-        catch (Exception e)
+        catch (Exception)
         {
             ViewData["deletionNotPermitted"] = true;
 
@@ -107,8 +107,8 @@ public class PlaceController : Controller
         }
     }
 
-    public async Task<ActionResult> ShowOnePlace(Place place) 
+    public Task<ActionResult> ShowOnePlace(Place place) 
     {
-        return View("PlaceInfo", place);
+        return Task.FromResult<ActionResult>(View("PlaceInfo", place));
     }
 }

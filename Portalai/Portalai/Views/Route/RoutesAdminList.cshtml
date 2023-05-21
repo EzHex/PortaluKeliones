@@ -17,27 +17,27 @@
 <div class="d-flex justify-content-center">
     <table class="entitylist table table-striped table-hover">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th></th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="text-md-start">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td class="text-md-end">
-                        <a href="@Url.Action("ShowOneRoute", new { item.Id })" class="btn btn-secondary">Išsami informacija</a>
-                        <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
-                        <a href="@Url.Action("ShowDeleteConfirmForm", item)" class="btn btn-danger">Šalinti</a>
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="text-md-end">
+                    <a href="@Url.Action("ShowOneRoute", new { item.Id })" class="btn btn-secondary">Išsami informacija</a>
+                    <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
+                    <a href="@Url.Action("ShowDeleteConfirmForm", item)" class="btn btn-danger">Šalinti</a>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>
