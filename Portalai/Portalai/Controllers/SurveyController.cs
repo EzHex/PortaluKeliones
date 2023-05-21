@@ -176,28 +176,75 @@ public class SurveyController : Controller
         foreach (var question in survey.SurveyQuestions)
         {
             var isOptionSelected = false;
-            foreach (var option in question.SurveyQuestionOptions)
+            if (question.Type == QuestionType.MultipleChoice)
             {
-                if (!form.ContainsKey(option.Id.ToString()))
+                foreach (var option in question.SurveyQuestionOptions)
+                {
+                    if (!form.ContainsKey(option.Id.ToString()))
+                        continue;
+
+                    isOptionSelected = true;
+
+                    var answer = new QuestionAnswer();
+                    answer.SurveyQuestion = question;
+                    answer.SurveyQuestionOptions.Add(option);
+                    answer.Answer = form[option.Id.ToString()];
+
+                    var surveyAnswer = new SurveyAnswer();
+                    surveyAnswer.AnswerDate = DateTime.Now;
+                    surveyAnswer.SurveyId = survey.Id;
+                    survey.SurveyAnswers.Add(surveyAnswer);
+                    await _context.SurveyAnswers.AddAsync(surveyAnswer);
+
+                    answer.SurveyAnswer = surveyAnswer;
+                    await _context.QuestionAnswers.AddAsync(answer);
+                }
+            }
+            else if (question.Type == QuestionType.SingleChoice)
+            {
+                foreach (var option in question.SurveyQuestionOptions)
+                {
+                    if (!form.ContainsKey("question_"+option.Id.ToString()))
+                        continue;
+
+                    isOptionSelected = true;
+                    
+                    var answer = new QuestionAnswer();
+                    answer.SurveyQuestion = question;
+                    answer.SurveyQuestionOptions.Add(option);
+                    answer.Answer = form["question_"+option.Id.ToString()];
+                    
+                    var surveyAnswer = new SurveyAnswer();
+                    surveyAnswer.AnswerDate = DateTime.Now;
+                    surveyAnswer.SurveyId = survey.Id;
+                    survey.SurveyAnswers.Add(surveyAnswer);
+                    await _context.SurveyAnswers.AddAsync(surveyAnswer);
+                    
+                    answer.SurveyAnswer = surveyAnswer;
+                    await _context.QuestionAnswers.AddAsync(answer);
+                }
+            }
+            else
+            {
+                if (!form.ContainsKey(question.Id.ToString()))
                     continue;
-
+                
                 isOptionSelected = true;
-
+                
                 var answer = new QuestionAnswer();
                 answer.SurveyQuestion = question;
-                answer.SurveyQuestionOptions.Add(option);
-                answer.Answer = form[option.Id.ToString()];
-
+                answer.Answer = form[question.Id.ToString()];
+                
                 var surveyAnswer = new SurveyAnswer();
                 surveyAnswer.AnswerDate = DateTime.Now;
                 surveyAnswer.SurveyId = survey.Id;
                 survey.SurveyAnswers.Add(surveyAnswer);
                 await _context.SurveyAnswers.AddAsync(surveyAnswer);
-
+                
                 answer.SurveyAnswer = surveyAnswer;
                 await _context.QuestionAnswers.AddAsync(answer);
             }
-
+            
             if (!isOptionSelected)
             {
                 ModelState.AddModelError("",

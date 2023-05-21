@@ -76,7 +76,7 @@
         }
     }
 
-    /*Jeigu klientas*/
+    @*Jeigu klientas*@
     @if (2 > 0)
     {
         using (Html.BeginForm("PostAnswers", "Survey", Model, FormMethod.Post))
@@ -95,18 +95,46 @@
                                     <h3>@question.Question</h3>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <ul>
-                                        @foreach (var option in question.SurveyQuestionOptions)
-                                        {
-                                            <ul>
-                                                <input type="checkbox" name="@option.Id" value="@option.Text"/> @option.Text
-                                            </ul>
-                                        }
-                                    </ul>
-                                </td>
-                            </tr>
+                            @if (question.Type == QuestionType.MultipleChoice)
+                            {
+                                //multiple choice
+                                <tr>
+                                    <td>
+                                        <ul>
+                                            @foreach (var option in question.SurveyQuestionOptions)
+                                            {
+                                                <ul>
+                                                    <input type="checkbox" name="@option.Id" value="@option.Text"/> @option.Text
+                                                </ul>
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+                            } else if (question.Type == QuestionType.SingleChoice)
+                            {
+                                // single choice
+                                <tr>
+                                    <td>
+                                        <ul>
+                                            @foreach (var option in question.SurveyQuestionOptions)
+                                            {
+                                                <ul>
+                                                    <input type="radio" name="question_@question.Id" value="@option.Text"/> @option.Text
+                                                </ul>
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                // open question
+                                <tr>
+                                    <td>
+                                        <textarea name="@question.Id" rows="4" cols="50"></textarea>
+                                    </td>
+                                </tr>
+                            }
                         </table>
                     </div>
                 }
