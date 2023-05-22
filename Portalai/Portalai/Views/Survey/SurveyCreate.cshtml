@@ -85,6 +85,9 @@
                             @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
                         </td>
                         <td>
+                             <button class="btn btn-danger removeQuestionButton">
+                                 <i class="fa-solid fa-trash"></i> Šalinti klausimą
+                             </button>
                             <button class="btn btn-success addOptionButton" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
                                 <i class="fa-solid fa-plus"></i> Pridėti variantą
                             </button>
@@ -157,8 +160,11 @@
                             <span class="text-danger"></span>
                         </td>
                         <td>
+                            <button class="btn btn-danger removeQuestionButton" data-question-index="${questionIndex}">
+                                <i class="fa-solid fa-trash"></i> Šalinti klausimą
+                            </button>
                             <button class="btn btn-success addOptionButton" data-question-index="${questionIndex}">
-                                <i class="fa-solid fa-plus"></i> Add Option
+                                <i class="fa-solid fa-plus"></i> Pridėti variantą
                             </button>
                         </td>
                     </tr>
@@ -202,6 +208,12 @@
         $(document).on('click', '.removeOptionButton', function (event) {
             event.preventDefault();
             $(this).closest('.optionRow').remove();
+        });
+        
+        /*Pridejau vicky*/
+        $(document).on('click', '.removeQuestionButton', function (event) {
+                event.preventDefault();
+                $(this).closest('tbody').remove();
         });
 
         $('.question-type-select').each(function () {

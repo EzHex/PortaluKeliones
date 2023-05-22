@@ -342,10 +342,11 @@ public class SurveyController : Controller
                     }
                 }
             }
-
+            
+            survey.Status = surveyGet.Status;
             // Detach the existing surveyGet entity from the context
             _context.Entry(surveyGet).State = EntityState.Detached;
-
+           
             // Attach the modified survey entity to the context and mark it as modified
             _context.Surveys.Update(survey);
 
