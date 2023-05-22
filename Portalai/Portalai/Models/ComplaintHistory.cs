@@ -17,6 +17,7 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
     [DisplayName("Komentaras")]
     public string Comment { get; set; }
     
+    public int ComplaintId { get; set; }
     public Complaint Complaint { get; set; }
 
     public ComplaintHistory(DateTime date, ComplaintStatus status, string comment, Complaint complaint)
@@ -26,7 +27,7 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
         Comment = comment;
         Complaint = complaint;
     }
-
+    
     public ComplaintHistory()
     {
     }

@@ -209,49 +209,53 @@ public class PortalsDbContext : DbContext
             new Bus
             {
                 Id = 1, LicensePlate = "ABC 123", Brand = "Opel", Model = "Vivado",
-                ManufactureDate = DateTime.Now.AddYears(-5), Fuel = FuelTypes.Diesel, Seats = 42,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-5), Fuel = FuelTypes.Diesel, Seats = 42,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 2, LicensePlate = "BCA 234", Brand = "Opel", Model = "Vivado",
-                ManufactureDate = DateTime.Now.AddYears(-2), Fuel = FuelTypes.Petrol, Seats = 54,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-2), Fuel = FuelTypes.Petrol, Seats = 54,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 3, LicensePlate = "CDE 345", Brand = "Arnas", Model = "Gaming",
-                ManufactureDate = DateTime.Now.AddYears(-7), Fuel = FuelTypes.PetrolElectricity, Seats = 12,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-7), Fuel = FuelTypes.PetrolElectricity,
+                Seats = 12,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 4, LicensePlate = "DEF 456", Brand = "Arnas", Model = "Driving",
-                ManufactureDate = DateTime.Now.AddYears(-12), Fuel = FuelTypes.Electricity, Seats = 34,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-12), Fuel = FuelTypes.Electricity,
+                Seats = 34,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 5, LicensePlate = "EFG 567", Brand = "Mad Lions", Model = "Base",
-                ManufactureDate = DateTime.Now.AddYears(-14), Fuel = FuelTypes.PetrolElectricity, Seats = 57,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-14), Fuel = FuelTypes.PetrolElectricity,
+                Seats = 57,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 6, LicensePlate = "FGH 678", Brand = "Mad Lions", Model = "Express",
-                ManufactureDate = DateTime.Now.AddYears(-8), Fuel = FuelTypes.Electricity, Seats = 86,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-8), Fuel = FuelTypes.Electricity,
+                Seats = 86,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 7, LicensePlate = "GHI 789", Brand = "Mode", Model = "Driving",
-                ManufactureDate = DateTime.Now.AddYears(-6), Fuel = FuelTypes.Petrol, Seats = 56,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-6), Fuel = FuelTypes.Petrol, Seats = 56,
                 Status = BusStatus.Garage
             },
             new Bus
             {
                 Id = 8, LicensePlate = "JKL 890", Brand = "Mode", Model = "Trolling",
-                ManufactureDate = DateTime.Now.AddYears(-1), Fuel = FuelTypes.Petrol, Seats = 21,
+                ManufactureDate = Convert.ToDateTime("2023-05-22").AddYears(-5), Fuel = FuelTypes.Petrol, Seats = 21,
                 Status = BusStatus.Garage
             }
         };
@@ -308,21 +312,24 @@ public class PortalsDbContext : DbContext
                 Id = 1,
                 SurveyId = survey.Id,
                 Question = "Ar pučiate valgydami šaltibarščius ?",
-                Type = QuestionType.SingleChoice
+                Type = QuestionType.SingleChoice,
+                Order = 1
             },
             new SurveyQuestion
             {
                 Id = 2,
                 SurveyId = survey.Id,
                 Question = "Kaip dažnai valgote šaltibarščius ?",
-                Type = QuestionType.MultipleChoice
+                Type = QuestionType.MultipleChoice,
+                Order = 2
             },
             new SurveyQuestion
             {
                 Id = 3,
                 SurveyId = survey.Id,
                 Question = "Kaip galėtumėme pagerinti šią apklausą ?",
-                Type = QuestionType.Open
+                Type = QuestionType.Open,
+                Order = 3
             },
         };
 
@@ -375,5 +382,135 @@ public class PortalsDbContext : DbContext
         };
 
         modelBuilder.Entity<SurveyQuestionOption>().HasData(surveyQuestionOptions);
+
+        //Add portals to context
+        var portals = new[]
+        {
+            new Portal
+            {
+                Id = 1,
+                Name = "Vilnius",
+                Longitude = 0,
+                Latitude = 0,
+                CurrentLiquidLevel = 2,
+                LiquidCapacity = 3,
+                Status = PortalStatus.NotWorking
+            },
+            new Portal
+            {
+                Id = 2,
+                Name = "Kaunas",
+                Longitude = 1,
+                Latitude = 1,
+                CurrentLiquidLevel = 10,
+                LiquidCapacity = 30,
+                Status = PortalStatus.InMaintenance
+            },
+            new Portal
+            {
+                Id = 3,
+                Name = "Klaipeda",
+                Longitude = 2,
+                Latitude = 2,
+                CurrentLiquidLevel = 20,
+                LiquidCapacity = 20,
+                Status = PortalStatus.Working
+            },
+            new Portal
+            {
+                Id = 4,
+                Name = "Panevezys",
+                Longitude = -3,
+                Latitude = 3,
+                CurrentLiquidLevel = 20,
+                LiquidCapacity = 20,
+                Status = PortalStatus.Reserved
+            }
+        };
+
+        modelBuilder.Entity<Portal>().HasData(portals);
+
+        //Create complaint
+
+        var complaints = new[]
+        {
+            new Complaint
+            {
+                Id = 1,
+                SubmisionDate = Convert.ToDateTime("2023-05-04 04:35:52.8560000"),
+                Description = "Portalas Vilnius yra nepasiekiamas",
+                Status = ComplaintStatus.Submited,
+                PortalId = portals[0].Id,
+                UserId = users[0].Id,
+            },
+            new Complaint
+            {
+                Id = 2,
+                SubmisionDate = Convert.ToDateTime("2023-05-04 04:35:52.8560000"),
+                Description = "Nu neveikia tas Vilniaus portalas nesamone kazkoke ce",
+                Status = ComplaintStatus.InProgress,
+                PortalId = portals[1].Id,
+                UserId = users[3].Id,
+            },
+            new Complaint
+            {
+                Id = 3,
+                SubmisionDate = Convert.ToDateTime("2023-05-04 04:38:52.8560000"),
+                Description = "Nemoku naudotis portalu padekit",
+                Status = ComplaintStatus.Rejected,
+                PortalId = portals[2].Id,
+                UserId = users[0].Id,
+            },
+        };
+
+        modelBuilder.Entity<Complaint>().HasData(complaints);
+
+        //Create complaint history
+        var complaintHistories = new[]
+        {
+            new ComplaintHistory
+            {
+                Id = 1,
+                Date = Convert.ToDateTime("2023-05-04 04:35:52.8560000"),
+                Status = ComplaintStatus.Submited,
+                Comment = "Portalas Vilnius yra nepasiekiamas",
+                ComplaintId = complaints[0].Id
+            },
+            new ComplaintHistory
+            {
+                Id = 2,
+                Date = Convert.ToDateTime("2023-05-04 07:35:52.8560000"),
+                Status = ComplaintStatus.Submited,
+                Comment = "Portalas Vilnius yra nepasiekiamas",
+                ComplaintId = complaints[1].Id
+            },
+            new ComplaintHistory
+            {
+                Id = 3,
+                Date = Convert.ToDateTime("2023-05-04 08:35:52.8560000"),
+                Status = ComplaintStatus.InProgress,
+                Comment = "Aptiktas ortalo skysčio lygio trūkumas. Problema pradėta spręsti",
+                ComplaintId = complaints[1].Id
+            },
+            new ComplaintHistory
+            {
+                Id = 4,
+                Date = Convert.ToDateTime("2023-05-04 06:35:52.8560000"),
+                Status = ComplaintStatus.Submited,
+                Comment = "Nemoku naudotis portalu padekit",
+                ComplaintId = complaints[2].Id
+            },
+            new ComplaintHistory
+            {
+                Id = 5,
+                Date = Convert.ToDateTime("2023-05-04 06:35:52.8560000"),
+                Status = ComplaintStatus.Rejected,
+                Comment = "Klaidingas pranešimas, portalas veikia",
+                ComplaintId = complaints[2].Id
+            },
+        };
+        
+        //save histories
+        modelBuilder.Entity<ComplaintHistory>().HasData(complaintHistories);
     }
 }

@@ -16,9 +16,11 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
     [DisplayName("Būsena")]
     public ComplaintStatus Status { get; set; }
     
+    public int PortalId { get; set; }
     [DisplayName("Portalo ID")]
     public Portal Portal { get; set; }
     
+    public int UserId { get; set; }
     [DisplayName("Kliento ID")]
     public User User { get; set; }
     

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portalai;
 
@@ -11,9 +12,10 @@ using Portalai;
 namespace Portalai.Migrations
 {
     [DbContext(typeof(PortalsDbContext))]
-    partial class PortalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522205957_CDsNuts")]
+    partial class CDsNuts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

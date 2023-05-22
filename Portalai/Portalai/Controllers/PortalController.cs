@@ -138,4 +138,14 @@ public class PortalController : Controller
 
         return RedirectToAction("ShowPortalReservation");
     }
+
+    public IActionResult PostCreate(Portal portal)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View("PortalCreate", portal);
+        }
+        
+        throw new NotImplementedException();
+    }
 }
