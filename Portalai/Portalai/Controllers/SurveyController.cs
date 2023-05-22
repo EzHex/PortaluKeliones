@@ -232,15 +232,15 @@ public class SurveyController : Controller
                         $"Neatsakėte į klausimą: '{question.Question}'.");
                     continue;
                 }
-
-                if (form["open_" + question.Id] == string.Empty)
+                
+                var tempAnswer = form["open_" + question.Id].ToString().Trim();
+                if (tempAnswer == string.Empty)
                 {
                     ModelState.AddModelError(question.Question,
                         $"Neatsakėte į klausimą: '{question.Question}'.");
                     continue;
                 }
-                    
-                
+
                 isOptionSelected = true;
                 
                 var answer = new QuestionAnswer();
