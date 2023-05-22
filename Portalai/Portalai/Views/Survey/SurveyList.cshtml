@@ -24,7 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th style="max-width: 300px;">
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
@@ -46,7 +46,7 @@
                 <td class="text-md-start">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td>
+                <td style="max-width: 300px;word-wrap: break-word;">
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>

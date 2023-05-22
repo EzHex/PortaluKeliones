@@ -37,11 +37,6 @@ public class PlaceController : Controller
     [HttpPost]
     public async Task<ActionResult> PostCreate(Place place)
     {
-        ModelState["RouteVoyages"]!.ValidationState = ModelValidationState.Valid;
-        ModelState["RouteVoyages"]!.Errors.Clear();
-        ModelState["EducationalRoutes"]!.ValidationState = ModelValidationState.Valid;
-        ModelState["EducationalRoutes"]!.Errors.Clear();
-
         if (!ModelState.IsValid) 
             return View("PlaceCreate", place);
         
