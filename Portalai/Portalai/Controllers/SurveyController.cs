@@ -204,7 +204,7 @@ public class SurveyController : Controller
             {
                 foreach (var option in question.SurveyQuestionOptions)
                 {
-                    if (!form.ContainsKey("question_"+option.Id.ToString()))
+                    if (!form.ContainsKey("question_" + option.Id.ToString()))
                         continue;
 
                     isOptionSelected = true;
@@ -212,7 +212,7 @@ public class SurveyController : Controller
                     var answer = new QuestionAnswer();
                     answer.SurveyQuestion = question;
                     answer.SurveyQuestionOptions.Add(option);
-                    answer.Answer = form["question_"+option.Id.ToString()];
+                    answer.Answer = form["question_"+option.Id];
                     
                     var surveyAnswer = new SurveyAnswer();
                     surveyAnswer.AnswerDate = DateTime.Now;
@@ -226,14 +226,26 @@ public class SurveyController : Controller
             }
             else
             {
-                if (!form.ContainsKey(question.Id.ToString()))
+                if (!form.ContainsKey("open_" + question.Id))
+                {
+                    ModelState.AddModelError(question.Question,
+                        $"Neatsakėte į klausimą: '{question.Question}'.");
                     continue;
+                }
                 
+                var tempAnswer = form["open_" + question.Id].ToString().Trim();
+                if (tempAnswer == string.Empty)
+                {
+                    ModelState.AddModelError(question.Question,
+                        $"Neatsakėte į klausimą: '{question.Question}'.");
+                    continue;
+                }
+
                 isOptionSelected = true;
                 
                 var answer = new QuestionAnswer();
                 answer.SurveyQuestion = question;
-                answer.Answer = form[question.Id.ToString()];
+                answer.Answer = form["open_" + question.Id];
                 
                 var surveyAnswer = new SurveyAnswer();
                 surveyAnswer.AnswerDate = DateTime.Now;
@@ -247,7 +259,7 @@ public class SurveyController : Controller
             
             if (!isOptionSelected)
             {
-                ModelState.AddModelError("",
+                ModelState.AddModelError(question.Question,
                     $"Bent vienas atsakymas turi būti pasirinktas klausimui: '{question.Question}'.");
             }
         }

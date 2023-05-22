@@ -113,9 +113,6 @@ public class PortalController : Controller
 
     public async Task<ActionResult> PostReservation(Portal portal)
     {
-        ModelState["Complaints"]!.ValidationState = ModelValidationState.Valid;
-        ModelState["Complaints"]!.Errors.Clear();
-        
         switch (portal.Status)
         {
             case PortalStatus.Reserved:
