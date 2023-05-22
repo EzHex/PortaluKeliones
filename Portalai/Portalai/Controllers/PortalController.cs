@@ -91,9 +91,12 @@ public class PortalController : Controller
         return RedirectToAction("ShowPortals");
     }
     
-    public Task<ActionResult> ShowCreateForm()
+    public ViewResult ShowCreateForm()
     {
-        return Task.FromResult<ActionResult>(RedirectToAction("ShowPortalReservation"));
+        //Create empty portal
+        var portal = new Portal();
+        
+        return View("PortalCreate", portal);
     }
     
     public Task<ActionResult> ShowDeleteConfirmForm()

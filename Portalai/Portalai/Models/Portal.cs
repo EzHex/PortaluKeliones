@@ -35,7 +35,7 @@ public class Portal : IEntityTypeConfiguration<Portal>
     [NotMapped]
     public int JunctionPortalId { get; set; }
 
-    public List<Complaint> Complaints { get; set; }
+    public List<Complaint>? Complaints { get; set; }
 
 
     public void Configure(EntityTypeBuilder<Portal> builder)

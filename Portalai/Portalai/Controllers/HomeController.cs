@@ -15,9 +15,6 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        //Set session role
-        // HttpContext.Session.SetString("Role", "Admin");
-        HttpContext.Session.SetString("Role", "Client");
         return View();
     }
 
@@ -29,16 +26,19 @@ public class HomeController : Controller
     
     public IActionResult AdminView()
     {
+        HttpContext.Session.SetString("Role", "Admin");
         return View();
     }
     
     public IActionResult ClientView()
     {
+        HttpContext.Session.SetString("Role", "Client");
         return View();
     }
     
     public IActionResult FixerView()
     {
+        HttpContext.Session.SetString("Role", "Fixer");
         return View();
     }
 }
