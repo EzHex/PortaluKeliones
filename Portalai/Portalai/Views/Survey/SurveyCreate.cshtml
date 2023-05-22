@@ -20,7 +20,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <fieldset class="border rounded shadow p-2">
-            <legend class="text-center">Survey</legend>
+            <legend class="text-center">Apklausa</legend>
             <div class="form-group">
                 @Html.LabelFor(m => m.Title, new { @class = "control-label" })
                 @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite apklausos pavadinimą" } })
@@ -46,9 +46,9 @@
         <fieldset class="border rounded shadow p-2" style="margin-top: 15px">
             <div class="container-fluid d-flex d-row justify-content-between align-items-center">
                 <span></span>
-                <legend>Questions</legend>
+                <legend>Klausimai</legend>
                 <button id="addQuestionButton" class="btn btn-info" style="white-space: nowrap;">
-                    <i class="fa-solid fa-plus"></i> Add question
+                    <i class="fa-solid fa-plus"></i> Pridėti klausimą
                 </button>
             </div>
 
@@ -86,7 +86,7 @@
                         </td>
                         <td>
                             <button class="btn btn-success addOptionButton" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
-                                <i class="fa-solid fa-plus"></i> Add Option
+                                <i class="fa-solid fa-plus"></i> Pridėti variantą
                             </button>
                         </td>
                     </tr>

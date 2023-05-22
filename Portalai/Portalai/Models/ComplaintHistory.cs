@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Portalai.Models;
@@ -11,6 +12,8 @@ public class ComplaintHistory : IEntityTypeConfiguration<ComplaintHistory>
     public DateTime Date { get; set; }
     [DisplayName("Būsena")]
     public ComplaintStatus Status { get; set; }
+    
+    [Required(ErrorMessage = "Komentaras yra privalomas")]
     [DisplayName("Komentaras")]
     public string Comment { get; set; }
     

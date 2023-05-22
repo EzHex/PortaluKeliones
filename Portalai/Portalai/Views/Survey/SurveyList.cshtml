@@ -9,8 +9,8 @@
     <span class="title">
         <h1>@ViewBag.Title</h1>
     </span>
-    @if (2 > 0)
-    {
+     @if (role == "Admin")
+     {
         <span>
             <a href="@Url.Action("ShowCreateForm")" class="btn btn-primary">Sukurti naują</a>
         </span>

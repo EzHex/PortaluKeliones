@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +24,7 @@ public class Complaint : IEntityTypeConfiguration<Complaint>
     
     public List<ComplaintHistory> ComplaintHistories { get; set; }
 
+    [Required(ErrorMessage = "Komentaras yra privalomas")]
     [DisplayName("Komentaras")]
     [NotMapped] public string? Comment { get; set; }
     

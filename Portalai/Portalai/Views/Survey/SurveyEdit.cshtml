@@ -1,6 +1,6 @@
 ﻿@model Survey
 @{
-    ViewBag.Title = "Apklausos kūrimas";
+    ViewBag.Title = "Apklausos redagavimas";
     Layout = "_Layout";
 }
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
@@ -20,7 +20,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <fieldset class="border rounded shadow p-2">
-            <legend class="text-center">Survey</legend>
+            <legend class="text-center">Apklausa</legend>
             <div class="form-group">
                 @Html.HiddenFor(m => m.Id)
                 @Html.LabelFor(m => m.Title, new { @class = "control-label" })
@@ -47,9 +47,9 @@
         <fieldset class="border rounded shadow p-2" style="margin-top: 15px">
             <div class="container-fluid d-flex d-row justify-content-between align-items-center">
                 <span></span>
-                <legend>Questions</legend>
+                <legend>Klausimai</legend>
                 <button id="addQuestionButton" class="btn btn-info" style="white-space: nowrap;">
-                    <i class="fa-solid fa-plus"></i> Add question
+                    <i class="fa-solid fa-plus"></i> Pridėti klausimą
                 </button>
             </div>
 
@@ -87,10 +87,10 @@
                         </td>
                         <td>
                             <button class="btn btn-danger removeQuestionButton">
-                                <i class="fa-solid fa-trash"></i> Remove question
+                                <i class="fa-solid fa-trash"></i> Šalinti klausimą
                             </button>
                             <button class="btn btn-success addOptionButton" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
-                                <i class="fa-solid fa-plus"></i> Add Option
+                                <i class="fa-solid fa-plus"></i> Pridėti variantą
                             </button>
                         </td>
                     </tr>

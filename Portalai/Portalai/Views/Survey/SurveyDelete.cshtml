@@ -1,7 +1,7 @@
 ﻿@model Survey
 
 @{
-    ViewBag.Title = "Maršruto šalinimas";
+    ViewBag.Title = "Apklausos šalinimas";
     Layout = "_Layout";
 }
 
@@ -17,11 +17,14 @@
         @Html.AntiForgeryToken()
 
         <fieldset class="border rounded shadow p-2">
-            <legend class="text-center">Ar tikrai norite šalinti šį maršrutą?</legend>
+            <legend class="text-center">Ar tikrai norite šalinti šią apklausą?</legend>
 
             <dl>
                 <dt>@Html.DisplayNameFor(m => m.Title)</dt>
                 <dd>@Html.DisplayFor(m => m.Title)</dd>
+                
+                <dt>@Html.DisplayNameFor(m => m.Description)</dt>
+                <dd>@Html.DisplayFor(m => m.Description)</dd>
 
                 <dt>@Html.DisplayNameFor(m => m.Id)</dt>
                 <dd>@Html.DisplayFor(m => m.Id)</dd>

@@ -62,12 +62,12 @@
                             <tr>
                                 <td>
                                     <ul>
-                                        @* @foreach (var option in question.SurveyQuestionOptions) *@
-                                        @* { *@
-                                        @*     $1$ <ul> #1# *@
-                                        @*     $1$     @Html.DisplayFor(modelItem => option.Text) #1# *@
-                                        @*     $1$ </ul> #1# *@
-                                        @* } *@
+                                        @foreach (var option in question.SurveyQuestionOptions)
+                                        { 
+                                             <ul>
+                                                  @Html.DisplayFor(modelItem => option.Text)
+                                             </ul>
+                                        } 
                                     </ul>
                                 </td>
                             </tr>
