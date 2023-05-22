@@ -32,7 +32,7 @@ namespace Portalai.Controllers
         
         public async Task<ActionResult> MakeTicketPurchase(Route route)
         {
-            if (!GetStatus())
+            if (!PayseraSim.Paysera.getStatus())
             {
                 TempData["status"] = "Mokėjimas nepavyko";
                 return RedirectToAction("ShowRoutesSearch", "Route");
@@ -59,11 +59,6 @@ namespace Portalai.Controllers
 
             TempData["status"] = "Mokėjimas pavyko";
             return RedirectToAction("ShowRoutesSearch", "Route");
-        }
-        
-        public bool GetStatus()
-        {
-            return PayseraSim.Paysera.getStatus();
         }
     }
 }
