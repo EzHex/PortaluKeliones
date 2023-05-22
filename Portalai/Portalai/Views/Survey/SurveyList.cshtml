@@ -66,7 +66,7 @@
                         <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
                         <a href="@Url.Action("ShowDeleteConfirmForm", item)" class="btn btn-danger">Šalinti</a>
                     }
-                    else
+                    else if(item.Status == SurveyStatus.Active)
                     {
                         <a href="@Url.Action("ShowSurvey", item)" class="btn btn-secondary">Pildyti</a>
                     }
