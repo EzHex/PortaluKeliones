@@ -636,6 +636,12 @@ namespace Portalai.Controllers
 
         public async Task<ActionResult> ShowRoutesSearch()
         {
+            if (TempData["status"] != null)
+            {
+                ViewBag.Status = TempData["status"];
+                TempData.Remove("status");
+            }
+            
             var route = await _context.Routes.FirstAsync();
 
             await route.LoadAvailableDropdowns(_context);
