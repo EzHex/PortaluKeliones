@@ -30,45 +30,46 @@ public class PortalController : Controller
 
     public async Task<ActionResult> ShowOnePortal(int id)
     {
-        var portal = await context.Portals
-            .Include(m => m.PortalJunction)
-            .SingleAsync(x => x.Id == id);
+        // var portal = await context.Portals
+        //     .Include(m => m.PortalJunction)
+        //     .SingleAsync(x => x.Id == id);
 
-        if (portal.PortalJunction != null)
-        {
-            var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
-                o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
-
-            if (secondPortal != null)
-            {
-                portal.JunctionPortalId = secondPortal.Id;
-            }
-        }
+        // if (portal.PortalJunction != null)
+        // {
+        //     var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
+        //         o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
+        //
+        //     if (secondPortal != null)
+        //     {
+        //         portal.JunctionPortalId = secondPortal.Id;
+        //     }
+        // }
         
-        return View("PortalInfo", portal);
+        // return View("PortalInfo", portal);
+        //throw not implemented
+        return View("PortalInfo");
     }
      
     //TODO su klaustuku del listo
     public async Task<ActionResult> ShowEditForm(int id)
     {
-        var portal = await context.Portals
-            .Include(m => m.PortalJunction)
-            .SingleAsync(x => x.Id == id);
+        // var portal = await context.Portals
+        //     .Include(m => m.PortalJunction)
+        //     .SingleAsync(x => x.Id == id);
         
-        if (portal.PortalJunction != null)
-        {
-            var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
-                o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
-
-            if (secondPortal != null)
-            {
-                portal.JunctionPortalId = secondPortal.Id;
-            }
-        }
+        // if (portal.PortalJunction != null)
+        // {
+        //     var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
+        //         o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
+        //
+        //     if (secondPortal != null)
+        //     {
+        //         portal.JunctionPortalId = secondPortal.Id;
+        //     }
+        // }
         
         var portalList = await context.Portals.ToListAsync();
         var portalEdit = new PortalEditVM();
-        portalEdit.Portal = portal;
         portalEdit.AllPortals = portalList;
 
         return View("PortalEdit", portalEdit);

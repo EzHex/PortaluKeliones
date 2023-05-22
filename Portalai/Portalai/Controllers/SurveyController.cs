@@ -261,9 +261,38 @@ public class SurveyController : Controller
 
     public IActionResult PostEdit(Survey survey)
     {
+        //check if the survey has question
+        if (survey.SurveyQuestions.Count == 0)
+        {
+            ModelState.AddModelError("", "Apklausa turi turėti bent vieną klausimą");
+        }
         //Set survey for each question
         for (var i = 0; i < survey.SurveyQuestions.Count; i++)
         {
+            //check if it is multi select or one select
+            if (survey.SurveyQuestions[i].Type == QuestionType.SingleChoice ||
+                survey.SurveyQuestions[i].Type == QuestionType.MultipleChoice)
+            {
+                //check if the question has options
+                if (survey.SurveyQuestions[i].SurveyQuestionOptions.Count < 2)
+                {
+                    // add error to specific question on text field
+                    ModelState.AddModelError($"SurveyQuestions[{i}].Question",
+                        "Klausimas turi turėti bent du pasirinkimus");
+                }
+            }
+            //check if it is text
+            else if (survey.SurveyQuestions[i].Type == QuestionType.Open)
+            {
+                //check if the question has options
+                if (survey.SurveyQuestions[i].SurveyQuestionOptions.Count > 0)
+                {
+                    // add error to specific question on text field
+                    ModelState.AddModelError($"SurveyQuestions[{i}].Question",
+                        "Klausimas negali turėti pasirinkimų");
+                }
+            }
+            
             survey.SurveyQuestions[i].Survey = survey;
             
             //Remove error
@@ -285,17 +314,48 @@ public class SurveyController : Controller
             }
         }
 
-        //modelstate
         if (ModelState.IsValid)
         {
-            //TODO handle changes because update doesn't remove old options @Vickyyy
-            //save the survey
+            //remove questions that aren't in the model anymore
+            var surveyGet = _context.Surveys
+                .Include(x => x.SurveyQuestions)
+                .ThenInclude(x => x.SurveyQuestionOptions)
+                .Single(x => x.Id == survey.Id);
+
+            // Remove questions
+            foreach (var question in surveyGet.SurveyQuestions.ToList())
+            {
+                if (survey.SurveyQuestions.All(x => x.Id != question.Id))
+                {
+                    _context.SurveyQuestions.Remove(question);
+                }
+            }
+
+            // Remove options
+            foreach (var question in surveyGet.SurveyQuestions)
+            {
+                foreach (var option in question.SurveyQuestionOptions.ToList())
+                {
+                    if (survey.SurveyQuestions.All(x => x.SurveyQuestionOptions.All(y => y.Id != option.Id)))
+                    {
+                        _context.SurveyQuestionOptions.Remove(option);
+                    }
+                }
+            }
+
+            // Detach the existing surveyGet entity from the context
+            _context.Entry(surveyGet).State = EntityState.Detached;
+
+            // Attach the modified survey entity to the context and mark it as modified
             _context.Surveys.Update(survey);
+
+            // Save survey
             _context.SaveChanges();
 
-            //save success, go back to the entity list
+            // Save success, go back to the entity list
             return RedirectToAction("ShowSurveyList");
         }
+
         //form field validation failed, go back to the form
         else
         {

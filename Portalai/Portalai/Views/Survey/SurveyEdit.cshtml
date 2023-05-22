@@ -86,6 +86,9 @@
                             @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
                         </td>
                         <td>
+                            <button class="btn btn-danger removeQuestionButton">
+                                <i class="fa-solid fa-trash"></i> Remove question
+                            </button>
                             <button class="btn btn-success addOptionButton" data-question-index="@Model.SurveyQuestions.IndexOf(Model.SurveyQuestions[i])">
                                 <i class="fa-solid fa-plus"></i> Add Option
                             </button>
@@ -203,6 +206,11 @@
         $(document).on('click', '.removeOptionButton', function (event) {
             event.preventDefault();
             $(this).closest('.optionRow').remove();
+        });
+        
+        $(document).on('click', '.removeQuestionButton', function (event) {
+            event.preventDefault();
+            $(this).closest('tbody').remove();
         });
 
         $('.question-type-select').each(function () {

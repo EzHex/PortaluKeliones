@@ -8,8 +8,9 @@ var connectionString = builder.Configuration.GetValue<string>("SqlConnectionStri
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<PortalsDbContext>(options => options.UseSqlServer(connectionString));
-// Add services to the container.
 
+// Add session support
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -17,7 +18,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -27,6 +27,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Add session middleware
+app.UseSession();
 
 app.MapControllerRoute(
     "default",

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Portalai;
 
 #nullable disable
 
@@ -33,7 +34,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("PlacesId");
 
-                    b.ToTable("EducationalRoutePlace");
+                    b.ToTable("EducationalRoutePlace", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.Bus", b =>
@@ -70,7 +71,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buses");
+                    b.ToTable("Buses", (string)null);
 
                     b.HasData(
                         new
@@ -193,7 +194,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Complaints");
+                    b.ToTable("Complaints", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.ComplaintHistory", b =>
@@ -221,7 +222,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("ComplaintId");
 
-                    b.ToTable("ComplaintHistories");
+                    b.ToTable("ComplaintHistories", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.EducationalRoute", b =>
@@ -253,7 +254,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EducationalRoutes");
+                    b.ToTable("EducationalRoutes", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.Place", b =>
@@ -276,7 +277,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Places");
+                    b.ToTable("Places", (string)null);
 
                     b.HasData(
                         new
@@ -744,7 +745,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("PortalJunctionId");
 
-                    b.ToTable("Portals");
+                    b.ToTable("Portals", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.PortalJunction", b =>
@@ -757,7 +758,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PortalJunctions");
+                    b.ToTable("PortalJunctions", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.QuestionAnswer", b =>
@@ -784,7 +785,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("SurveyQuestionId");
 
-                    b.ToTable("QuestionAnswers");
+                    b.ToTable("QuestionAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.Route", b =>
@@ -801,7 +802,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Routes", (string)null);
 
                     b.HasData(
                         new
@@ -852,7 +853,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("RouteId");
 
-                    b.ToTable("RouteVoyages");
+                    b.ToTable("RouteVoyages", (string)null);
 
                     b.HasData(
                         new
@@ -1001,7 +1002,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Surveys");
+                    b.ToTable("Surveys", (string)null);
 
                     b.HasData(
                         new
@@ -1033,7 +1034,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("SurveyId");
 
-                    b.ToTable("SurveyAnswers");
+                    b.ToTable("SurveyAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.SurveyQuestion", b =>
@@ -1064,7 +1065,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("SurveyId");
 
-                    b.ToTable("SurveyQuestions");
+                    b.ToTable("SurveyQuestions", (string)null);
 
                     b.HasData(
                         new
@@ -1115,7 +1116,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("SurveyQuestionId");
 
-                    b.ToTable("SurveyQuestionOptions");
+                    b.ToTable("SurveyQuestionOptions", (string)null);
 
                     b.HasData(
                         new
@@ -1197,7 +1198,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.Trip", b =>
@@ -1226,7 +1227,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("RouteId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("Portalai.Models.User", b =>
@@ -1258,7 +1259,7 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
@@ -1337,7 +1338,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Voyages");
+                    b.ToTable("Voyages", (string)null);
                 });
 
             modelBuilder.Entity("QuestionAnswerSurveyQuestionOption", b =>
@@ -1352,7 +1353,7 @@ namespace Portalai.Migrations
 
                     b.HasIndex("SurveyQuestionOptionsId");
 
-                    b.ToTable("QuestionAnswerSurveyQuestionOption");
+                    b.ToTable("QuestionAnswerSurveyQuestionOption", (string)null);
                 });
 
             modelBuilder.Entity("EducationalRoutePlace", b =>

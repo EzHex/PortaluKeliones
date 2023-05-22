@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Apklausos";
     Layout = "_Layout";
+    string? role = Context.Session.GetString("Role");
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
@@ -59,7 +60,7 @@
                 </td>
                 <td class="text-md-end">
 
-                    @if (2 > 0)
+                    @if (role == "Admin")
                     {
                         <a href="@Url.Action("ShowSurvey", item)" class="btn btn-secondary">Išsami informacija</a>
                         <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>

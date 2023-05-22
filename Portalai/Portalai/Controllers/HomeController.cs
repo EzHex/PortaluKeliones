@@ -15,6 +15,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        //Set session role
+        // HttpContext.Session.SetString("Role", "Admin");
+        HttpContext.Session.SetString("Role", "Client");
         return View();
     }
 
