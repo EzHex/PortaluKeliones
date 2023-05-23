@@ -36,8 +36,7 @@ public class PortalController : Controller
 
         return View("PortalInfo", portal);
     }
-
-    //TODO su klaustuku del listo
+    
     public async Task<ActionResult> ShowEditForm(int id)
     {
         //Get portal and junction with both portals
