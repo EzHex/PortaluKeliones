@@ -221,16 +221,17 @@ public class PortalController : Controller
 
     public IActionResult DeletePortal(Portal portal)
     {
-        //If it had a junction remove it
-        if (portal.PortalJunction != null)
+        //Detach both portals from junction
+        var junction = portal.PortalJunction;
+        if (junction != null)
         {
-            //Remove the junction
-            _context.Remove(portal.PortalJunction);
-            _context.SaveChanges();
-            //Set the junction to null
-            portal.PortalJunction = null;
+            //Detach 0 and 1st portal
+            junction.Portals.RemoveRange(0, 2);
+            //Remove junction
+            _context.Remove(junction);
         }
-        
+
+
         _context.Remove(portal);
         _context.SaveChanges();
         
