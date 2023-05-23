@@ -206,7 +206,7 @@ public class SurveyController : Controller
             {
                 foreach (var option in question.SurveyQuestionOptions)
                 {
-                    if (!form.ContainsKey("question_" + option.Id.ToString()))
+                    if (!form.ContainsKey("question_" + question.Id))
                         continue;
 
                     isOptionSelected = true;
@@ -214,7 +214,7 @@ public class SurveyController : Controller
                     var answer = new QuestionAnswer();
                     answer.SurveyQuestion = question;
                     answer.SurveyQuestionOptions.Add(option);
-                    answer.Answer = form["question_"+option.Id];
+                    answer.Answer = form["question_"+question.Id];
                     
                     var surveyAnswer = new SurveyAnswer();
                     surveyAnswer.AnswerDate = DateTime.Now;
@@ -224,6 +224,7 @@ public class SurveyController : Controller
                     
                     answer.SurveyAnswer = surveyAnswer;
                     await _context.QuestionAnswers.AddAsync(answer);
+                    break;
                 }
             }
             else
