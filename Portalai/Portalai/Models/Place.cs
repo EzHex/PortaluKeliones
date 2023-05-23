@@ -53,8 +53,8 @@ public class Place : IEntityTypeConfiguration<Place>
         builder.HasMany(m => m.ArrivalVoyages)
             .WithOne(m => m.Arrival)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Cascade);
-
+            .OnDelete(DeleteBehavior.NoAction);
+        
         // Place 1 : 0...N RouteVoyage (DEPARTURE)
         builder.HasMany(m => m.DepartureVoyages)
             .WithOne(m => m.Departure)

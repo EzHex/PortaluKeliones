@@ -706,11 +706,11 @@ namespace Portalai.Controllers
                 
                 foreach (var routeVoyage in route.RouteVoyages)
                 {
-                    if (routeVoyage.DeparturePlaceId != departureCity.Id) 
+                    if (routeVoyage.DepartureId != departureCity.Id) 
                         continue;
                     foreach (var routeVoyage2 in route.RouteVoyages)
                     {
-                        if (routeVoyage2.ArrivalPlaceId != arrivalCity.Id) 
+                        if (routeVoyage2.ArrivalId != arrivalCity.Id) 
                             continue;
                         if (routeVoyage.Order > routeVoyage2.Order) 
                             continue;
