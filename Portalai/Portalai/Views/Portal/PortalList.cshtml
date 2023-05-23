@@ -21,13 +21,13 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Latitude)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Longitude)
+                Koordinates
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentLiquidLevel)
+                Skystis
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -43,13 +43,13 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td class="text-md-start">
-                    @Html.DisplayFor(modelItem => item.Latitude)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Longitude)
+                    @Html.DisplayFor(modelItem => item.Longitude) : @Html.DisplayFor(modelItem => item.Latitude)
                 </td>
                 <td class="text-md-start">
-                    @Html.DisplayFor(modelItem => item.CurrentLiquidLevel)
+                    @Html.DisplayFor(modelItem => item.CurrentLiquidLevel) / @Html.DisplayFor(modelItem => item.LiquidCapacity)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
@@ -57,7 +57,7 @@
                 <td class="text-md-end">
                     <a href="@Url.Action("ShowOnePortal", item)" class="btn btn-secondary">Išsami informacija</a>
                     <a href="@Url.Action("ShowEditForm", new { item.Id })" class="btn btn-warning">Redaguoti</a>
-                    <a href="@Url.Action("ShowDeleteConfirmForm", item)" class="btn btn-danger">Šalinti</a>
+                    <a href="@Url.Action("ShowDeleteConfirmForm",  item)" class="btn btn-danger">Šalinti</a>
                 </td>
             </tr>
         }

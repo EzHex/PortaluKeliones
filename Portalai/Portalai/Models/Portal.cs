@@ -23,7 +23,7 @@ public class Portal : IEntityTypeConfiguration<Portal>
     [Range(-90, 90)]
     public double Latitude { get; set; }
     
-    [Range(1, double.MaxValue, ErrorMessage = "Skysčio talpa privalo būti didesnė už 1.")]
+    [Range(1, double.MaxValue, ErrorMessage = "Skysčio talpa privalo būti didesnė už 1."), ]
     [DisplayName("Skysčio talpa")] public double LiquidCapacity { get; set; }
 
     [Range(0, double.MaxValue, ErrorMessage = "Dabartinis skysčio kiekis privalo būti didesnis arba lygus 0.")]
@@ -52,7 +52,8 @@ public class Portal : IEntityTypeConfiguration<Portal>
         // 0 to 1 relation
         builder.HasOne(p => p.PortalJunction)
             .WithMany(p => p.Portals)
-            .OnDelete(DeleteBehavior.Cascade)
+            .HasForeignKey(p => p.PortalJunction)
+            .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
     }
 }
