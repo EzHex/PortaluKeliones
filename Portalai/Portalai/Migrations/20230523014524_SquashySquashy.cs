@@ -167,7 +167,8 @@ namespace Portalai.Migrations
                         name: "FK_Portals_PortalJunctions_PortalJunctionId",
                         column: x => x.PortalJunctionId,
                         principalTable: "PortalJunctions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
