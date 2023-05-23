@@ -144,6 +144,8 @@ public class SurveyController : Controller
                 //save the survey
                 _context.Surveys.Add(survey);
                 _context.SaveChanges();
+                
+                TempData["status"] = "Apklausa sėkmingai sukurta";
 
                 //save success, go back to the entity list
                 return Task.FromResult<ActionResult>(RedirectToAction("ShowSurveyList"));
@@ -364,6 +366,8 @@ public class SurveyController : Controller
 
             // Save survey
             _context.SaveChanges();
+            
+            TempData["status"] = "Apklausa sėkmingai redaguota";
 
             // Save success, go back to the entity list
             return RedirectToAction("ShowSurveyList");
@@ -384,6 +388,8 @@ public class SurveyController : Controller
         //remove the survey
         if (survey != null) _context.Surveys.Remove(survey);
         _context.SaveChanges();
+        
+        TempData["status"] = "Apklausa sėkmingai panaikinta";
         
         //go back to the entity list
         return RedirectToAction("ShowSurveyList");

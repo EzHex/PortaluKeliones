@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Portalai.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,7 +23,13 @@ namespace Portalai.Controllers
         public async Task<ActionResult> ShowRoutes()
         {
             var routes = await _context.Routes.ToListAsync();
-
+            
+            if (TempData["status"] != null)
+            {
+                ViewBag.Status = TempData["status"];
+                TempData.Remove("status");
+            }
+            
             return View("RoutesAdminList", routes);
         }
 
