@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Portalo redagavimas";
     Layout = "_Layout";
-    List<Portal> freePortals = _context.Portals.Where(p => p.PortalJunction == null).ToList();
+    // Get all free portals and exclude current portal
+var freePortals = _context.Portals.Where(p => p.Id != Model.Id && p.PortalJunction == null).ToList();
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">

@@ -1,23 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
-using Portalai.ViewModel;
 
 namespace Portalai.Controllers;
 
 public class PortalController : Controller
 {
-    private readonly PortalsDbContext context;
+    private readonly PortalsDbContext _context;
 
     public PortalController(PortalsDbContext context)
     {
-        this.context = context;
+        this._context = context;
     }
 
     public async Task<ActionResult> ShowPortals()
     {
-        var portals = await context.Portals.ToListAsync();
+        var portals = await _context.Portals.ToListAsync();
 
         if (TempData["status"] != null)
         {
@@ -31,7 +29,7 @@ public class PortalController : Controller
     public ActionResult ShowOnePortal(int id)
     {
         //Get portal with junctions that has both portals
-        var portal = context.Portals
+        var portal = _context.Portals
             .Include(m => m.PortalJunction)
             .ThenInclude(m => m.Portals)
             .Single(x => x.Id == id);
@@ -43,7 +41,7 @@ public class PortalController : Controller
     public async Task<ActionResult> ShowEditForm(int id)
     {
         //Get portal and junction with both portals
-        var portal = await context.Portals
+        var portal = await _context.Portals
             .Include(m => m.PortalJunction)
             .ThenInclude(m => m.Portals)
             .SingleAsync(x => x.Id == id);
@@ -68,24 +66,36 @@ public class PortalController : Controller
             //If it is still connected and changed only the portal data
             if (secondPortal.Id == portal.JunctionPortalId)
             {
-                //set currentJunction portals to null
-                currentJunction.Portals = null;
+                //set junction to null to safe update
+                portal.PortalJunction = null;
+                
                 //Update the portal
-                context.Update(portal);
+                _context.Update(portal);
                 //Save changes
-                context.SaveChanges();
+                _context.SaveChanges();
             }
             else
             {
                 //If it is connected to a different portal now
-                
-                //Remove old junction
-                context.Remove(currentJunction);
-                
-                //Update the portal
-                context.Update(portal);
+                //Remove it
+                _context.Remove(currentJunction);
                 //Save changes
-                context.SaveChanges();
+                _context.SaveChanges();
+                
+                //Replace old portal with new one
+                currentJunction.Portals.Remove(secondPortal);
+                
+                if (portal.JunctionPortalId != null)
+                {
+                    currentJunction.Portals.Add(_context.Portals.Single(x => x.Id == portal.JunctionPortalId));
+                    //Remove junction id
+                    currentJunction.Id = 0;
+                    //Update the junction
+                    _context.Add(currentJunction);
+                }
+
+                //Save changes
+                _context.SaveChanges();
             }
         }
         else
@@ -98,18 +108,26 @@ public class PortalController : Controller
                 var newJunction = new PortalJunction();
                 //Add both portals to the junction
                 newJunction.Portals.Add(portal);
-                newJunction.Portals.Add(context.Portals.Single(x => x.Id == portal.JunctionPortalId));
+                newJunction.Portals.Add(_context.Portals.Single(x => x.Id == portal.JunctionPortalId));
+
                 //Add the junction to the portal
                 portal.PortalJunction = newJunction;
                 
-                //Add the junction to the database
-                context.PortalJunctions.Add(newJunction);
+                //Detach mew junction
+                _context.Entry(newJunction).State = EntityState.Detached;
                 
                 //Update the portal
-                context.Update(portal);
+                _context.Update(portal);
                 
                 //Save changes
-                context.SaveChanges();
+                _context.SaveChanges();
+            }
+            else
+            {
+                //Update the portal
+                _context.Update(portal);
+                //Save changes
+                _context.SaveChanges();
             }
         }
 
@@ -128,7 +146,7 @@ public class PortalController : Controller
     public ActionResult ShowDeleteConfirmForm(int id)
     {
         //Load portal and its junction if it has one
-        var portal = context.Portals
+        var portal = _context.Portals
             .Include(m => m.PortalJunction)
             .ThenInclude(m => m.Portals)
             .Single(x => x.Id == id);
@@ -138,7 +156,7 @@ public class PortalController : Controller
 
     public async Task<ActionResult> ShowPortalReservation()
     {
-        var portals = await context.Portals.ToListAsync();
+        var portals = await _context.Portals.ToListAsync();
 
         return View("PortalReserve", portals);
     }
@@ -160,13 +178,13 @@ public class PortalController : Controller
 
         if (!ModelState.IsValid)
         {
-            var portals = await context.Portals.ToListAsync();
+            var portals = await _context.Portals.ToListAsync();
             return View("PortalReserve", portals);
         }
 
-        var dbPortal = await context.Portals.SingleAsync(x => x.Id == portal.Id);
+        var dbPortal = await _context.Portals.SingleAsync(x => x.Id == portal.Id);
         dbPortal.Status = PortalStatus.Reserved;
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         return RedirectToAction("ShowPortalReservation");
     }
@@ -179,8 +197,8 @@ public class PortalController : Controller
         }
 
         //create portal
-        context.Portals.Add(portal);
-        context.SaveChanges();
+        _context.Portals.Add(portal);
+        _context.SaveChanges();
         //create junction if connected portal stated
         if (portal.JunctionPortalId != null)
         {
@@ -189,13 +207,13 @@ public class PortalController : Controller
             junction.Portals.Add(portal);
 
             //get second portal and add it to junction
-            var secondPortal = context.Portals.Single(x => x.Id == portal.JunctionPortalId);
+            var secondPortal = _context.Portals.Single(x => x.Id == portal.JunctionPortalId);
             junction.Portals.Add(secondPortal);
 
-            context.PortalJunctions.Add(junction);
+            _context.PortalJunctions.Add(junction);
         }
 
-        context.SaveChanges();
+        _context.SaveChanges();
 
         TempData["status"] = "Portalas sėkmingai sukurtas";
         return RedirectToAction("ShowPortals");
@@ -206,12 +224,15 @@ public class PortalController : Controller
         //If it had a junction remove it
         if (portal.PortalJunction != null)
         {
-            portal.PortalJunction.Portals = null;
+            //Remove the junction
+            _context.Remove(portal.PortalJunction);
+            _context.SaveChanges();
+            //Set the junction to null
+            portal.PortalJunction = null;
         }
-
-        //Remove portal and its junctipn if it has one (CASCADE)
-        context.Remove(portal);
-        context.SaveChanges();
+        
+        _context.Remove(portal);
+        _context.SaveChanges();
         
         TempData["status"] = "Portalas sėkmingai ištrintas";
         
