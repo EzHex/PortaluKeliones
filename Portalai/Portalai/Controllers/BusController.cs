@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
 
@@ -143,13 +144,34 @@ public class BusController : Controller
     [HttpPost]
     public async Task<ActionResult> DeleteBus(int id)
     {
-        var bus = await context.Buses.SingleAsync(x => x.Id == id);
-        
-        context.Buses.Remove(bus);
-        await context.SaveChangesAsync();
-        
-        TempData["status"] = "Autobusas sėkmingai pašalintas";
-        
-        return RedirectToAction("ShowBusesList");
+        try
+        {
+            var bus = await context.Buses.SingleAsync(x => x.Id == id);
+
+            context.Buses.Remove(bus);
+            await context.SaveChangesAsync();
+
+            TempData["status"] = "Autobusas sėkmingai pašalintas";
+
+            return RedirectToAction("ShowBusesList");
+        }
+        catch (DbUpdateException ex)
+        {
+            var sqlException = ex.GetBaseException() as SqlException;
+
+            //Handle Database.Restrict message
+            if (sqlException?.Number == 547)
+            {
+                //Set deletionNotPermitted to true
+                ViewData["deletionNotPermitted"] = true;
+
+                //Add error message to ModelState
+                ModelState.AddModelError("",
+                    "Negalima ištrinti įrašo, nes jis yra susietas su kitais įrašais (kelionemis).");
+
+            }
+            
+            return View("BusDelete", await context.Buses.SingleAsync(x => x.Id == id));
+        }
     }
 }

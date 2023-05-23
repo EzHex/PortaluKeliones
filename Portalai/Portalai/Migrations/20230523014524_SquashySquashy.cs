@@ -224,7 +224,7 @@ namespace Portalai.Migrations
                         column: x => x.BusId,
                         principalTable: "Buses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Trips_Routes_RouteId",
                         column: x => x.RouteId,

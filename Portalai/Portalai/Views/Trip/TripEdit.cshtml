@@ -27,6 +27,7 @@
                 @Html.LabelFor(m => m.DepartureTime, new { @class = "control-label" })
                 @Html.EditorFor(m => m.DepartureTime, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.DepartureTime, "", new { @class = "text-danger" })
+
                 @Html.HiddenFor(m => m.Id)
                 @Html.HiddenFor(m => m.ArrivalTime)
 

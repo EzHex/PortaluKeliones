@@ -27,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ArrivalTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bus.LicensePlate)
+            </th>
             <th></th>
         </tr>
         </thead>
@@ -42,6 +45,9 @@
                 </td>
                 <td class="text-md-start">
                     @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                <td class="text-md-start">
+                    @Html.DisplayFor(modelItem => item.Bus.LicensePlate)
                 </td>
                 <td class="text-md-end">
                     <a href="@Url.Action("ShowOneTrip", new { item.Id })" class="btn btn-secondary">Išsami informacija</a>

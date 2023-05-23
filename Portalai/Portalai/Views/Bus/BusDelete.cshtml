@@ -17,6 +17,8 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <fieldset class="border rounded shadow p-2">
             <legend class="text-center">Ar tikrai norite šalinti šį autobusą?</legend>
