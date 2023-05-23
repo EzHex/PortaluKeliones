@@ -81,7 +81,7 @@ var freePortals = _context.Portals.Where(p => p.Id != Model.Id && p.PortalJuncti
             @if (Model.PortalJunction != null)
             {
                 @Html.HiddenFor(m => m.JunctionPortalId)
-                @Html.HiddenFor(m => m.PortalJunction.Id)
+                @Html.HiddenFor(m => m.PortalJunction!.Id)
                 /*for through portals and add all hidden fields using for loop with var*/
                 @for (var i = 0; i < Model.PortalJunction.Portals.Count; i++)
                 {

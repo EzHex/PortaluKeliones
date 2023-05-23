@@ -8,20 +8,20 @@ namespace Portalai.Controllers;
 
 public class BusController : Controller
 {
-    private readonly PortalsDbContext context;
+    private readonly PortalsDbContext _context;
 
     public BusController(PortalsDbContext context)
     {
-        this.context = context;
+        this._context = context;
     }
     
     public async Task<ActionResult> ShowBusesList()
     {
-        var buses = await context.Buses.ToListAsync();
+        var buses = await _context.Buses.ToListAsync();
 
         if (TempData["status"] != null)
         {
-            ViewBag.Status = TempData["status"];
+            ViewBag.Status = TempData["status"]!;
             TempData.Remove("status");
         }
 
@@ -30,7 +30,7 @@ public class BusController : Controller
 
     public async Task<ActionResult> ShowStatusChangeForBus(int id)
     {
-        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+        var bus = await _context.Buses.SingleAsync(x => x.Id == id);
         bus.NewStatus = bus.Status;
 
         return View("BusStatus", bus);
@@ -39,7 +39,7 @@ public class BusController : Controller
     [HttpPost]
     public async Task<ActionResult> CheckIfStatusAvailable(int id, BusStatus newStatus)
     {
-        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+        var bus = await _context.Buses.SingleAsync(x => x.Id == id);
 
         switch (bus.Status)
         {
@@ -48,7 +48,7 @@ public class BusController : Controller
                 {
                     TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
                     bus.Status = newStatus;
-                    await context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                     return RedirectToAction("ShowBusesList");
                 }
                 ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
@@ -58,7 +58,7 @@ public class BusController : Controller
                 {
                     TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
                     bus.Status = newStatus;
-                    await context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                     return RedirectToAction("ShowBusesList");
                 }
                 ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
@@ -68,7 +68,7 @@ public class BusController : Controller
                 {
                     TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
                     bus.Status = newStatus;
-                    await context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                     return RedirectToAction("ShowBusesList");
                 }
                 ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
@@ -78,7 +78,7 @@ public class BusController : Controller
                 {
                     TempData["status"] = "Autobuso būsena sėkmingai pakeistas";
                     bus.Status = newStatus;
-                    await context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                     return RedirectToAction("ShowBusesList");
                 }
                 ModelState.AddModelError("NewStatus", "Tokia būsena negalima");
@@ -104,8 +104,8 @@ public class BusController : Controller
         if (!ModelState.IsValid)
             return View("BusCreate", bus);
         
-        await context.Buses.AddAsync(bus);
-        await context.SaveChangesAsync();
+        await _context.Buses.AddAsync(bus);
+        await _context.SaveChangesAsync();
 
         TempData["status"] = "Autobusas sėkmingai pridėtas";
         
@@ -114,7 +114,7 @@ public class BusController : Controller
     
     public async Task<ActionResult> ShowEditForm(int id)
     {
-        var bus = await context.Buses.SingleAsync(x => x.Id == id);
+        var bus = await _context.Buses.SingleAsync(x => x.Id == id);
 
         return View("BusEdit", bus);
     }
@@ -128,8 +128,8 @@ public class BusController : Controller
         if (!ModelState.IsValid)
             return View("BusEdit", bus);
         
-        context.Buses.Update(bus);
-        await context.SaveChangesAsync();
+        _context.Buses.Update(bus);
+        await _context.SaveChangesAsync();
         
         TempData["status"] = "Autobusas sėkmingai atnaujintas";
         
@@ -146,10 +146,10 @@ public class BusController : Controller
     {
         try
         {
-            var bus = await context.Buses.SingleAsync(x => x.Id == id);
+            var bus = await _context.Buses.SingleAsync(x => x.Id == id);
 
-            context.Buses.Remove(bus);
-            await context.SaveChangesAsync();
+            _context.Buses.Remove(bus);
+            await _context.SaveChangesAsync();
 
             TempData["status"] = "Autobusas sėkmingai pašalintas";
 
@@ -171,7 +171,7 @@ public class BusController : Controller
 
             }
             
-            return View("BusDelete", await context.Buses.SingleAsync(x => x.Id == id));
+            return View("BusDelete", await _context.Buses.SingleAsync(x => x.Id == id));
         }
     }
 }

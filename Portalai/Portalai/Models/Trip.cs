@@ -22,16 +22,6 @@ public class Trip : IEntityTypeConfiguration<Trip>
     
     public List<Ticket> Tickets { get; set; }
 
-    public Trip(DateTime departureTime, DateTime arrivalTime)
-    {
-        DepartureTime = departureTime;
-        ArrivalTime = arrivalTime;
-    }
-
-    public Trip()
-    {
-    }
-
     public void Configure(EntityTypeBuilder<Trip> builder)
     {
         // Trip 0...N : 1 Route
