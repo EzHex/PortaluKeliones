@@ -62,7 +62,13 @@
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].Order, "", new { @class = "text-danger" })
                         </td>
                         <td>
-                            @Html.EditorFor(m => Model.RouteVoyageMs[i].Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite trukmę" } })
+                        @{ if (Model.RouteVoyageMs[i].Order == 0)
+                               @Html.HiddenFor(m => Model.RouteVoyageMs[i].Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite trukmę" } })
+                           else
+                           {
+                               @Html.EditorFor(m => Model.RouteVoyageMs[i].Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Įveskite trukmę" } });
+                           }
+                        }
                             @Html.ValidationMessageFor(m => Model.RouteVoyageMs[i].Duration, "", new { @class = "text-danger" })
                         </td>
                         <td>

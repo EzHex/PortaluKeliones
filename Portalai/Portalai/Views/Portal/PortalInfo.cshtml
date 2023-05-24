@@ -22,17 +22,32 @@
             <dt>@Html.DisplayNameFor(m => m.Id)</dt>
             <dd>@Html.DisplayFor(m => m.Id)</dd>
 
+            <dt>@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd>@Html.DisplayFor(m => m.Name)</dd>
+
             <dt>@Html.DisplayNameFor(m => m.Latitude)</dt>
             <dd>@Html.DisplayFor(m => m.Latitude)</dd>
 
             <dt>@Html.DisplayNameFor(m => m.Longitude)</dt>
             <dd>@Html.DisplayFor(m => m.Longitude)</dd>
 
-            <dt>@Html.DisplayNameFor(m => m.LiquidCapacity)</dt>
-            <dd>@Html.DisplayFor(m => m.LiquidCapacity)</dd>
-
-            <dt>@Html.DisplayNameFor(m => m.CurrentLiquidLevel)</dt>
-            <dd>@Html.DisplayFor(m => m.CurrentLiquidLevel)</dd>
+            <dt>Skystis</dt>
+            <dd>
+                @{
+                    double progress = Model.LiquidCapacity != 0 ? (Model.CurrentLiquidLevel / Model.LiquidCapacity) * 100 : 0;
+                    string progressWidth = $"{progress}%";
+                }
+                <div class="progress">
+                    <div class="progress-bar w-10"
+                         role="progressbar"
+                         aria-valuenow="@Model.CurrentLiquidLevel"
+                         aria-valuemin="0"
+                         aria-valuemax="@Model.LiquidCapacity"
+                         style="width: @progressWidth;">
+                        @Model.CurrentLiquidLevel / @Model.LiquidCapacity
+                    </div>
+                </div>
+            </dd>
 
             <dt>@Html.DisplayNameFor(m => m.TeleportPrice)</dt>
             <dd>@Html.DisplayFor(m => m.TeleportPrice)</dd>
@@ -42,6 +57,12 @@
 
             <dt>@Html.DisplayNameFor(m => m.Status)</dt>
             <dd>@Html.DisplayFor(m => m.Status)</dd>
+
+            @if (Model.PortalJunction != null)
+            {
+                <dt>Jungtis1 - Jungtis2</dt>
+                <dd>@Html.DisplayFor(m => m.PortalJunction.Portals[0].Name) - @Html.DisplayFor(m => m.PortalJunction.Portals[1].Name)</dd>
+            }
 
         </dl>
     </fieldset>

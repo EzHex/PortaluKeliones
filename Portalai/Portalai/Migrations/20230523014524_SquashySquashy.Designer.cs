@@ -12,8 +12,8 @@ using Portalai;
 namespace Portalai.Migrations
 {
     [DbContext(typeof(PortalsDbContext))]
-    [Migration("20230522205957_CDsNuts")]
-    partial class CDsNuts
+    [Migration("20230523014524_SquashySquashy")]
+    partial class SquashySquashy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -958,10 +958,10 @@ namespace Portalai.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ArrivalPlaceId")
+                    b.Property<int>("ArrivalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeparturePlaceId")
+                    b.Property<int>("DepartureId")
                         .HasColumnType("int");
 
                     b.Property<int>("Duration")
@@ -975,9 +975,9 @@ namespace Portalai.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArrivalPlaceId");
+                    b.HasIndex("ArrivalId");
 
-                    b.HasIndex("DeparturePlaceId");
+                    b.HasIndex("DepartureId");
 
                     b.HasIndex("RouteId");
 
@@ -987,8 +987,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalPlaceId = 30,
-                            DeparturePlaceId = 22,
+                            ArrivalId = 30,
+                            DepartureId = 22,
                             Duration = 70,
                             Order = 1,
                             RouteId = 3
@@ -996,8 +996,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 2,
-                            ArrivalPlaceId = 14,
-                            DeparturePlaceId = 30,
+                            ArrivalId = 14,
+                            DepartureId = 30,
                             Duration = 50,
                             Order = 2,
                             RouteId = 3
@@ -1005,8 +1005,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 3,
-                            ArrivalPlaceId = 9,
-                            DeparturePlaceId = 14,
+                            ArrivalId = 9,
+                            DepartureId = 14,
                             Duration = 40,
                             Order = 3,
                             RouteId = 3
@@ -1014,8 +1014,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 4,
-                            ArrivalPlaceId = 3,
-                            DeparturePlaceId = 9,
+                            ArrivalId = 3,
+                            DepartureId = 9,
                             Duration = 45,
                             Order = 4,
                             RouteId = 3
@@ -1023,8 +1023,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 5,
-                            ArrivalPlaceId = 2,
-                            DeparturePlaceId = 1,
+                            ArrivalId = 2,
+                            DepartureId = 1,
                             Duration = 105,
                             Order = 1,
                             RouteId = 2
@@ -1032,8 +1032,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 6,
-                            ArrivalPlaceId = 27,
-                            DeparturePlaceId = 2,
+                            ArrivalId = 27,
+                            DepartureId = 2,
                             Duration = 90,
                             Order = 2,
                             RouteId = 2
@@ -1041,8 +1041,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 7,
-                            ArrivalPlaceId = 3,
-                            DeparturePlaceId = 27,
+                            ArrivalId = 3,
+                            DepartureId = 27,
                             Duration = 150,
                             Order = 3,
                             RouteId = 2
@@ -1050,8 +1050,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 8,
-                            ArrivalPlaceId = 22,
-                            DeparturePlaceId = 38,
+                            ArrivalId = 22,
+                            DepartureId = 38,
                             Duration = 90,
                             Order = 1,
                             RouteId = 1
@@ -1059,8 +1059,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 9,
-                            ArrivalPlaceId = 4,
-                            DeparturePlaceId = 22,
+                            ArrivalId = 4,
+                            DepartureId = 22,
                             Duration = 120,
                             Order = 2,
                             RouteId = 1
@@ -1068,8 +1068,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 10,
-                            ArrivalPlaceId = 5,
-                            DeparturePlaceId = 4,
+                            ArrivalId = 5,
+                            DepartureId = 4,
                             Duration = 120,
                             Order = 3,
                             RouteId = 1
@@ -1077,8 +1077,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 11,
-                            ArrivalPlaceId = 17,
-                            DeparturePlaceId = 5,
+                            ArrivalId = 17,
+                            DepartureId = 5,
                             Duration = 120,
                             Order = 4,
                             RouteId = 1
@@ -1086,8 +1086,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 12,
-                            ArrivalPlaceId = 16,
-                            DeparturePlaceId = 17,
+                            ArrivalId = 16,
+                            DepartureId = 17,
                             Duration = 65,
                             Order = 5,
                             RouteId = 1
@@ -1095,8 +1095,8 @@ namespace Portalai.Migrations
                         new
                         {
                             Id = 13,
-                            ArrivalPlaceId = 3,
-                            DeparturePlaceId = 16,
+                            ArrivalId = 3,
+                            DepartureId = 16,
                             Duration = 30,
                             Order = 6,
                             RouteId = 1
@@ -1561,13 +1561,13 @@ namespace Portalai.Migrations
                 {
                     b.HasOne("Portalai.Models.Place", "Arrival")
                         .WithMany("ArrivalVoyages")
-                        .HasForeignKey("ArrivalPlaceId")
+                        .HasForeignKey("ArrivalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Portalai.Models.Place", "Departure")
                         .WithMany("DepartureVoyages")
-                        .HasForeignKey("DeparturePlaceId")
+                        .HasForeignKey("DepartureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

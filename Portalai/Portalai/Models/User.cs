@@ -11,9 +11,9 @@ public class User : IEntityTypeConfiguration<User>
     public string Password { get; set; }
     public string Phone { get; set; }
     public Roles Role { get; set; }
-    public List<Ticket> Tickets { get; set; }
+    public List<Ticket>? Tickets { get; set; }
     
-    public List<Complaint> Complaints { get; set; }
+    public List<Complaint>? Complaints { get; set; }
 
     public void Configure(EntityTypeBuilder<User> builder)
     {

@@ -73,6 +73,12 @@ public class TripController : Controller
             .Include(t => t.Route)
             .Include(t => t.Bus)
             .ToListAsync();
+        
+        if (TempData["status"] != null)
+        {
+            ViewBag.Status = TempData["status"];
+            TempData.Remove("status");
+        }
 
         return View("TripList", trips);
     }

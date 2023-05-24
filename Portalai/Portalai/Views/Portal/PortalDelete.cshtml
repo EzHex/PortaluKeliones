@@ -1,0 +1,86 @@
+﻿@model Portal
+
+@{
+    ViewBag.Title = "Vietovės šalinimas";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewBag.Title</h1>
+    </span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset class="border rounded shadow p-2">
+            <legend class="text-center">Ar tikrai norite šalinti šią vietovę?</legend>
+
+            @*Display all portals atributes*@
+            <dl>
+                <dt>@Html.DisplayNameFor(m => m.Name)</dt>
+                <dd>@Html.DisplayFor(m => m.Name)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Longitude)</dt>
+                <dd>@Html.DisplayFor(m => m.Longitude)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Latitude)</dt>
+                <dd>@Html.DisplayFor(m => m.Latitude)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.LiquidCapacity)</dt>
+                <dd>@Html.DisplayFor(m => m.LiquidCapacity)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.CurrentLiquidLevel)</dt>
+                <dd>@Html.DisplayFor(m => m.CurrentLiquidLevel)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.TeleportCount)</dt>
+                <dd>@Html.DisplayFor(m => m.TeleportCount)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.TeleportPrice)</dt>
+                <dd>@Html.DisplayFor(m => m.TeleportPrice)</dd>
+
+                <dt>@Html.DisplayNameFor(m => m.Status)</dt>
+                <dd>@Html.DisplayFor(m => m.Status)</dd>
+
+                <div>
+                    @Html.HiddenFor(m => m.Id)
+                </div>
+
+                @if (Model.PortalJunction != null)
+                {
+                    @Html.HiddenFor(m => m.JunctionPortalId)
+                    @Html.HiddenFor(m => m.PortalJunction!.Id)
+                    /*for through portals and add all hidden fields using for loop with var*/
+                    @for (var i = 0; i < Model.PortalJunction.Portals.Count; i++)
+                    {
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Id)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Name)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Longitude)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Latitude)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].LiquidCapacity)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].CurrentLiquidLevel)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].TeleportPrice)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Status)
+                        @Html.HiddenFor(m => Model.PortalJunction.Portals[i].PortalJunction)
+                    }
+                }
+
+            </dl>
+
+
+            <div class="container-fluid d-flex d-row justify-content-between align-items-center p-2">
+                <span class="actions">
+                    <a href="@Url.Action("ShowPortals")" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-circle-xmark"></i> Atšaukti</a>
+                </span>
+                <span>
+                    <button formaction="@Url.Action("DeletePortal", Model)" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</button>
+                </span>
+
+            </div>
+
+        </fieldset>
+    }
+</div>

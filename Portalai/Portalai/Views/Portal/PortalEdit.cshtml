@@ -1,8 +1,10 @@
-﻿@model Portalai.ViewModel.PortalEditVM
-
+﻿@model Portal
+@inject PortalsDbContext _context;
 @{
-    ViewBag.Title = "Portalo informacijos redagavimas";
+    ViewBag.Title = "Portalo redagavimas";
     Layout = "_Layout";
+    // Get all free portals and exclude current portal
+var freePortals = _context.Portals.Where(p => p.Id != Model.Id && p.PortalJunction == null).ToList();
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
@@ -10,84 +12,94 @@
         <h1>@ViewBag.Title</h1>
     </span>
     <span class="actions">
-        <a href="@Url.Action("ShowPortals")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sąrašą</a>
+        <a href="@Url.Action("ShowPortals")" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
     </span>
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("PostEdit", "Portal", FormMethod.Post, new { style = "width:50%" }))
+    @using (Html.BeginForm("PostEdit", "Portal", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.HiddenFor(m => m.Portal.Id)
-
-        <fieldset class="border rounded shadow p-2" style="word-wrap: break-word;">
-            <legend class="text-center">Portalo informacija</legend>
+        <fieldset class="border rounded shadow p-2">
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.Latitude, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.Latitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.Latitude, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m=>m.Id)
+                @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.Longitude, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.Longitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.Longitude, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.Longitude, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.LiquidCapacity, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.LiquidCapacity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.LiquidCapacity, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.Latitude, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.CurrentLiquidLevel, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.CurrentLiquidLevel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.CurrentLiquidLevel, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.LiquidCapacity, new { @class = "control-label" })
+                @Html.EditorFor(m => m.LiquidCapacity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.LiquidCapacity, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.TeleportCount, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.TeleportCount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.TeleportCount, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.CurrentLiquidLevel, new { @class = "control-label" })
+                @Html.EditorFor(m => m.CurrentLiquidLevel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.CurrentLiquidLevel, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.TeleportPrice, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Portal.TeleportPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Portal.TeleportPrice, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.TeleportPrice, new { @class = "control-label" })
+                @Html.EditorFor(m => m.TeleportPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.TeleportPrice, "", new { @class = "text-danger" })
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(m => m.Portal.Status, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.Portal.Status, new SelectList(Enum.GetValues(typeof(PortalStatus)), Model.Portal.Status), new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Portal.Status, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.Status, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(PortalStatus))), new { @class = "form-control question-type-select" })
+                @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
             </div>
-
-
+            <div>
+                @Html.LabelFor(m => m.JunctionPortalId, new { @class = "control-label" })
+                @{
+                    // Add second portal to free portals select list
+                    // Get second portal from junction
+                    var portalTwo = Model.PortalJunction?.Portals.FirstOrDefault(p => p.Id != Model.Id);
+                    if (portalTwo != null)
+                    {
+                        freePortals.Add(portalTwo);
+                    }
+                    var selectedPortalId = portalTwo?.Id ?? Model.JunctionPortalId;
+                    var portalList = new SelectList(freePortals, "Id", "Name", selectedPortalId);
+                }
+                @Html.DropDownListFor(m => m.JunctionPortalId, portalList, "-- Select Portal --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JunctionPortalId, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.PortalJunction) <!-- Add this hidden field -->
+            </div>
+            @*Add hidden fields for junction*@
+            @if (Model.PortalJunction != null)
+            {
+                @Html.HiddenFor(m => m.JunctionPortalId)
+                @Html.HiddenFor(m => m.PortalJunction!.Id)
+                /*for through portals and add all hidden fields using for loop with var*/
+                @for (var i = 0; i < Model.PortalJunction.Portals.Count; i++)
+                {
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Id)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Name)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Longitude)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Latitude)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].LiquidCapacity)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].CurrentLiquidLevel)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].TeleportPrice)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].Status)
+                    @Html.HiddenFor(m => Model.PortalJunction.Portals[i].PortalJunction)
+                }
+            }
         </fieldset>
-        <br/>
-        <fieldset class="border rounded shadow p-2" style="word-wrap: break-word;">
-            <div class="container-fluid d-flex d-row justify-content-between align-items-center" style="margin-bottom: 10px;">
-                <span></span>
-                <legend style="width: unset; margin-bottom: 0;">Jungties informacija</legend>
-                <button
-                    name="add"
-                    value="1"
-                    formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-                    formaction="@Url.Action()#listEnd"
-                    class="btn btn-info"
-                    style="white-space: nowrap;">
-                    <i class="fa-solid fa-plus"></i> Pridėti
-                </button>
-            </div>
-        </fieldset>
 
-        <div style="margin-top: 10px" class="container-fluid d-flex d-row justify-content-end">
-            <button name="save" value="1" class="btn btn-success"><i style="padding-right: 5px" class="fa-solid fa-check"></i> Pateikti</button>
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button formnovalidate="formnovalidate" name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>Išsaugoti</button>
         </div>
     }
 </div>

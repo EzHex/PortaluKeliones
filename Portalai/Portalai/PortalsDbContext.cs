@@ -135,69 +135,69 @@ public class PortalsDbContext : DbContext
             //ROUTE3
             new RouteVoyage
             {
-                Id = 1, Order = 1, Duration = 70, ArrivalPlaceId = places[29].Id, DeparturePlaceId = places[21].Id,
+                Id = 1, Order = 1, Duration = 70, ArrivalId = places[29].Id, DepartureId = places[21].Id,
                 RouteId = routes[2].Id
             },
             new RouteVoyage
             {
-                Id = 2, Order = 2, Duration = 50, ArrivalPlaceId = places[13].Id, DeparturePlaceId = places[29].Id,
+                Id = 2, Order = 2, Duration = 50, ArrivalId = places[13].Id, DepartureId = places[29].Id,
                 RouteId = routes[2].Id
             },
             new RouteVoyage
             {
-                Id = 3, Order = 3, Duration = 40, ArrivalPlaceId = places[8].Id, DeparturePlaceId = places[13].Id,
+                Id = 3, Order = 3, Duration = 40, ArrivalId = places[8].Id, DepartureId = places[13].Id,
                 RouteId = routes[2].Id
             },
             new RouteVoyage
             {
-                Id = 4, Order = 4, Duration = 45, ArrivalPlaceId = places[2].Id, DeparturePlaceId = places[8].Id,
+                Id = 4, Order = 4, Duration = 45, ArrivalId = places[2].Id, DepartureId = places[8].Id,
                 RouteId = routes[2].Id
             },
             //ROUTE2
             new RouteVoyage
             {
-                Id = 5, Order = 1, Duration = 105, ArrivalPlaceId = places[1].Id, DeparturePlaceId = places[0].Id,
+                Id = 5, Order = 1, Duration = 105, ArrivalId = places[1].Id, DepartureId = places[0].Id,
                 RouteId = routes[1].Id
             },
             new RouteVoyage
             {
-                Id = 6, Order = 2, Duration = 90, ArrivalPlaceId = places[26].Id, DeparturePlaceId = places[1].Id,
+                Id = 6, Order = 2, Duration = 90, ArrivalId = places[26].Id, DepartureId = places[1].Id,
                 RouteId = routes[1].Id
             },
             new RouteVoyage
             {
-                Id = 7, Order = 3, Duration = 150, ArrivalPlaceId = places[2].Id, DeparturePlaceId = places[26].Id,
+                Id = 7, Order = 3, Duration = 150, ArrivalId = places[2].Id, DepartureId = places[26].Id,
                 RouteId = routes[1].Id
             },
             //ROUTE1 "Zarasai - Rokiškis - Panevėžys - Šiauliai - Plungė - Palanga - Klaipėda"
             new RouteVoyage
             {
-                Id = 8, Order = 1, Duration = 90, ArrivalPlaceId = places[21].Id, DeparturePlaceId = places[37].Id,
+                Id = 8, Order = 1, Duration = 90, ArrivalId = places[21].Id, DepartureId = places[37].Id,
                 RouteId = routes[0].Id
             },
             new RouteVoyage
             {
-                Id = 9, Order = 2, Duration = 120, ArrivalPlaceId = places[3].Id, DeparturePlaceId = places[21].Id,
+                Id = 9, Order = 2, Duration = 120, ArrivalId = places[3].Id, DepartureId = places[21].Id,
                 RouteId = routes[0].Id
             },
             new RouteVoyage
             {
-                Id = 10, Order = 3, Duration = 120, ArrivalPlaceId = places[4].Id, DeparturePlaceId = places[3].Id,
+                Id = 10, Order = 3, Duration = 120, ArrivalId = places[4].Id, DepartureId = places[3].Id,
                 RouteId = routes[0].Id
             },
             new RouteVoyage
             {
-                Id = 11, Order = 4, Duration = 120, ArrivalPlaceId = places[16].Id, DeparturePlaceId = places[4].Id,
+                Id = 11, Order = 4, Duration = 120, ArrivalId = places[16].Id, DepartureId = places[4].Id,
                 RouteId = routes[0].Id
             },
             new RouteVoyage
             {
-                Id = 12, Order = 5, Duration = 65, ArrivalPlaceId = places[15].Id, DeparturePlaceId = places[16].Id,
+                Id = 12, Order = 5, Duration = 65, ArrivalId = places[15].Id, DepartureId = places[16].Id,
                 RouteId = routes[0].Id
             },
             new RouteVoyage
             {
-                Id = 13, Order = 6, Duration = 30, ArrivalPlaceId = places[2].Id, DeparturePlaceId = places[15].Id,
+                Id = 13, Order = 6, Duration = 30, ArrivalId = places[2].Id, DepartureId = places[15].Id,
                 RouteId = routes[0].Id
             }
         };

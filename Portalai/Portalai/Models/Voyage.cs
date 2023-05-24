@@ -15,20 +15,9 @@ public class Voyage : IEntityTypeConfiguration<Voyage>
     public double Price { get; set; }
     
     //Mapping
-    
-    public virtual RouteVoyage RouteVoyage { get; set; }
-    public virtual Trip Trip { get; set; }
 
-    public Voyage(DateTime departureTime, DateTime arrivalTime, double price)
-    {
-        DepartureTime = departureTime;
-        ArrivalTime = arrivalTime;
-        Price = price;
-    }
-
-    public Voyage()
-    {
-    }
+    public virtual RouteVoyage RouteVoyage { get; set; } = new RouteVoyage();
+    public virtual Trip Trip { get; set; } = new Trip();
 
     public void Configure(EntityTypeBuilder<Voyage> builder)
     {

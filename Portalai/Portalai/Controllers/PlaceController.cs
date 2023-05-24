@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
 
@@ -92,9 +93,20 @@ public class PlaceController : Controller
             TempData["status"] = "Įrašas sėkmingai pašalintas";
             return RedirectToAction("ShowPlaces");
         }
-        catch (Exception)
+        catch (DbUpdateException ex)
         {
-            ViewData["deletionNotPermitted"] = true;
+            var sqlException = ex.GetBaseException() as SqlException;
+            
+            //Handle Database.Restrict message
+            if (sqlException?.Number == 547)
+            {
+                //Set deletionNotPermitted to true
+                ViewData["deletionNotPermitted"] = true;
+                
+                //Add error message to ModelState
+                ModelState.AddModelError("", "Negalima ištrinti įrašo, nes jis yra susietas su kitais įrašais (maršrutais).");
+
+            }
 
             var place = await context.Places.SingleAsync(x => x.Id == id);
 

@@ -1,112 +1,161 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Portalai.Models;
-using Portalai.ViewModel;
 
 namespace Portalai.Controllers;
 
 public class PortalController : Controller
 {
-    private readonly PortalsDbContext context;
+    private readonly PortalsDbContext _context;
 
     public PortalController(PortalsDbContext context)
     {
-        this.context = context;
+        this._context = context;
     }
 
     public async Task<ActionResult> ShowPortals()
     {
-        var portals = await context.Portals.ToListAsync();
-        
+        var portals = await _context.Portals.ToListAsync();
+
         if (TempData["status"] != null)
         {
             ViewBag.Status = TempData["status"];
             TempData.Remove("status");
         }
-  
+
         return View("PortalList", portals);
     }
 
-    public async Task<ActionResult> ShowOnePortal(int id)
+    public ActionResult ShowOnePortal(int id)
     {
-        // var portal = await context.Portals
-        //     .Include(m => m.PortalJunction)
-        //     .SingleAsync(x => x.Id == id);
+        //Get portal with junctions that has both portals
+        var portal = _context.Portals
+            .Include(m => m.PortalJunction)
+            .ThenInclude(m => m.Portals)
+            .Single(x => x.Id == id);
 
-        // if (portal.PortalJunction != null)
-        // {
-        //     var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
-        //         o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
-        //
-        //     if (secondPortal != null)
-        //     {
-        //         portal.JunctionPortalId = secondPortal.Id;
-        //     }
-        // }
-        
-        // return View("PortalInfo", portal);
-        //throw not implemented
-        return View("PortalInfo");
+        return View("PortalInfo", portal);
     }
-     
-    //TODO su klaustuku del listo
+    
     public async Task<ActionResult> ShowEditForm(int id)
     {
-        // var portal = await context.Portals
-        //     .Include(m => m.PortalJunction)
-        //     .SingleAsync(x => x.Id == id);
-        
-        // if (portal.PortalJunction != null)
-        // {
-        //     var secondPortal = await context.Portals.FirstOrDefaultAsync(o =>
-        //         o.PortalJunction.Id == portal.PortalJunction.Id && o.Id != portal.Id);
-        //
-        //     if (secondPortal != null)
-        //     {
-        //         portal.JunctionPortalId = secondPortal.Id;
-        //     }
-        // }
-        
-        var portalList = await context.Portals.ToListAsync();
-        var portalEdit = new PortalEditVM();
-        portalEdit.AllPortals = portalList;
+        //Get portal and junction with both portals
+        var portal = await _context.Portals
+            .Include(m => m.PortalJunction)
+            .ThenInclude(m => m.Portals)
+            .SingleAsync(x => x.Id == id);
 
-        return View("PortalEdit", portalEdit);
+        return View("PortalEdit", portal);
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostEdit(PortalEditVM newElement)
+    public ActionResult PostEdit(Portal portal)
     {
-        /*ModelState["Complaints"].ValidationState = ModelValidationState.Valid;
-        ModelState["Complaints"].Errors.Clear();*/
-
         if (!ModelState.IsValid)
-            return View("PortalEdit", newElement);
-        
-        context.Portals.Update(newElement.Portal);
-        await context.SaveChangesAsync();
+            return View("PortalEdit", portal);
+        //Check if the portal WAS connected
+        var currentJunction = portal.PortalJunction;
+
+        //IF IT WAS CONNECTED
+        if (currentJunction != null)
+        {
+            //Get the portal it was connected to FROM CURRENT JUNCTION
+            var secondPortal = currentJunction.Portals.Single(x => x.Id != portal.Id);
+            
+            //If it is still connected and changed only the portal data
+            if (secondPortal.Id == portal.JunctionPortalId)
+            {
+                //set junction to null to safe update
+                portal.PortalJunction = null;
+                
+                //Update the portal
+                _context.Update(portal);
+                //Save changes
+                _context.SaveChanges();
+            }
+            else
+            {
+                //If it is connected to a different portal now
+                //Remove it
+                _context.Remove(currentJunction);
+                //Save changes
+                _context.SaveChanges();
+                
+                //Replace old portal with new one
+                currentJunction.Portals.Remove(secondPortal);
+                
+                if (portal.JunctionPortalId != null)
+                {
+                    currentJunction.Portals.Add(_context.Portals.Single(x => x.Id == portal.JunctionPortalId));
+                    //Remove junction id
+                    currentJunction.Id = 0;
+                    //Update the junction
+                    _context.Add(currentJunction);
+                }
+
+                //Save changes
+                _context.SaveChanges();
+            }
+        }
+        else
+        {
+            //IF IT WAS NOT CONNECTED
+            //Check if we are connecting it to another portal
+            if (portal.JunctionPortalId != null)
+            {
+                //Create a new junction
+                var newJunction = new PortalJunction();
+                //Add both portals to the junction
+                newJunction.Portals.Add(portal);
+                newJunction.Portals.Add(_context.Portals.Single(x => x.Id == portal.JunctionPortalId));
+
+                //Add the junction to the portal
+                portal.PortalJunction = newJunction;
+                
+                //Detach mew junction
+                _context.Entry(newJunction).State = EntityState.Detached;
+                
+                //Update the portal
+                _context.Update(portal);
+                
+                //Save changes
+                _context.SaveChanges();
+            }
+            else
+            {
+                //Update the portal
+                _context.Update(portal);
+                //Save changes
+                _context.SaveChanges();
+            }
+        }
 
         TempData["status"] = "Portalas sėkmingai atnaujintas";
         return RedirectToAction("ShowPortals");
     }
-    
+
     public ViewResult ShowCreateForm()
     {
         //Create empty portal
         var portal = new Portal();
-        
+
         return View("PortalCreate", portal);
     }
-    
-    public Task<ActionResult> ShowDeleteConfirmForm()
+
+    public ActionResult ShowDeleteConfirmForm(int id)
     {
-        return Task.FromResult<ActionResult>(RedirectToAction("ShowPortalReservation"));
+        //Load portal and its junction if it has one
+        var portal = _context.Portals
+            .Include(m => m.PortalJunction)
+            .ThenInclude(m => m.Portals)
+            .Single(x => x.Id == id);
+        
+        return View("PortalDelete", portal);
     }
-    
+
     public async Task<ActionResult> ShowPortalReservation()
     {
-        var portals = await context.Portals.ToListAsync();
+        var portals = await _context.Portals.ToListAsync();
 
         return View("PortalReserve", portals);
     }
@@ -125,16 +174,16 @@ public class PortalController : Controller
                 ModelState.AddModelError("", "Portalas neveikia");
                 break;
         }
-        
+
         if (!ModelState.IsValid)
         {
-            var portals = await context.Portals.ToListAsync();
+            var portals = await _context.Portals.ToListAsync();
             return View("PortalReserve", portals);
         }
-            
-        var dbPortal = await context.Portals.SingleAsync(x => x.Id == portal.Id);
+
+        var dbPortal = await _context.Portals.SingleAsync(x => x.Id == portal.Id);
         dbPortal.Status = PortalStatus.Reserved;
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         return RedirectToAction("ShowPortalReservation");
     }
@@ -145,7 +194,48 @@ public class PortalController : Controller
         {
             return View("PortalCreate", portal);
         }
+
+        //create portal
+        _context.Portals.Add(portal);
+        _context.SaveChanges();
+        //create junction if connected portal stated
+        if (portal.JunctionPortalId != null)
+        {
+            // Add portal to junction
+            var junction = new PortalJunction();
+            junction.Portals.Add(portal);
+
+            //get second portal and add it to junction
+            var secondPortal = _context.Portals.Single(x => x.Id == portal.JunctionPortalId);
+            junction.Portals.Add(secondPortal);
+
+            _context.PortalJunctions.Add(junction);
+        }
+
+        _context.SaveChanges();
+
+        TempData["status"] = "Portalas sėkmingai sukurtas";
+        return RedirectToAction("ShowPortals");
+    }
+
+    public IActionResult DeletePortal(Portal portal)
+    {
+        //Detach both portals from junction
+        var junction = portal.PortalJunction;
+        if (junction != null)
+        {
+            //Detach 0 and 1st portal
+            junction.Portals.RemoveRange(0, 2);
+            //Remove junction
+            _context.Remove(junction);
+        }
+
+
+        _context.Remove(portal);
+        _context.SaveChanges();
         
-        throw new NotImplementedException();
+        TempData["status"] = "Portalas sėkmingai ištrintas";
+        
+        return RedirectToAction("ShowPortals");
     }
 }

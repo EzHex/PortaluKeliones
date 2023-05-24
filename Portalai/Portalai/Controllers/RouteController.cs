@@ -106,8 +106,8 @@ namespace Portalai.Controllers
                     //construct RouteVoyages
                     for(int i = 0; i < routeCreateEditVm.RouteVoyageMs.Count-1; i++)
                     {
-                        var arrivalId = routeCreateEditVm.RouteVoyageMs[i].PlaceId;
-                        var departureId = routeCreateEditVm.RouteVoyageMs[i+1].PlaceId;
+                        var departureId = routeCreateEditVm.RouteVoyageMs[i].PlaceId; // FROM
+                        var arrivalId = routeCreateEditVm.RouteVoyageMs[i+1].PlaceId; // TO
                         
                         var arrival = await _context.Places.FindAsync(arrivalId);
                         var departure = await _context.Places.FindAsync(departureId);
@@ -122,7 +122,7 @@ namespace Portalai.Controllers
                                     Order = routeCreateEditVm.RouteVoyageMs[i].Order,
                                     Arrival = arrival,
                                     Departure = departure,
-                                    Duration = routeCreateEditVm.RouteVoyageMs[i].Duration
+                                    Duration = routeCreateEditVm.RouteVoyageMs[i+1].Duration
                                 };
                         
                                 await _context.RouteVoyages.AddAsync(routeVoyage);
@@ -706,11 +706,11 @@ namespace Portalai.Controllers
                 
                 foreach (var routeVoyage in route.RouteVoyages)
                 {
-                    if (routeVoyage.DeparturePlaceId != departureCity.Id) 
+                    if (routeVoyage.DepartureId != departureCity.Id) 
                         continue;
                     foreach (var routeVoyage2 in route.RouteVoyages)
                     {
-                        if (routeVoyage2.ArrivalPlaceId != arrivalCity.Id) 
+                        if (routeVoyage2.ArrivalId != arrivalCity.Id) 
                             continue;
                         if (routeVoyage.Order > routeVoyage2.Order) 
                             continue;
@@ -747,12 +747,16 @@ namespace Portalai.Controllers
                 .Select(x=> new SelectListItem(x.Name, x.Id.ToString())).ToList());
             
             vm.RouteVoyageMs = new List<RouteCreateEditVm.RouteVoyageM>();
+            
+            //Sort RouteVoyages by order
+            vm.Route.RouteVoyages = vm.Route.RouteVoyages.OrderBy(rv => rv.Order).ToList();
+            
             foreach (var routeVoyage in vm.Route.RouteVoyages)
             {
                 vm.RouteVoyageMs.Add(new RouteCreateEditVm.RouteVoyageM()
                 {
                     Order = routeVoyage.Order,
-                    PlaceId = routeVoyage.Arrival.Id,
+                    PlaceId = routeVoyage.Departure.Id,
                     Duration = routeVoyage.Duration
                 });
             }
@@ -761,7 +765,7 @@ namespace Portalai.Controllers
             vm.RouteVoyageMs.Add(new RouteCreateEditVm.RouteVoyageM()
             {
                 Order = vm.Route.RouteVoyages.Last().Order+1,
-                PlaceId = vm.Route.RouteVoyages.Last().Departure.Id,
+                PlaceId = vm.Route.RouteVoyages.Last().Arrival.Id,
                 Duration = vm.Route.RouteVoyages.Last().Duration
             });
 
@@ -840,8 +844,8 @@ namespace Portalai.Controllers
                     //construct RouteVoyages
                     for(int i = 0; i < routeCreateEditVm.RouteVoyageMs.Count-1; i++)
                     {
-                        var arrivalId = routeCreateEditVm.RouteVoyageMs[i].PlaceId;
-                        var departureId = routeCreateEditVm.RouteVoyageMs[i+1].PlaceId;
+                        var departureId = routeCreateEditVm.RouteVoyageMs[i].PlaceId;
+                        var arrivalId = routeCreateEditVm.RouteVoyageMs[i+1].PlaceId;
                         
                         var arrival = await _context.Places.FindAsync(arrivalId);
                         var departure = await _context.Places.FindAsync(departureId);
@@ -854,7 +858,7 @@ namespace Portalai.Controllers
                                     Order = routeCreateEditVm.RouteVoyageMs[i].Order,
                                     Arrival = arrival,
                                     Departure = departure,
-                                    Duration = routeCreateEditVm.RouteVoyageMs[i].Duration
+                                    Duration = routeCreateEditVm.RouteVoyageMs[i+1].Duration
                                 };
                         
                                 await _context.RouteVoyages.AddAsync(routeVoyage);

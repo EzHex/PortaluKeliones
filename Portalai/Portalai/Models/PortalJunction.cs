@@ -9,13 +9,13 @@ public class PortalJunction : IEntityTypeConfiguration<PortalJunction>
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
     
-    public List<Portal> Portals { get; set; } = null!;
+    public List<Portal> Portals { get; set; } = new List<Portal>();
 
     public void Configure(EntityTypeBuilder<PortalJunction> builder)
     {
         builder.HasMany(p => p.Portals)
             .WithOne(p => p.PortalJunction)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasCheckConstraint("CK_PortalJunction_PortalsCount", "COUNT(Portals) = 2");
     }

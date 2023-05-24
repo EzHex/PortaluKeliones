@@ -33,13 +33,13 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
 
     public virtual List<Voyage>? Voyage { get; set; }
 
-    public int ArrivalPlaceId { get; set; }
+    public int ArrivalId { get; set; }
 
-    [ForeignKey("ArrivalPlaceId")] public virtual Place Arrival { get; set; }
+     public virtual Place Arrival { get; set; }
 
-    public int DeparturePlaceId { get; set; }
+    public int DepartureId { get; set; }
 
-    [ForeignKey("DeparturePlaceId")] public virtual Place Departure { get; set; }
+     public virtual Place Departure { get; set; }
 
     public void Configure(EntityTypeBuilder<RouteVoyage> builder)
     {
@@ -55,10 +55,10 @@ public class RouteVoyage : IEntityTypeConfiguration<RouteVoyage>
 
         builder.HasOne(m => m.Arrival)
             .WithMany(m => m.ArrivalVoyages)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(m => m.Departure)
             .WithMany(m => m.DepartureVoyages)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
