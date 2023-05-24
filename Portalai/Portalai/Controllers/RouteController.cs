@@ -45,7 +45,7 @@ namespace Portalai.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Create(int? save, int? add, int? remove, RouteCreateEditVm routeCreateEditVm)
+        public async Task<ActionResult> PostCreate(int? save, int? add, int? remove, RouteCreateEditVm routeCreateEditVm)
         {
             //add specifies order number of the voyage to add
             if (add != null)
@@ -769,7 +769,7 @@ namespace Portalai.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(int? save, int? add, int? remove, RouteCreateEditVm routeCreateEditVm)
+        public async Task<ActionResult> PostEdit(int? save, int? add, int? remove, RouteCreateEditVm routeCreateEditVm)
         {
             //add specifies order number of the voyage to add
             if (add != null)

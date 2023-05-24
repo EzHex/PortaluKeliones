@@ -16,7 +16,7 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    @using (Html.BeginForm("Edit", "Route", FormMethod.Post, new { @class = "col-md-6" }))
+    @using (Html.BeginForm("PostEdit", "Route", FormMethod.Post, new { @class = "col-md-6" }))
     {
         @Html.AntiForgeryToken()
 
@@ -37,7 +37,7 @@
                 <button name="add"
                         value="1"
                         formnovalidate
-                        formaction="@Url.Action("Edit", "Route")#listEnd"
+                        formaction="@Url.Action("PostEdit", "Route")#listEnd"
                         class="btn btn-info"
                         style="white-space: nowrap;">
                     <i class="fa-solid fa-plus"></i>Pridėti
@@ -74,7 +74,7 @@
                                 name="remove"
                                 value="@Model.RouteVoyageMs[i].Order"
                                 formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-                                formaction="@Url.Action("Edit")#listEnd"
+                                formaction="@Url.Action("PostEdit")#listEnd"
                                 class="btn btn-danger"
                                 style="white-space: nowrap;">
                                 <i class="fa-solid fa-trash"></i> Šalinti
