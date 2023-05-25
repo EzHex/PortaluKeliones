@@ -37,6 +37,9 @@
                     @Html.HiddenFor(m => Model.Voyages[i].DepartureTime)
                     @Html.HiddenFor(m => Model.Voyages[i].ArrivalTime)
                     @Html.HiddenFor(m => Model.Voyages[i].Price)
+                    @Html.HiddenFor(m => Model.Voyages[i].RouteVoyage.ArrivalId)
+                    @Html.HiddenFor(m => Model.Voyages[i].RouteVoyage.DepartureId)
+                    @Html.HiddenFor(m => Model.Voyages[i].RouteVoyage.RouteId)
                 }
 
             </div>

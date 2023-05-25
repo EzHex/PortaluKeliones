@@ -52,6 +52,7 @@ public class TripController : Controller
     {
         Trip trip = _context.Trips
             .Include(t=>t.Voyages)
+            .ThenInclude(m=>m.RouteVoyage)
             .FirstOrDefault(t => t.Id == id) ?? throw new InvalidOperationException();
         return View("TripEdit", trip);
     }
