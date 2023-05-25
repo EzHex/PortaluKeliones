@@ -59,7 +59,6 @@
                     <th>Klausimas</th>
                     <th>Tipas</th>
                     <th>Privalomumas</th>
-                    <th>Eilės numeris</th>
                     <th style="width: 1px;"></th>
                 </tr>
                 </thead>
@@ -80,10 +79,11 @@
                             @Html.DropDownListFor(m => Model.SurveyQuestions[i].IsRequired, new SelectList(new[] { true, false }), new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].IsRequired, "", new { @class = "text-danger" })
                         </td>
-                        <td>
+                        @*<td>
                             @Html.EditorFor(m => Model.SurveyQuestions[i].Order, new { htmlAttributes = new {@readonly = "readonly", @class = "form-control" } })
                             @Html.ValidationMessageFor(m => Model.SurveyQuestions[i].Order, "", new { @class = "text-danger" })
-                        </td>
+                        </td>*@
+                        @Html.HiddenFor(m=>m.SurveyQuestions[i].Order)
                         <td>
                              <button class="btn btn-danger removeQuestionButton">
                                  <i class="fa-solid fa-trash"></i> Šalinti klausimą
@@ -164,10 +164,11 @@
                             </select>
                             <span class="text-danger"></span>
                         </td>
-                        <td>
+                        <td style="display: none;">
                             <input type="text" name="SurveyQuestions[${questionIndex}].Order" value=${counter} class="form-control" readonly />
                             <span class="text-danger"></span>
                         </td>
+
                         <td>
                             <button class="btn btn-danger removeQuestionButton" data-question-index="${questionIndex}">
                                 <i class="fa-solid fa-trash"></i> Šalinti klausimą
